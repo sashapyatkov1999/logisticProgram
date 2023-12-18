@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="DRIVER_001" author="pyatkov_aa">
+
+        <preConditions>
+            <not>
+                <foreignKeyConstraintExists foreignKeyName="FK-DRIVER-USERS"/>
+            </not>
+
+        </preConditions>
+
+
+        <addForeignKeyConstraint
+                baseTableName="DRIVER" baseColumnNames="USER_ID"
+                constraintName="FK-DRIVER-USERS"  onUpdate="RESTRICT" onDelete="RESTRICT"
+                referencedTableName="USERS" referencedColumnNames="USER_ID" />
+
+
+    </changeSet>
+    <changeSet id="DRIVER_002" author="pyatkov_aa">
+
+        <preConditions>
+            <not>
+                <foreignKeyConstraintExists foreignKeyName="FK-DRIVER-DRIVER_STATUS"/>
+            </not>
+
+        </preConditions>
+
+        <addForeignKeyConstraint
+                baseTableName="DRIVER" baseColumnNames="DRIVER_STATUS_ID"
+                constraintName="FK-DRIVER-DRIVER_STATUS"  onUpdate="RESTRICT" onDelete="RESTRICT"
+                referencedTableName="DRIVER_STATUS" referencedColumnNames="DRIVER_STATUS_ID" />
+
+    </changeSet>
+    <changeSet id="DRIVER_003" author="pyatkov_aa">
+
+        <preConditions>
+            <not>
+                <foreignKeyConstraintExists foreignKeyName="FK-DRIVER-CAR"/>
+            </not>
+
+        </preConditions>
+
+        <addForeignKeyConstraint
+                baseTableName="DRIVER" baseColumnNames="CAR_ID"
+                constraintName="FK-DRIVER-CAR"  onUpdate="RESTRICT" onDelete="RESTRICT"
+                referencedTableName="CAR" referencedColumnNames="CAR_ID" />
+
+
+    </changeSet>
+</databaseChangeLog>

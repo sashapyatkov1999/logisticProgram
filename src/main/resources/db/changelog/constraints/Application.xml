@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="APPLICATION_001" author="pyatkov_aa">
+
+        <preConditions>
+            <not>
+                <foreignKeyConstraintExists foreignKeyName="FK-APPLICATION-USERS"/>
+            </not>
+
+        </preConditions>
+
+        <addForeignKeyConstraint
+                baseTableName="APPLICATION" baseColumnNames="USER_ID"
+                constraintName="FK-APPLICATION-USERS"  onUpdate="RESTRICT" onDelete="RESTRICT"
+                referencedTableName="USERS" referencedColumnNames="USER_ID" />
+
+
+    </changeSet>
+    <changeSet id="APPLICATION_002" author="pyatkov_aa">
+
+        <preConditions>
+            <not>
+                <foreignKeyConstraintExists foreignKeyName="FK-APPLICATION-DRIVER"/>
+            </not>
+
+        </preConditions>
+
+        <addForeignKeyConstraint
+                baseTableName="APPLICATION" baseColumnNames="DRIVER_ID"
+                constraintName="FK-APPLICATION-DRIVER"  onUpdate="RESTRICT" onDelete="RESTRICT"
+                referencedTableName="DRIVER" referencedColumnNames="DRIVER_ID" />
+
+
+    </changeSet>
+</databaseChangeLog>
