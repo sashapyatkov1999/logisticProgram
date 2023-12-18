@@ -16,6 +16,12 @@
 
     <changeSet id="LIST_DOCS_002" author="pyatkov_aa">
 
+        <preConditions>
+            <not>
+                <tableExists schemaName="REPOSITORY" tableName="LIST_DOCS"/>
+            </not>
+        </preConditions>
+
         <createTable schemaName="REPOSITORY" tableName="LIST_DOCS">
 
             <column name="LIST_DOCS_ID" type="INT" defaultValueSequenceNext="LIST_DOCS_SEQ">

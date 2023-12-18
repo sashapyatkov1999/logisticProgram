@@ -16,6 +16,12 @@
 
     <changeSet id="DRIVER_002" author="pyatkov_aa">
 
+        <preConditions>
+            <not>
+                <tableExists schemaName="REPOSITORY" tableName="DRIVER"/>
+            </not>
+        </preConditions>
+
         <createTable schemaName="REPOSITORY" tableName="DRIVER">
 
             <column name="DRIVER_ID" type="INT" defaultValueSequenceNext="DRIVER_SEQ">

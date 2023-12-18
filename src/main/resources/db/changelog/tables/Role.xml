@@ -16,6 +16,12 @@
 
     <changeSet id="ROLE_002" author="pyatkov_aa">
 
+        <preConditions>
+            <not>
+                <tableExists schemaName="REPOSITORY" tableName="ROLE"/>
+            </not>
+        </preConditions>
+
         <createTable schemaName="REPOSITORY" tableName="ROLE">
 
             <column name="ROLE_ID" type="INT" defaultValueSequenceNext="ROLE_SEQ">

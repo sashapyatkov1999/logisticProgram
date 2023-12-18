@@ -16,6 +16,12 @@
 
     <changeSet id="POINT_002" author="pyatkov_aa">
 
+        <preConditions>
+            <not>
+                <tableExists schemaName="REPOSITORY" tableName="POINT"/>
+            </not>
+        </preConditions>
+
         <createTable schemaName="REPOSITORY" tableName="POINT">
 
             <column name="POINT_ID" type="INT" defaultValueSequenceNext="POINT_SEQ">
@@ -54,7 +60,7 @@
                 <constraints  nullable="false"/>
             </column>
 
-            <column name="TIME_END" type="TIMESTAMP" defaultValue="NULL">
+            <column name="TIME_START" type="TIMESTAMP" defaultValue="NULL">
                 <constraints  nullable="false"/>
             </column>
 

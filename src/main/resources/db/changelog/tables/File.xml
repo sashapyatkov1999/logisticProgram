@@ -16,6 +16,12 @@
 
     <changeSet id="FILE_002" author="pyatkov_aa">
 
+        <preConditions>
+            <not>
+                <tableExists schemaName="REPOSITORY" tableName="FILE"/>
+            </not>
+        </preConditions>
+
         <createTable schemaName="REPOSITORY" tableName="FILE">
 
             <column name="FILE_ID" type="INT" defaultValueSequenceNext="FILE_SEQ">
@@ -30,9 +36,6 @@
                 <constraints  nullable="false"/>
             </column>
 
-            <column name="APPLICATION_ID" type="INT">
-                <constraints  nullable="false"/>
-            </column>
             <column name="DESCRIPTION" type="VARCHAR(50)">
                 <constraints  nullable="false"/>
             </column>
