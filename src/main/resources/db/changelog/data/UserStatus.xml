@@ -13,13 +13,13 @@
 
         <insert schemaName="REPOSITORY" tableName="USER_STATUS">
             <column name="NAME" value="ENABLE"/>
-            <column name="DESCRIPTION" value="Пользователь включен"/>
+            <column name="DESCRIPTION" value="Пользователь онлайн"/>
         </insert>
 
 
         <insert schemaName="REPOSITORY" tableName="USER_STATUS">
             <column name="NAME" value="DISABLE"/>
-            <column name="DESCRIPTION" value="Пользователь выключен"/>
+            <column name="DESCRIPTION" value="Пользователь оффлайн"/>
         </insert>
 
     </changeSet>

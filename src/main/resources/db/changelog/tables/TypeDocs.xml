@@ -16,7 +16,13 @@
 
     <changeSet id="TYPE_DOCS_002" author="pyatkov_aa">
 
-        <createTable schemaName="REPOSITORY" tableName="LIST_DOCS">
+        <preConditions>
+            <not>
+                <tableExists schemaName="REPOSITORY" tableName="TYPE_DOCS"/>
+            </not>
+        </preConditions>
+
+        <createTable schemaName="REPOSITORY" tableName="TYPE_DOCS">
 
             <column name="TYPE_DOCS_ID" type="INT" defaultValueSequenceNext="TYPE_DOCS_SEQ">
                 <constraints primaryKey="true" primaryKeyName="TYPE_DOCS_PK"/>

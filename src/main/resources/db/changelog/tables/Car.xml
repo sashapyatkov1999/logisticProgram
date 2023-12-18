@@ -16,6 +16,12 @@
 
     <changeSet id="CAR_002" author="pyatkov_aa">
 
+        <preConditions>
+            <not>
+                <tableExists schemaName="REPOSITORY" tableName="CAR"/>
+            </not>
+        </preConditions>
+
         <createTable schemaName="REPOSITORY" tableName="CAR">
 
             <column name="CAR_ID" type="INT" defaultValueSequenceNext="CAR_SEQ">

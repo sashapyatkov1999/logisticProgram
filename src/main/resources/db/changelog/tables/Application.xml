@@ -16,6 +16,12 @@
 
     <changeSet id="APPLICATION_002" author="pyatkov_aa">
 
+        <preConditions>
+            <not>
+                <tableExists schemaName="REPOSITORY" tableName="APPLICATION"/>
+            </not>
+        </preConditions>
+
         <createTable schemaName="REPOSITORY" tableName="APPLICATION">
 
             <column name="APPLICATION_ID" type="INT" defaultValueSequenceNext="APPLICATION_SEQ">

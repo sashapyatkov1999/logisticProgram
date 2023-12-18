@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="LIST_DOCS_001" author="pyatkov_aa">
+
+        <preConditions>
+            <not>
+                <foreignKeyConstraintExists foreignKeyName="FK-LIST_DOCS-TYPE_DOCS"/>
+            </not>
+
+        </preConditions>
+
+
+        <addForeignKeyConstraint
+                baseTableName="LIST_DOCS" baseColumnNames="TYPE_DOCS_ID"
+                constraintName="FK-LIST_DOCS-TYPE_DOCS"  onUpdate="RESTRICT" onDelete="RESTRICT"
+                referencedTableName="TYPE_DOCS" referencedColumnNames="TYPE_DOCS_ID" />
+
+
+    </changeSet>
+    <changeSet id="LIST_DOCS_002" author="pyatkov_aa">
+
+        <preConditions>
+            <not>
+                <foreignKeyConstraintExists foreignKeyName="FK-LIST_DOCS-APPLICATION"/>
+            </not>
+
+        </preConditions>
+
+        <addForeignKeyConstraint
+                baseTableName="LIST_DOCS" baseColumnNames="APPLICATION_ID"
+                constraintName="FK-LIST_DOCS-APPLICATION"  onUpdate="RESTRICT" onDelete="RESTRICT"
+                referencedTableName="APPLICATION" referencedColumnNames="APPLICATION_ID" />
+
+
+    </changeSet>
+</databaseChangeLog>

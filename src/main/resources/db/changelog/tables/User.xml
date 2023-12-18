@@ -17,6 +17,12 @@
 
     <changeSet id="USER_002" author="pyatkov_aa">
 
+        <preConditions>
+            <not>
+                <tableExists schemaName="REPOSITORY" tableName="USERS"/>
+            </not>
+        </preConditions>
+
         <createTable schemaName="REPOSITORY" tableName="USERS">
             
             <column name="USER_ID" type="INT" defaultValueSequenceNext="USER_SEQ">
