@@ -15,7 +15,7 @@
 
 
         <addForeignKeyConstraint
-                baseTableName="APPLICATION_CLIENT" baseColumnNames="USER_ID"
+                baseTableName="APPLICATION_CLIENT" baseColumnNames="CLIENT_ID"
                 constraintName="FK-APPLICATION_CLIENT-USERS"  onUpdate="RESTRICT" onDelete="RESTRICT"
                 referencedTableName="USERS" referencedColumnNames="USER_ID" />
 

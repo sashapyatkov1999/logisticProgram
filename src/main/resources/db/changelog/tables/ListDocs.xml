@@ -22,6 +22,8 @@
             </not>
         </preConditions>
 
+
+
         <createTable schemaName="REPOSITORY" tableName="LIST_DOCS">
 
             <column name="LIST_DOCS_ID" type="INT" defaultValueSequenceNext="LIST_DOCS_SEQ">
@@ -29,6 +31,10 @@
             </column>
 
             <column name="POINT_ID" type="INT">
+                <constraints  nullable="false"/>
+            </column>
+
+            <column name="APPLICATION_ID" type="INT">
                 <constraints  nullable="false"/>
             </column>
 

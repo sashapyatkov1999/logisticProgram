@@ -14,7 +14,7 @@
         </preConditions>
 
         <addForeignKeyConstraint
-                baseTableName="APPLICATION" baseColumnNames="USER_ID"
+                baseTableName="APPLICATION" baseColumnNames="MANAGER_ID"
                 constraintName="FK-APPLICATION-USERS"  onUpdate="RESTRICT" onDelete="RESTRICT"
                 referencedTableName="USERS" referencedColumnNames="USER_ID" />
 

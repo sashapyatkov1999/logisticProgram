@@ -22,7 +22,7 @@
             </not>
         </preConditions>
 
-        <createTable schemaName="REPOSITORY" tableName="USERS_ROLE">
+        <createTable schemaName="REPOSITORY" tableName="USER_ROLE">
 
             <column name="USER_ROLE_ID" type="INT" defaultValueSequenceNext="USER_ROLE_SEQ">
                 <constraints primaryKey="true" primaryKeyName="USER_ROLE_PK"/>
