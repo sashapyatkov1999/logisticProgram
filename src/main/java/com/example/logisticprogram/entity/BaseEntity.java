@@ -30,7 +30,7 @@ import static org.hibernate.id.enhanced.SequenceStyleGenerator.CONFIG_SEQUENCE_P
 @Accessors(chain = true)
 @NoArgsConstructor
 @MappedSuperclass
-public abstract class BaseEntity implements Serializable {
+public abstract class  BaseEntity implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;
