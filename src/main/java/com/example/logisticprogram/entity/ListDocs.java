@@ -8,6 +8,7 @@ import lombok.ToString;
 import lombok.experimental.Accessors;
 
 import java.io.Serial;
+import java.time.LocalDateTime;
 
 @Entity(name = "LIST_DOCS")
 @Data
@@ -26,5 +27,31 @@ public class ListDocs extends BaseEntity{
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "TYPE_DOCS_ID")
-    TypeDocs typeDocses;
+    TypeDoc typeDoc;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "POINT_ID")
+    Point point;
+
+    public ListDocs(Long id) {
+        this.id = id;
+    }
+
+    @Override
+    public ListDocs setId(Long id) {
+        this.id = id;
+        return this;
+    }
+
+    @Override
+    public ListDocs setCreated(LocalDateTime created) {
+        this.created = created;
+        return this;
+    }
+
+    @Override
+    public ListDocs setModified(LocalDateTime modified) {
+        this.modified = modified;
+        return this;
+    }
 }

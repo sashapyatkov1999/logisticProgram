@@ -1,6 +1,11 @@
 package com.example.logisticprogram.entity;
 
-import jakarta.persistence.*;
+import jakarta.persistence.AttributeOverride;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -9,24 +14,26 @@ import lombok.experimental.Accessors;
 
 import java.io.Serial;
 import java.time.LocalDateTime;
-import java.util.Collections;
-import java.util.List;
 
 @Entity(name = "APPLICATION")
 @Accessors(chain = true)
-@EqualsAndHashCode(onlyExplicitlyIncluded = true,callSuper = true)
-@ToString(onlyExplicitlyIncluded = true,callSuper = true)
+@EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = true)
+@ToString(onlyExplicitlyIncluded = true, callSuper = true)
 @Data
 @NoArgsConstructor
 @AttributeOverride(name = "id", column = @Column(name = "APPLICATION_ID"))
-public class Application extends EntityWithName{
+public class Application extends EntityWithName {
 
     @Serial
     private static final long serialVersionUID = 1L;
-
+    /*
+        @ManyToOne(fetch = FetchType.LAZY)
+        @JoinColumn(name = "USER_ID")
+        User client;
+    */
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "APPLICATION_CLIENT_ID")
-    ApplicationClient applicationClient;
+    @JoinColumn(name = "MANAGER_ID")
+    User manager;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "DRIVER_ID")

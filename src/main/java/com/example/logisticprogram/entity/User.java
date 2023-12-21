@@ -9,8 +9,6 @@ import lombok.experimental.Accessors;
 
 import java.io.Serial;
 import java.time.LocalDateTime;
-import java.util.Collections;
-import java.util.List;
 
 @Entity(name = "USERS")
 @Data
@@ -19,53 +17,21 @@ import java.util.List;
 @ToString(onlyExplicitlyIncluded = true, callSuper = true)
 @EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = true)
 @AttributeOverride(name = "id", column = @Column(name = "USERS"))
-public class Users extends  EntityWithName {
+public class User extends  BaseEntity {
     @Serial
     private static final long serialVersionUID = 1L;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "users")
-    List<Users> userses = Collections.emptyList();
-
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "FILE_ID")
-    File file;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "USER_ROLE_ID")
-    Role role;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "APPLICATION_ID")
-    Application application;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "DRIVER_ID")
-    Driver driver;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "APPLICATION_CLIENT_ID")
-    ApplicationClient applicationClient;
-
-
-    public Users(Long id) {
-        this.id = id;
-    }
-
-    @Override
-    public Users setId(Long id) {
-        this.id = id;
-        return this;
-    }
-
-    @Override
-    public Users setCreated(LocalDateTime created) {
-        this.created = created;
-        return this;
-    }
+    @JoinColumn(name = "USER_STATUS_ID")
+    UserStatus status;
 
     @ToString.Include
     @Column(name = "SURNAME", nullable = false, updatable = false)
     protected String surname;
+
+    @ToString.Include
+    @Column(name = "NAME")
+    protected String name;
 
     @ToString.Include
     @Column(name = "PASSWORD", nullable = false, updatable = false)
@@ -83,15 +49,30 @@ public class Users extends  EntityWithName {
     @Column(name = "PHONE_NUMBER", nullable = false, updatable = false)
     protected Long phoneNumber;
 
+
+    public User(Long id) {
+        this.id = id;
+    }
+
     @Override
-    public Users setModified(LocalDateTime modified) {
-        this.modified = modified;
+    public User setId(Long id) {
+        this.id = id;
         return this;
     }
 
     @Override
-    public Users setName(String name) {
-        this.name = name;
+    public User setCreated(LocalDateTime created) {
+        this.created = created;
         return this;
     }
+
+
+
+    @Override
+    public User setModified(LocalDateTime modified) {
+        this.modified = modified;
+        return this;
+    }
+
+
 }

@@ -9,8 +9,6 @@ import lombok.experimental.Accessors;
 
 import java.io.Serial;
 import java.time.LocalDateTime;
-import java.util.Collections;
-import java.util.List;
 
 @Entity(name = "TYPE_DOCS")
 @Data
@@ -19,45 +17,41 @@ import java.util.List;
 @ToString(onlyExplicitlyIncluded = true, callSuper = true)
 @EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = true)
 @AttributeOverride(name = "id", column = @Column(name = "TYPE_DOCS_ID"))
-public class TypeDocs extends EntityWithName {
+public class TypeDoc extends EntityWithName {
 
     @Serial
     private static final long serialVersionUID = 1L;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "typeDocses")
-    List<TypeDocs> typeDocs = Collections.emptyList();
-
-
-    public TypeDocs(Long id) {
+    public TypeDoc(Long id) {
         this.id = id;
     }
 
     @Override
-    public TypeDocs setId(Long id) {
+    public TypeDoc setId(Long id) {
         this.id = id;
         return this;
     }
 
     @Override
-    public TypeDocs setCreated(LocalDateTime created) {
+    public TypeDoc setCreated(LocalDateTime created) {
         this.created = created;
         return this;
     }
 
     @Override
-    public TypeDocs setModified(LocalDateTime modified) {
+    public TypeDoc setModified(LocalDateTime modified) {
         this.modified = modified;
         return this;
     }
 
     @Override
-    public TypeDocs setName(String name) {
+    public TypeDoc setName(String name) {
         this.name = name;
         return this;
     }
 
     @Override
-    public TypeDocs setDescription(String description) {
+    public TypeDoc setDescription(String description) {
         this.description = description;
         return this;
     }

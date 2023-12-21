@@ -1,6 +1,8 @@
 package com.example.logisticprogram.entity;
 
-import jakarta.persistence.*;
+import jakarta.persistence.AttributeOverride;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -9,8 +11,6 @@ import lombok.experimental.Accessors;
 
 import java.io.Serial;
 import java.time.LocalDateTime;
-import java.util.Collections;
-import java.util.List;
 
 @Entity(name = "USER_STATUS")
 @Data
@@ -20,14 +20,10 @@ import java.util.List;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = true)
 @AttributeOverride(name = "id", column = @Column(name = "USER_STATUS_ID"))
 
-public class UserStatus extends EntityWithName{
+public class UserStatus extends EntityWithName {
 
     @Serial
     private static final long serialVersionUID = 1L;
-
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "usersStatus")
-    List<UserStatus> userStatuses = Collections.emptyList();
-
 
     public UserStatus(Long id) {
         this.id = id;

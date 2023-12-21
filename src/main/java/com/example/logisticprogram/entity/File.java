@@ -1,6 +1,11 @@
 package com.example.logisticprogram.entity;
 
-import jakarta.persistence.*;
+import jakarta.persistence.AttributeOverride;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -9,26 +14,32 @@ import lombok.experimental.Accessors;
 
 import java.io.Serial;
 import java.time.LocalDateTime;
-import java.util.Collections;
-import java.util.List;
 
 @Entity(name = "FILE")
 @Accessors(chain = true)
-@EqualsAndHashCode(onlyExplicitlyIncluded = true,callSuper = true)
-@ToString(onlyExplicitlyIncluded = true,callSuper = true)
+@EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = true)
+@ToString(onlyExplicitlyIncluded = true, callSuper = true)
 @Data
 @NoArgsConstructor
 @AttributeOverride(name = "id", column = @Column(name = "FILE_ID"))
-public class File extends EntityWithName{
+public class File extends EntityWithName {
 
     @Serial
     private static final long serialVersionUID = 1L;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "file")
-    List<File> files = Collections.emptyList();
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "point")
-    List<File> filesToPoint = Collections.emptyList();
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "APPLICATION_ID")
+    Application application;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "USER_ID")
+    User user;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "POINT_ID")
+    Point point;
+
     public File(Long id) {
         this.id = id;
     }

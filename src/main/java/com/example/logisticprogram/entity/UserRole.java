@@ -15,6 +15,7 @@ import lombok.experimental.Accessors;
 import lombok.experimental.FieldDefaults;
 
 import java.io.Serial;
+import java.time.LocalDateTime;
 
 @Entity(name = "USER_ROLE")
 @Data
@@ -35,7 +36,29 @@ public class UserRole extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "USERS_ID")
-    Users users;
+    User user;
+
+    public UserRole(Long id) {
+        this.id = id;
+    }
+
+    @Override
+    public UserRole setId(Long id) {
+        this.id = id;
+        return this;
+    }
+
+    @Override
+    public UserRole setCreated(LocalDateTime created) {
+        this.created = created;
+        return this;
+    }
 
 
+
+    @Override
+    public UserRole setModified(LocalDateTime modified) {
+        this.modified = modified;
+        return this;
+    }
 }

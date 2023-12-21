@@ -8,6 +8,8 @@ import lombok.ToString;
 import lombok.experimental.Accessors;
 
 import java.io.Serial;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity(name = "DRIVER")
 @Data
@@ -22,27 +24,56 @@ public class Driver extends BaseEntity {
     private static final long serialVersionUID = 1L;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "DRIVER_SRATUS_ID")
+    @JoinColumn(name = "DRIVER_STATUS_ID")
     DriverStatus driverStatus;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "CAR_ID")
     Car car;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "USER_ID")
+    User user;
+
     @ToString.Include
     @Column(name = "PASSPORT_NUMBER", nullable = false, updatable = false)
-    protected Integer passportNumber; // надо логику проделать типа (#### #####)
+    private String passportNumber;
 
     @ToString.Include
     @Column(name = "PASSPORT_DATE", nullable = false, updatable = false)
-    protected Integer passportDate; // ##.##.####
+    private LocalDate passportDate;
 
     @ToString.Include
-    @Column(name = "PASSPORT_REGISTRATION", nullable = false, updatable = false)
-    protected String passportRegistration;
+    @Column(name = "REGISTRATION", nullable = false, updatable = false)
+    private String passportRegistration;
 
     @ToString.Include
     @Column(name = "DRIVER_LICENSE", nullable = false)
-    protected String driverLicense;
+    private String driverLicense;
+
+
+    public Driver(Long id) {
+        this.id = id;
+    }
+
+    @Override
+    public Driver setId(Long id) {
+        this.id = id;
+        return this;
+    }
+
+    @Override
+    public Driver setCreated(LocalDateTime created) {
+        this.created = created;
+        return this;
+    }
+
+
+
+    @Override
+    public Driver setModified(LocalDateTime modified) {
+        this.modified = modified;
+        return this;
+    }
 
 }
