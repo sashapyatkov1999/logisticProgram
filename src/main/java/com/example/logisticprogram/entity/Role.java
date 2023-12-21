@@ -33,7 +33,7 @@ public class Role extends EntityWithName {
     private static final long serialVersionUID = 1L;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "role")
-    List<Role> userRoles = Collections.emptyList();
+    private List<UserRole> userRoles = Collections.emptyList();
 
 
     public Role(Long id) {

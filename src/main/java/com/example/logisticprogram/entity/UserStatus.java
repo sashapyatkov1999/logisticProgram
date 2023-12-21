@@ -3,62 +3,59 @@ package com.example.logisticprogram.entity;
 import jakarta.persistence.AttributeOverride;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import lombok.AccessLevel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import lombok.experimental.Accessors;
-import lombok.experimental.FieldDefaults;
 
 import java.io.Serial;
 import java.time.LocalDateTime;
 
-@Entity(name = "USER_ROLE")
+@Entity(name = "USER_STATUS")
 @Data
 @Accessors(chain = true)
 @NoArgsConstructor
 @ToString(onlyExplicitlyIncluded = true, callSuper = true)
 @EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = true)
-@AttributeOverride(name = "id", column = @Column(name = "USER_ROLE_ID"))
-@FieldDefaults(level = AccessLevel.PRIVATE)
-public class UserRole extends BaseEntity {
+@AttributeOverride(name = "id", column = @Column(name = "USER_STATUS_ID"))
+
+public class UserStatus extends EntityWithName {
 
     @Serial
     private static final long serialVersionUID = 1L;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "ROLE_ID")
-    Role role;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "USERS_ID")
-    User user;
-
-    public UserRole(Long id) {
+    public UserStatus(Long id) {
         this.id = id;
     }
 
     @Override
-    public UserRole setId(Long id) {
+    public UserStatus setId(Long id) {
         this.id = id;
         return this;
     }
 
     @Override
-    public UserRole setCreated(LocalDateTime created) {
+    public UserStatus setCreated(LocalDateTime created) {
         this.created = created;
         return this;
     }
 
-
+    @Override
+    public UserStatus setModified(LocalDateTime modified) {
+        this.modified = modified;
+        return this;
+    }
 
     @Override
-    public UserRole setModified(LocalDateTime modified) {
-        this.modified = modified;
+    public UserStatus setName(String name) {
+        this.name = name;
+        return this;
+    }
+
+    @Override
+    public UserStatus setDescription(String description) {
+        this.description = description;
         return this;
     }
 }
