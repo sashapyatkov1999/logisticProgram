@@ -27,20 +27,9 @@ public class CarDomainService {
 
     @Transactional
     public List<CarResponse> getAllCars() {
-        return carResponseMapper.from(carRepository.findAll());//сейчас не разберу в чем ошибка
+        return carResponseMapper.from(carRepository.findAll());
 
     }
-    //@Transactional
-    //public List<CarResponse> getAllCars() {
-    //    List<Car> cars = carRepository.findAll();
-    //    List<CarResponse> carResponses = new ArrayList<>();
-    //
-    //    for (Car car : cars) {
-    //        carResponses.add(carResponseMapper.from(car));
-    //    }
-    //
-    //    return carResponses;
-    //}
 
     @Transactional
     public void deleteCar(Long id) {
