@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="TYPE_DOC-001" author="pyatkov_aa">
+
+        <preConditions>
+            <tableIsEmpty schemaName="REPOSITORY" tableName="TYPE_DOC"/>
+        </preConditions>
+
+
+        <insert schemaName="REPOSITORY" tableName="TYPE_DOC">
+            <column name="NAME" value="ENABLE"/>
+            <column name="DESCRIPTION" value="ТОВАРНАЯ НАКЛАДНАЯ"/>
+        </insert>
+
+
+        <insert schemaName="REPOSITORY" tableName="TYPE_DOC">
+            <column name="NAME" value="ENABLE"/>
+            <column name="DESCRIPTION" value="ТОВАРО-ТРАНСПОРТНАЯ НАКЛАДНАЯ"/>
+        </insert>
+
+        <insert schemaName="REPOSITORY" tableName="TYPE_DOC">
+            <column name="NAME" value="ENABLE"/>
+            <column name="DESCRIPTION" value="ТРАНСПОРТНАЯ НАКЛАДНАЯ"/>
+        </insert>
+
+        <insert schemaName="REPOSITORY" tableName="TYPE_DOC">
+            <column name="NAME" value="ENABLE"/>
+            <column name="DESCRIPTION" value="СЧЕТ-ФАКТУРА"/>
+        </insert>
+
+        <insert schemaName="REPOSITORY" tableName="TYPE_DOC">
+            <column name="NAME" value="ENABLE"/>
+            <column name="DESCRIPTION" value="УПД"/>
+        </insert>
+
+    </changeSet>
+</databaseChangeLog>
