@@ -35,7 +35,7 @@
         <column name="DESCRIPTION" type="VARCHAR(50)">
         </column>
 
-        <column name="CREATED_AT" type="TIMESTAMP" defaultValue="CURRENT_TIMESTAMP()">
+        <column name="CREATED" type="TIMESTAMP" defaultValue="CURRENT_TIMESTAMP()">
             <constraints  nullable="false"/>
         </column>
 

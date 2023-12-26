@@ -4,30 +4,30 @@
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
                    https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
 
-    <changeSet id="LIST_DOCS_001" author="pyatkov_aa">
+    <changeSet id="LIST_DOC_001" author="pyatkov_aa">
 
         <preConditions>
             <not>
-                <sequenceExists sequenceName="LIST_DOCS_SEQ"/>
+                <sequenceExists sequenceName="LIST_DOC_SEQ"/>
             </not>
         </preConditions>
-        <createSequence sequenceName="LIST_DOCS_SEQ" startValue="0"/>
+        <createSequence sequenceName="LIST_DOC_SEQ" startValue="0"/>
     </changeSet>
 
-    <changeSet id="LIST_DOCS_002" author="pyatkov_aa">
+    <changeSet id="LIST_DOC_002" author="pyatkov_aa">
 
         <preConditions>
             <not>
-                <tableExists schemaName="REPOSITORY" tableName="LIST_DOCS"/>
+                <tableExists schemaName="REPOSITORY" tableName="LIST_DOC"/>
             </not>
         </preConditions>
 
 
 
-        <createTable schemaName="REPOSITORY" tableName="LIST_DOCS">
+        <createTable schemaName="REPOSITORY" tableName="LIST_DOC">
 
-            <column name="LIST_DOCS_ID" type="INT" defaultValueSequenceNext="LIST_DOCS_SEQ">
-                <constraints primaryKey="true" primaryKeyName="LIST_DOCS_PK"/>
+            <column name="LIST_DOC_ID" type="INT" defaultValueSequenceNext="LIST_DOC_SEQ">
+                <constraints primaryKey="true" primaryKeyName="LIST_DOC_PK"/>
             </column>
 
             <column name="POINT_ID" type="INT">
@@ -38,11 +38,11 @@
                 <constraints  nullable="false"/>
             </column>
 
-            <column name="TYPE_DOCS_ID" type="INT">
+            <column name="TYPE_DOC_ID" type="INT">
                 <constraints  nullable="false"/>
             </column>
 
-            <column name="CREATED_AT" type="TIMESTAMP" defaultValue="CURRENT_TIMESTAMP()">
+            <column name="CREATED" type="TIMESTAMP" defaultValue="CURRENT_TIMESTAMP()">
                 <constraints  nullable="false"/>
             </column>
 

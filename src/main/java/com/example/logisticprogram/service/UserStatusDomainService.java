@@ -1,10 +1,7 @@
 package com.example.logisticprogram.service;
 
-import com.example.logisticprogram.dto.request.role.RoleAddRequest;
 import com.example.logisticprogram.dto.request.userstatus.UserStatusAddRequest;
-import com.example.logisticprogram.dto.response.role.RoleResponse;
 import com.example.logisticprogram.dto.response.userstatus.UserStatusResponse;
-import com.example.logisticprogram.entity.UserStatus;
 import com.example.logisticprogram.mapper.userstatus.UserStatusMapper;
 import com.example.logisticprogram.mapper.userstatus.UserStatusResponseMapper;
 import com.example.logisticprogram.repository.UserStatusRepository;

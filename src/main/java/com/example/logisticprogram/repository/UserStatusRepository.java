@@ -7,9 +7,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface UserStatusRepository extends JpaRepository<UserStatus, Long> {
 
-    UserStatus findUserStatusById(String id);
-    UserStatus getAllById(String id);
-
-
+    UserStatus findUserStatusByName(String name);
+    UserStatus getAllById(Long id);
 
 }

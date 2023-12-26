@@ -10,13 +10,13 @@ import lombok.experimental.Accessors;
 import java.io.Serial;
 import java.time.LocalDateTime;
 
-@Entity(name = "TYPE_DOCS")
+@Entity(name = "TYPE_DOC")
 @Data
 @Accessors(chain = true)
 @NoArgsConstructor
 @ToString(onlyExplicitlyIncluded = true, callSuper = true)
 @EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = true)
-@AttributeOverride(name = "id", column = @Column(name = "TYPE_DOCS_ID"))
+@AttributeOverride(name = "id", column = @Column(name = "TYPE_DOC_ID"))
 public class TypeDoc extends EntityWithName {
 
     @Serial
