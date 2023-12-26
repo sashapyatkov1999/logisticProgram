@@ -4,35 +4,35 @@
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
                    https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
 
-    <changeSet id="LIST_DOCS_001" author="pyatkov_aa">
+    <changeSet id="LIST_DOC_001" author="pyatkov_aa">
 
         <preConditions>
             <not>
-                <foreignKeyConstraintExists foreignKeyName="FK-LIST_DOCS-TYPE_DOCS"/>
+                <foreignKeyConstraintExists foreignKeyName="FK-LIST_DOC-TYPE_DOC"/>
             </not>
 
         </preConditions>
 
 
         <addForeignKeyConstraint
-                baseTableName="LIST_DOCS" baseColumnNames="TYPE_DOCS_ID"
-                constraintName="FK-LIST_DOCS-TYPE_DOCS"  onUpdate="RESTRICT" onDelete="RESTRICT"
-                referencedTableName="TYPE_DOCS" referencedColumnNames="TYPE_DOCS_ID" />
+                baseTableName="LIST_DOC" baseColumnNames="TYPE_DOC_ID"
+                constraintName="FK-LIST_DOC-TYPE_DOC"  onUpdate="RESTRICT" onDelete="RESTRICT"
+                referencedTableName="TYPE_DOC" referencedColumnNames="TYPE_DOC_ID" />
 
 
     </changeSet>
-    <changeSet id="LIST_DOCS_002" author="pyatkov_aa">
+    <changeSet id="LIST_DOC_002" author="pyatkov_aa">
 
         <preConditions>
             <not>
-                <foreignKeyConstraintExists foreignKeyName="FK-LIST_DOCS-APPLICATION"/>
+                <foreignKeyConstraintExists foreignKeyName="FK-LIST_DOC-APPLICATION"/>
             </not>
 
         </preConditions>
 
         <addForeignKeyConstraint
-                baseTableName="LIST_DOCS" baseColumnNames="APPLICATION_ID"
-                constraintName="FK-LIST_DOCS-APPLICATION"  onUpdate="RESTRICT" onDelete="RESTRICT"
+                baseTableName="LIST_DOC" baseColumnNames="APPLICATION_ID"
+                constraintName="FK-LIST_DOC-APPLICATION"  onUpdate="RESTRICT" onDelete="RESTRICT"
                 referencedTableName="APPLICATION" referencedColumnNames="APPLICATION_ID" />
 
 

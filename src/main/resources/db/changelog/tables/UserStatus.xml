@@ -8,7 +8,7 @@
 
         <preConditions>
             <not>
-                <sequenceExists sequenceName="USER_STATUS_SEQ"/>
+                <sequenceExists sequenceName="USER_STATUS_S+EQ"/>
             </not>
         </preConditions>
         <createSequence sequenceName="USER_STATUS_SEQ" startValue="0"/>
@@ -36,7 +36,7 @@
                 <constraints  nullable="false"/>
             </column>
 
-            <column name="CREATED_AT" type="TIMESTAMP" defaultValue="CURRENT_TIMESTAMP()">
+            <column name="CREATED" type="TIMESTAMP" defaultValue="CURRENT_TIMESTAMP()">
                 <constraints  nullable="false"/>
             </column>
 

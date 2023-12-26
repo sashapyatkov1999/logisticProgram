@@ -40,8 +40,8 @@ public class Application extends EntityWithName {
     Driver driver;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "LIST_DOCS_ID")
-    ListDocs listDocs;
+    @JoinColumn(name = "LIST_DOC_ID")
+    ListDoc listDocs;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "POINT_ID")
