@@ -7,10 +7,6 @@ import lombok.experimental.Accessors;
 @Data
 @Accessors(chain = true)
 @NoArgsConstructor
-public class RoleAddRequest {
-
+public class RoleRequest {
     private Long id;
-    private String name;
-    private String description;
-
 }
