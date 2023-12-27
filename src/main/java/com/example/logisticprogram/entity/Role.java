@@ -1,10 +1,8 @@
 package com.example.logisticprogram.entity;
 
 import jakarta.persistence.AttributeOverride;
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.OneToMany;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -15,8 +13,6 @@ import lombok.experimental.FieldDefaults;
 
 import java.io.Serial;
 import java.time.LocalDateTime;
-import java.util.Collections;
-import java.util.List;
 
 @Entity(name = "ROLE")
 @Data
@@ -32,18 +28,19 @@ public class Role extends EntityWithName {
     @Serial
     private static final long serialVersionUID = 1L;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "role")
-    private List<UserRole> userRoles = Collections.emptyList();
+    /*
+        @OneToMany(cascade = CascadeType.ALL, mappedBy = "role")
+        private List<UserRole> userRoles = Collections.emptyList();
 
-
+    */
     public Role(Long id) {
         this.id = id;
     }
 
     @Override
     public Role setId(Long id) {
-       this.id = id;
-       return this;
+        this.id = id;
+        return this;
     }
 
     @Override
