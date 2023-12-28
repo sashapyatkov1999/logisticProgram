@@ -1,18 +1,15 @@
-package com.example.logisticprogram.dto.request.file;
+package com.example.logisticprogram.dto.request.application_client;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
-import java.time.LocalDateTime;
-
 @Data
 @Accessors(chain = true)
 @NoArgsConstructor
-public class FileAddRequest {
-    private Long pointId;
+public class ApplicationClientAddRequest {
     private Long applicationId;
-    private Long userId;
-    private String name;
+    private Long clientId;
     private String description;
+
 }

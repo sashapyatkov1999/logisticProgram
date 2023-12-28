@@ -10,8 +10,9 @@ import java.time.LocalDateTime;
 @Accessors(chain = true)
 @NoArgsConstructor
 public class UserAddRequest {
+    private Long userStatusId;
     private String name;
     private String surname;
-    //private String eMail; не уверен , т.к почта должна делать запрос, а водителю эта инфа не нужна
+    private String eMail;
     private String phoneNumber;
 }

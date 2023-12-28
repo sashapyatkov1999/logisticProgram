@@ -26,11 +26,7 @@ public class Application extends EntityWithName {
 
     @Serial
     private static final long serialVersionUID = 1L;
-    /*
-        @ManyToOne(fetch = FetchType.LAZY)
-        @JoinColumn(name = "USER_ID")
-        User client;
-    */
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "MANAGER_ID")
     User manager;

@@ -12,23 +12,23 @@
 
 
         <insert schemaName="REPOSITORY" tableName="DRIVER_STATUS">
-            <column name="NAME" value="ENABLE"/>
+            <column name="NAME" value="SOON_ON_LOADING"/>
             <column name="DESCRIPTION" value="Через час буду на погрузке/выгрузке"/>
         </insert>
 
 
         <insert schemaName="REPOSITORY" tableName="DRIVER_STATUS">
-            <column name="NAME" value="ENABLE"/>
+            <column name="NAME" value="LOADING"/>
             <column name="DESCRIPTION" value="На погрузке/выгрузке"/>
         </insert>
 
         <insert schemaName="REPOSITORY" tableName="DRIVER_STATUS">
-            <column name="NAME" value="ENABLE"/>
+            <column name="NAME" value="UNLOADING"/>
             <column name="DESCRIPTION" value="загрузили/выгрузили"/>
         </insert>
 
         <insert schemaName="REPOSITORY" tableName="DRIVER_STATUS">
-            <column name="NAME" value="ENABLE"/>
+            <column name="NAME" value="WAIT_DOCS"/>
             <column name="DESCRIPTION" value="Жду документы"/>
         </insert>
 
