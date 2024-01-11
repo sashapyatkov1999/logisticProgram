@@ -1,4 +1,4 @@
-package com.example.logisticprogram.service;
+package com.example.logisticprogram.service.domain;
 
 import com.example.logisticprogram.dto.request.role.RoleAddRequest;
 import com.example.logisticprogram.dto.response.role.RoleResponse;
