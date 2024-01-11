@@ -8,6 +8,7 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 @NoArgsConstructor
 public class TypeDocAddRequest {
+    private Long id;
     private String name;
     private String description;
 }
