@@ -3,6 +3,7 @@ package com.example.logisticprogram.service;
 import com.example.logisticprogram.dto.request.role.RoleAddRequest;
 import com.example.logisticprogram.dto.response.role.RoleResponse;
 import com.example.logisticprogram.mapper.role.RoleMapper;
+import com.example.logisticprogram.mapper.role.RoleMerger;
 import com.example.logisticprogram.mapper.role.RoleResponseMapper;
 import com.example.logisticprogram.repository.RoleRepository;
 import jakarta.transaction.Transactional;
@@ -18,10 +19,10 @@ public class RoleDomainService {
     private final RoleRepository repository;
     private final RoleResponseMapper roleResponseMapper;
     private final RoleMapper roleMapper;
+    private final RoleMerger roleMerger;
 
-    @Transactional
     public RoleResponse getRole(Long id) {
-        return roleResponseMapper.from(repository.getReferenceById(id));
+        return roleResponseMapper.from(repository.findById(id).orElseThrow(() -> new RuntimeException("Роль не найдена!")));
     }
 
 
@@ -41,5 +42,12 @@ public class RoleDomainService {
         return repository.save(roleMapper.from(request)).getId();
     }
 
+
+    @Transactional
+    public Long editRole(RoleAddRequest request) {
+        var role = repository.getReferenceById(request.getId());
+        return repository.save(roleMerger.merge(role, request)).getId();
+
+    }
 
 }
