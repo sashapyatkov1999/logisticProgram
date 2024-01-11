@@ -32,6 +32,10 @@ public class Application extends EntityWithName {
     User manager;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "CLIENT_ID")
+    User client;
+
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "DRIVER_ID")
     Driver driver;
 

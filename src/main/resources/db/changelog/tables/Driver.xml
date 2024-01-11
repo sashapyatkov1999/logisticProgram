@@ -32,7 +32,7 @@
                 <constraints unique="true" nullable="false"/>
             </column>
 
-            <column name="PASSPORT_DATE" type="VARCHAR(10)">
+            <column name="PASSPORT_DATE" type="DATE">
                 <constraints  nullable="false"/>
             </column>
 

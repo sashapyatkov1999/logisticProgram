@@ -36,4 +36,22 @@
 
 
     </changeSet>
+
+
+    <changeSet id="APPLICATION_003" author="pyatkov_aa">
+
+        <preConditions>
+            <not>
+                <foreignKeyConstraintExists foreignKeyName="FK-APPLICATION-CLIENT"/>
+            </not>
+
+        </preConditions>
+
+        <addForeignKeyConstraint
+                baseTableName="APPLICATION" baseColumnNames="CLIENT_ID"
+                constraintName="FK-APPLICATION-CLIENT"  onUpdate="RESTRICT" onDelete="RESTRICT"
+                referencedTableName="USERS" referencedColumnNames="USER_ID" />
+
+
+    </changeSet>
 </databaseChangeLog>

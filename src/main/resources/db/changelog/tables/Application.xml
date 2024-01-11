@@ -36,6 +36,10 @@
                 <constraints  nullable="false"/>
             </column>
 
+            <column name="CLIENT_ID" type="INT">
+                <constraints  nullable="false"/>
+            </column>
+
             <column name="DESCRIPTION" type="VARCHAR(50)">
                 <constraints  nullable="false"/>
             </column>
