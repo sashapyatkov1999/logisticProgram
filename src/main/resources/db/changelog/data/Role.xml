@@ -12,23 +12,23 @@
 
 
         <insert schemaName="REPOSITORY" tableName="ROLE">
-            <column name="NAME" value="ENABLE"/>
+            <column name="NAME" value="MANAGER"/>
             <column name="DESCRIPTION" value="Менеджер"/>
         </insert>
 
 
         <insert schemaName="REPOSITORY" tableName="ROLE">
-            <column name="NAME" value="ENABLE"/>
+            <column name="NAME" value="CLIENT"/>
             <column name="DESCRIPTION" value="Клиент"/>
         </insert>
 
         <insert schemaName="REPOSITORY" tableName="ROLE">
-            <column name="NAME" value="ENABLE"/>
+            <column name="NAME" value="DRIVER"/>
             <column name="DESCRIPTION" value="Водитель"/>
         </insert>
 
         <insert schemaName="REPOSITORY" tableName="ROLE">
-            <column name="NAME" value="ENABLE"/>
+            <column name="NAME" value="ADMIN"/>
             <column name="DESCRIPTION" value="Админ"/>
         </insert>
 

@@ -8,7 +8,7 @@
 
         <preConditions>
             <not>
-                <sequenceExists sequenceName="USER_STATUS_S+EQ"/>
+                <sequenceExists sequenceName="USER_STATUS_SEQ"/>
             </not>
         </preConditions>
         <createSequence sequenceName="USER_STATUS_SEQ" startValue="0"/>
