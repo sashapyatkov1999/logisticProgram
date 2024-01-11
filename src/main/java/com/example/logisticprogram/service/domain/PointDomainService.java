@@ -1,8 +1,6 @@
-package com.example.logisticprogram.service;
+package com.example.logisticprogram.service.domain;
 
-import com.example.logisticprogram.dto.request.file.FileAddRequest;
 import com.example.logisticprogram.dto.request.point.PointAddRequest;
-import com.example.logisticprogram.dto.response.file.FileResponse;
 import com.example.logisticprogram.dto.response.point.PointResponse;
 import com.example.logisticprogram.mapper.point.PointMapper;
 import com.example.logisticprogram.mapper.point.PointResponseMapper;

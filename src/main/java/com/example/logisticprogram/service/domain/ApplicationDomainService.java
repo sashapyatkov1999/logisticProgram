@@ -1,9 +1,7 @@
-package com.example.logisticprogram.service;
+package com.example.logisticprogram.service.domain;
 
 import com.example.logisticprogram.dto.request.application.ApplicationAddRequest;
-import com.example.logisticprogram.dto.request.userstatus.UserStatusAddRequest;
 import com.example.logisticprogram.dto.response.application.ApplicationResponse;
-import com.example.logisticprogram.dto.response.userstatus.UserStatusResponse;
 import com.example.logisticprogram.mapper.application.ApplicationMapper;
 import com.example.logisticprogram.mapper.application.ApplicationResponseMapper;
 import com.example.logisticprogram.repository.ApplicationRepository;

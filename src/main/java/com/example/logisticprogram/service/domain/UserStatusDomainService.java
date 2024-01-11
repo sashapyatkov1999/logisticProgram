@@ -1,4 +1,4 @@
-package com.example.logisticprogram.service;
+package com.example.logisticprogram.service.domain;
 
 import com.example.logisticprogram.dto.request.userstatus.UserStatusAddRequest;
 import com.example.logisticprogram.dto.response.userstatus.UserStatusResponse;
@@ -25,18 +25,18 @@ public class UserStatusDomainService {
 
 
     @Transactional
-    public List<UserStatusResponse> getAllUserStatus() {
+    public List<UserStatusResponse> getAllRoles() {
         return userStatusResponseMapper.from(userStatusRepository.findAll());
 
     }
 
     @Transactional
-    public void deleteUserStatus(Long id) {
+    public void deleteRole(Long id) {
         userStatusRepository.deleteById(id);
     }
 
     @Transactional
-    public Long addUserStatus(UserStatusAddRequest request) {
+    public Long addRole(UserStatusAddRequest request) {
         return userStatusRepository.save(userStatusMapper.from(request)).getId();
 
     }

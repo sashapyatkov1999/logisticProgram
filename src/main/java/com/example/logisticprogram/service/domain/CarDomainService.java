@@ -1,9 +1,7 @@
-package com.example.logisticprogram.service;
+package com.example.logisticprogram.service.domain;
 
 import com.example.logisticprogram.dto.request.car.CarAddRequest;
-import com.example.logisticprogram.dto.request.typedoc.TypeDocAddRequest;
 import com.example.logisticprogram.dto.response.car.CarResponse;
-import com.example.logisticprogram.dto.response.typedoc.TypeDocResponse;
 import com.example.logisticprogram.mapper.car.CarMapper;
 import com.example.logisticprogram.mapper.car.CarResponseMapper;
 import com.example.logisticprogram.repository.CarRepository;
