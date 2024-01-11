@@ -1,4 +1,4 @@
-package com.example.logisticprogram.mapper.listDoc;
+package com.example.logisticprogram.mapper.listdoc;
 
 import com.example.logisticprogram.dto.request.listdoc.ListDocAddRequest;
 import com.example.logisticprogram.entity.Application;
@@ -7,7 +7,6 @@ import com.example.logisticprogram.entity.Point;
 import com.example.logisticprogram.entity.TypeDoc;
 import com.example.logisticprogram.mapper.Mapper;
 import lombok.RequiredArgsConstructor;
-import org.hibernate.mapping.List;
 import org.springframework.stereotype.Service;
 
 @Service

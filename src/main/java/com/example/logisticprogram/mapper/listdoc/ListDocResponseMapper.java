@@ -1,9 +1,7 @@
-package com.example.logisticprogram.mapper.listDoc;
+package com.example.logisticprogram.mapper.listdoc;
 
 import com.example.logisticprogram.dto.response.listdoc.ListDocResponse;
-import com.example.logisticprogram.dto.response.role.RoleResponse;
 import com.example.logisticprogram.entity.ListDoc;
-import com.example.logisticprogram.entity.Point;
 import com.example.logisticprogram.mapper.Mapper;
 import com.example.logisticprogram.mapper.application.ApplicationResponseMapper;
 import com.example.logisticprogram.mapper.point.PointResponseMapper;
