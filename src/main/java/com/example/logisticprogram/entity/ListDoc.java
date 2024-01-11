@@ -10,14 +10,14 @@ import lombok.experimental.Accessors;
 import java.io.Serial;
 import java.time.LocalDateTime;
 
-@Entity(name = "LIST_DOCS")
+@Entity(name = "LIST_DOC")
 @Data
 @Accessors(chain = true)
 @NoArgsConstructor
 @ToString(onlyExplicitlyIncluded = true, callSuper = true)
 @EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = true)
-@AttributeOverride(name = "id", column = @Column(name = "LIST_DOCS_ID"))
-public class ListDocs extends BaseEntity{
+@AttributeOverride(name = "id", column = @Column(name = "LIST_DOC_ID"))
+public class ListDoc extends BaseEntity{
     @Serial
     private static final long serialVersionUID = 1L;
 
@@ -33,24 +33,24 @@ public class ListDocs extends BaseEntity{
     @JoinColumn(name = "POINT_ID")
     Point point;
 
-    public ListDocs(Long id) {
+    public ListDoc(Long id) {
         this.id = id;
     }
 
     @Override
-    public ListDocs setId(Long id) {
+    public ListDoc setId(Long id) {
         this.id = id;
         return this;
     }
 
     @Override
-    public ListDocs setCreated(LocalDateTime created) {
+    public ListDoc setCreated(LocalDateTime created) {
         this.created = created;
         return this;
     }
 
     @Override
-    public ListDocs setModified(LocalDateTime modified) {
+    public ListDoc setModified(LocalDateTime modified) {
         this.modified = modified;
         return this;
     }

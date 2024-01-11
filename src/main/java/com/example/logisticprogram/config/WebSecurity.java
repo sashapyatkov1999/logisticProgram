@@ -29,6 +29,7 @@ public class WebSecurity implements WebMvcConfigurer {
                                                       HandlerMappingIntrospector introspector) throws Exception {
         MvcRequestMatcher.Builder mvcMatcherBuilder = new MvcRequestMatcher.Builder(introspector);
 
+
         http.csrf(csrfConfigurer ->
                 csrfConfigurer.ignoringRequestMatchers(mvcMatcherBuilder.pattern(API_URL_PATTERN),
                         PathRequest.toH2Console()));

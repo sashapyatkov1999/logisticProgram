@@ -1,4 +1,4 @@
-package com.example.logisticprogram.service.domain;
+package com.example.logisticprogram.service;
 
 import com.example.logisticprogram.dto.request.role.RoleAddRequest;
 import com.example.logisticprogram.dto.response.role.RoleResponse;
@@ -21,7 +21,6 @@ public class RoleDomainService {
     private final RoleMapper roleMapper;
     private final RoleMerger roleMerger;
 
-    @Transactional
     public RoleResponse getRole(Long id) {
         return roleResponseMapper.from(repository.findById(id).orElseThrow(() -> new RuntimeException("Роль не найдена!")));
     }
@@ -42,6 +41,7 @@ public class RoleDomainService {
     public Long addRole(RoleAddRequest request) {
         return repository.save(roleMapper.from(request)).getId();
     }
+
 
     @Transactional
     public Long editRole(RoleAddRequest request) {
