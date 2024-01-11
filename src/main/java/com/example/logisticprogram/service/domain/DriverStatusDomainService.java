@@ -1,13 +1,8 @@
 package com.example.logisticprogram.service.domain;
 
-import com.example.logisticprogram.dto.request.driverstatus.DriverStatusAddRequest;
-import com.example.logisticprogram.dto.request.typedoc.TypeDocAddRequest;
 import com.example.logisticprogram.dto.response.driverstatus.DriverStatusResponse;
-import com.example.logisticprogram.dto.response.typedoc.TypeDocResponse;
-import com.example.logisticprogram.entity.DriverStatus;
 import com.example.logisticprogram.mapper.driverstatus.DriverStatusMapper;
 import com.example.logisticprogram.mapper.driverstatus.DriverStatusResponseMapper;
-import com.example.logisticprogram.repository.DriverRepository;
 import com.example.logisticprogram.repository.DriverStatusRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
