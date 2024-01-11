@@ -12,28 +12,28 @@
 
 
         <insert schemaName="REPOSITORY" tableName="TYPE_DOC">
-            <column name="NAME" value="ENABLE"/>
+            <column name="NAME" value="TN"/>
             <column name="DESCRIPTION" value="ТОВАРНАЯ НАКЛАДНАЯ"/>
         </insert>
 
 
         <insert schemaName="REPOSITORY" tableName="TYPE_DOC">
-            <column name="NAME" value="ENABLE"/>
+            <column name="NAME" value="TTN"/>
             <column name="DESCRIPTION" value="ТОВАРО-ТРАНСПОРТНАЯ НАКЛАДНАЯ"/>
         </insert>
 
         <insert schemaName="REPOSITORY" tableName="TYPE_DOC">
-            <column name="NAME" value="ENABLE"/>
+            <column name="NAME" value="TRANSPORT_DOCS"/>
             <column name="DESCRIPTION" value="ТРАНСПОРТНАЯ НАКЛАДНАЯ"/>
         </insert>
 
         <insert schemaName="REPOSITORY" tableName="TYPE_DOC">
-            <column name="NAME" value="ENABLE"/>
+            <column name="NAME" value="INVOICE"/>
             <column name="DESCRIPTION" value="СЧЕТ-ФАКТУРА"/>
         </insert>
 
         <insert schemaName="REPOSITORY" tableName="TYPE_DOC">
-            <column name="NAME" value="ENABLE"/>
+            <column name="NAME" value="REPOSITORY"/>
             <column name="DESCRIPTION" value="УПД"/>
         </insert>
 
