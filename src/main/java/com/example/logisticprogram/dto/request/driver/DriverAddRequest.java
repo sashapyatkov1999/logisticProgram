@@ -8,6 +8,7 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 @NoArgsConstructor
 public class DriverAddRequest {
+    private Long id;
     private Long userId;
     private Long driverStatusId;
     private Long carId;
@@ -15,4 +16,6 @@ public class DriverAddRequest {
     private String passportDate;
     private String registration;
     private String driverLicense;
+
+
 }

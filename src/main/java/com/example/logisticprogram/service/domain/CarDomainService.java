@@ -1,8 +1,10 @@
 package com.example.logisticprogram.service.domain;
 
 import com.example.logisticprogram.dto.request.car.CarAddRequest;
+import com.example.logisticprogram.dto.request.car.CarNumberRequest;
 import com.example.logisticprogram.dto.response.car.CarResponse;
 import com.example.logisticprogram.mapper.car.CarMapper;
+import com.example.logisticprogram.mapper.car.CarMerger;
 import com.example.logisticprogram.mapper.car.CarResponseMapper;
 import com.example.logisticprogram.repository.CarRepository;
 import jakarta.transaction.Transactional;
@@ -17,6 +19,7 @@ public class CarDomainService {
     private final CarRepository carRepository;
     private final CarMapper carMapper;
     private final CarResponseMapper carResponseMapper;
+    private final CarMerger carMerger;
     @Transactional
     public CarResponse getCarById(Long id) {
         return carResponseMapper.from(carRepository.getReferenceById(id));
@@ -38,5 +41,20 @@ public class CarDomainService {
     public Long addCar(CarAddRequest request) {
         return carRepository.save(carMapper.from(request)).getId();
 
+    }
+
+    @Transactional
+    public Long editCars(CarAddRequest request) {
+        var car = carRepository.getReferenceById(request.getId());
+        return carRepository.save(carMerger.merge(car, request)).getId();
+    }
+
+    @Transactional
+    public  List<CarResponse> getCarByNumber(CarNumberRequest numberRequest) {
+        return  carRepository.findAll()
+                .stream()
+                .filter(car-> car.getCarNumber().toLowerCase().contains(numberRequest.getNumber().toLowerCase()))
+                .map(carResponseMapper::from)
+                .toList();
     }
 }
