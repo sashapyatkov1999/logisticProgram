@@ -46,8 +46,9 @@ public class DriverService {
         return driverDomainService.getAllDrivers();
     }
 
-    public Long editDriver(DriverAddRequest request){
-        return driverDomainService.editDrivers(request);
+    public DriverResponse editDriver(DriverAddRequest request){
+        var id =driverDomainService.editDrivers(request);
+        return driverDomainService.getDriverById(id);
     }
 
     public DriverStatusResponse getDriverStatus(DriverStatusRequest request){

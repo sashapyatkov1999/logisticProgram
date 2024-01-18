@@ -3,8 +3,9 @@ package com.example.logisticprogram.service.domain;
 
 import com.example.logisticprogram.dto.request.driver.DriverAddRequest;
 import com.example.logisticprogram.dto.request.driver.DriverFindByNameRequest;
+import com.example.logisticprogram.dto.response.car.CarResponse;
 import com.example.logisticprogram.dto.response.driver.DriverResponse;
-import com.example.logisticprogram.dto.response.user.UserResponse;
+import com.example.logisticprogram.mapper.car.CarResponseMapper;
 import com.example.logisticprogram.mapper.driver.DriverMapper;
 import com.example.logisticprogram.mapper.driver.DriverMerger;
 import com.example.logisticprogram.mapper.driver.DriverResponseMapper;
@@ -26,6 +27,7 @@ public class DriverDomainService {
     private final DriverMerger driverMerger;
     private final UserRepository userRepository;
     private final UserResponseMapper userResponseMapper;
+    private final CarResponseMapper carResponseMapper;
 
     @Transactional
     public DriverResponse getDriverById(Long id) {
@@ -57,11 +59,11 @@ public class DriverDomainService {
     }
 
     @Transactional
-    public  List<UserResponse> getCarByDriver(DriverFindByNameRequest request) {
-        return  userRepository.findAll()
+    public  List<CarResponse> getCarByDriver(DriverFindByNameRequest request) {
+        return  repository.findAll()
                 .stream()
-                .filter(driver -> driver.getName().toLowerCase().contains(request.getFindByName().toLowerCase()))
-                .map(userResponseMapper::from)
+                .filter(driver -> driver.getUser().getName().toLowerCase().contains(request.getFindByName().toLowerCase()))
+                .map(driver -> carResponseMapper.from(driver.getCar()))
                 .toList();
     }
 }

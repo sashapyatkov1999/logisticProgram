@@ -82,7 +82,7 @@ public class DriverController {
             value = DRIVER_EDIT,
             consumes = APPLICATION_JSON_VALUE,
             produces = APPLICATION_JSON_VALUE)
-    public Long editDriver(@RequestBody DriverAddRequest request){
+    public DriverResponse editDriver(@RequestBody DriverAddRequest request){
         return service.editDriver(request);
     }
 
