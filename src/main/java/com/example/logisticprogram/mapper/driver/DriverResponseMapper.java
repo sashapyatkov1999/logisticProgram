@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class DriverResponseMapper implements Mapper<DriverResponse, Driver> {
     private final UserResponseMapper userResponseMapper;
-
     private final CarResponseMapper carResponseMapper;
     @Override
     public DriverResponse from(Driver source) {

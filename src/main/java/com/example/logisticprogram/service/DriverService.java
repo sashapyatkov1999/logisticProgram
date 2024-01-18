@@ -26,57 +26,58 @@ public class DriverService {
     private final DriverStatusDomainService driverStatusDomainService;
 
 
-    public List<CarResponse> getCarByNumber(CarNumberRequest numberRequest){
+    public List<CarResponse> getCarByNumber(CarNumberRequest numberRequest) {
         return carDomainService.getCarByNumber(numberRequest);
     }
 
     public DriverResponse getDriver(DriverRequest request) {
-        return  driverDomainService.getDriverById(request.getId());
+        return driverDomainService.getDriverById(request.getId());
     }
 
     public void deleteDriver(DriverRequest request) {
         driverDomainService.deleteDriver(request.getId());
     }
-    public DriverResponse addDriver(DriverAddRequest request){
+
+    public DriverResponse addDriver(DriverAddRequest request) {
         var id = driverDomainService.addDriver(request);
-        return  driverDomainService.getDriverById(id);
-    }
-
-    public List<DriverResponse> getAllDrivers(){
-        return driverDomainService.getAllDrivers();
-    }
-
-    public DriverResponse editDriver(DriverAddRequest request){
-        var id =driverDomainService.editDrivers(request);
         return driverDomainService.getDriverById(id);
     }
 
-    public DriverStatusResponse getDriverStatus(DriverStatusRequest request){
+    public List<DriverResponse> getAllDrivers() {
+        return driverDomainService.getAllDrivers();
+    }
+
+    public DriverResponse editDriver(DriverAddRequest request) {
+        driverDomainService.editDrivers(request);
+        return driverDomainService.getDriverById(request.getId());
+    }
+
+    public DriverStatusResponse getDriverStatus(DriverStatusRequest request) {
         return driverStatusDomainService.getDriverStatusById(request.getId());
     }
 
-    public List<DriverStatusResponse> getAllDriverStatuses(){
+    public List<DriverStatusResponse> getAllDriverStatuses() {
         return driverStatusDomainService.getAllDriverStatus();
     }
 
-    public CarResponse addCar(CarAddRequest request){
+    public CarResponse addCar(CarAddRequest request) {
         var id = carDomainService.addCar(request);
         return carDomainService.getCarById(id);
     }
 
-    public CarResponse getCar(CarRequest request){
+    public CarResponse getCar(CarRequest request) {
         return carDomainService.getCarById(request.getId());
     }
 
-    public List<CarResponse> getAllCars(){
+    public List<CarResponse> getAllCars() {
         return carDomainService.getAllCars();
     }
 
-    public  void deleteCar(CarRequest request){
+    public void deleteCar(CarRequest request) {
         carDomainService.deleteCar(request.getId());
     }
 
-    public Long editCar(CarAddRequest request){
+    public Long editCar(CarAddRequest request) {
         return carDomainService.editCars(request);
     }
 
