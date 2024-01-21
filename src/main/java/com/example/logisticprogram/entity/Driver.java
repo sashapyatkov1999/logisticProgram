@@ -48,7 +48,7 @@ public class Driver extends BaseEntity {
     private String passportRegistration;
 
     @ToString.Include
-    @Column(name = "DRIVER_LICENSE", nullable = false)
+    @Column(name = "DRIVE_LICENSE", nullable = false)
     private String driverLicense;
 
 

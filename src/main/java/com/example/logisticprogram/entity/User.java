@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @ToString(onlyExplicitlyIncluded = true, callSuper = true)
 @EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = true)
-@AttributeOverride(name = "id", column = @Column(name = "USERS"))
+@AttributeOverride(name = "id", column = @Column(name = "USER_ID"))
 public class User extends  BaseEntity {
     @Serial
     private static final long serialVersionUID = 1L;
@@ -42,7 +42,7 @@ public class User extends  BaseEntity {
     protected String login;
 
     @ToString.Include
-    @Column(name = "E-MAIL", nullable = false, updatable = false)
+    @Column(name = "E_MAIL", nullable = false, updatable = false)
     protected String email;
 
     @ToString.Include

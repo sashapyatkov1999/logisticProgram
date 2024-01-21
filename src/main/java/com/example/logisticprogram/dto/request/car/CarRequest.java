@@ -7,10 +7,6 @@ import lombok.experimental.Accessors;
 @Data
 @Accessors(chain = true)
 @NoArgsConstructor
-public class CarAddRequest {
+public class CarRequest {
     private Long id;
-    private String carNumber;
-    private String trailerNumber;
-
-
 }
