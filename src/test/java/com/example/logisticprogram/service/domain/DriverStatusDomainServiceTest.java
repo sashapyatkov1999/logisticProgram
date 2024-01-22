@@ -32,9 +32,7 @@ public class DriverStatusDomainServiceTest {
     @InjectMocks
     private DriverStatusDomainService service;
 
-    private final DriverStatusAddRequest driverStatusAddRequestAdd = new DriverStatusAddRequest();
     private final List<DriverStatus> driverStatuses = new ArrayList<>();
-    private final DriverStatus driverStatusAdd = new DriverStatus(1L);
     private final List<DriverStatusResponse> driverStatusResponses = new ArrayList<>();
     private final Long ID = 0L;
     private final Long id = 1L;
