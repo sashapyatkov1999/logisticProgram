@@ -99,7 +99,6 @@ class UserDomainServiceTest {
         verifyNoMoreInteractions(userRepository, userResponseMapper);
     }
 
-
     private UserResponse getUserResponse(){
         return  new UserResponse()
                 .setId(ID);

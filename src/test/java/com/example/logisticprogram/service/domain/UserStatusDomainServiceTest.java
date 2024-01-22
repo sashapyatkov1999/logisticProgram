@@ -43,7 +43,7 @@ public class UserStatusDomainServiceTest {
     void getUserStatusTest(){
 
         when(userStatusResponseMapper.from((UserStatus) any())).thenReturn(getUserStatusResponse());
-        when(userStatusRepository.getReferenceById(anyLong())).thenReturn(getUser());
+        when(userStatusRepository.getReferenceById(anyLong())).thenReturn(getUserStatus());
 
         var result = service.getUserStatus(ID);
 
@@ -56,7 +56,7 @@ public class UserStatusDomainServiceTest {
     }
 
     @Test
-    void getAllRolesTest(){
+    void getAllUserStatusTest(){
         usersStatus.add(new UserStatus(1L));
         usersStatus.add(new UserStatus(2L));
         userResponses.add(new UserStatusResponse());
@@ -77,7 +77,7 @@ public class UserStatusDomainServiceTest {
     }
 
     @Test
-    void  deleteRole(){
+    void  deleteUserStatus(){
         service.deleteRole(id);
         verify(userStatusRepository).deleteById(id);
 
@@ -86,7 +86,7 @@ public class UserStatusDomainServiceTest {
     }
 
     @Test
-    void addRole(){
+    void addUserStatus(){
         when(userStatusMapper.from(userStatusAddRequestAdd)).thenReturn(userStatusAdd);
         when(userStatusRepository.save(userStatusAdd)).thenReturn(userStatusAdd);
         Long id = service.addRole(userStatusAddRequestAdd);
@@ -100,5 +100,5 @@ public class UserStatusDomainServiceTest {
         return new UserStatusResponse().setId(ID);
     }
 
-    private UserStatus getUser(){return new UserStatus(ID);}
+    private UserStatus getUserStatus(){return new UserStatus(ID);}
 }
