@@ -30,12 +30,16 @@ class UserDomainServiceTest {
     private UserResponseMapper userResponseMapper;
     @Mock
     private UserMapper userMapper;
-
     @InjectMocks
     private UserDomainService service;
 
-
+    private final UserAddRequest userAddRequestAdd = new UserAddRequest();
+    private final List<User> users = new ArrayList<>();
+    private final User userAdd = new User(1L);
+    private final List<UserResponse> userResponses = new ArrayList<>();
     private final Long ID = 0L;
+    private final Long id = 1L;
+
 
 
     @Test
@@ -56,11 +60,8 @@ class UserDomainServiceTest {
 
     @Test
     void getAllUsersTest() {
-        List<User> users = new ArrayList<>();
         users.add(new User(1L));
         users.add(new User(2L));
-
-        List<UserResponse> userResponses = new ArrayList<>();
         userResponses.add(new UserResponse());
         userResponses.add(new UserResponse());
 
@@ -73,29 +74,29 @@ class UserDomainServiceTest {
         assertNotNull(result);
         verify(userRepository).findAll();
         verify(userResponseMapper).from(users);
+
+        verifyNoMoreInteractions(userRepository, userResponseMapper);
+        verifyNoInteractions(userMapper);
     }
 
     @Test
     void deleteUserTest() {
-
-        Long id = 1L;
-
         service.deleteUser(id);
         verify(userRepository).deleteById(id);
+
+        verifyNoMoreInteractions(userRepository, userResponseMapper);
+        verifyNoInteractions(userMapper);
     }
 
     @Test
     void addUserTest() {
-        UserAddRequest userAddRequest = new UserAddRequest();
-        User user = new User(1L);
-        when(userMapper.from(userAddRequest)).thenReturn(user);
-        when(userRepository.save(user)).thenReturn(user);
-        Long id = service.addUser(userAddRequest);
-        assertEquals(1L,id);
-        verify(userMapper).from(userAddRequest);
-        verify(userRepository).save(user);
-
-
+        when(userMapper.from(userAddRequestAdd)).thenReturn(userAdd);
+        when(userRepository.save(userAdd)).thenReturn(userAdd);
+        Long id = service.addUser(userAddRequestAdd);
+        assertEquals(userAdd.getId(),id.longValue());
+        verify(userMapper).from(userAddRequestAdd);
+        verify(userRepository).save(userAdd);
+        verifyNoMoreInteractions(userRepository, userResponseMapper);
     }
 
 
