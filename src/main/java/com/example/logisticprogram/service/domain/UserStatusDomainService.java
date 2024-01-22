@@ -20,13 +20,15 @@ public class UserStatusDomainService {
 
     @Transactional
     public UserStatusResponse getUserStatus(Long id) {
-        return userStatusResponseMapper.from(userStatusRepository.getReferenceById(id));
+        return userStatusResponseMapper
+                .from(userStatusRepository.getReferenceById(id));
     }
 
 
     @Transactional
     public List<UserStatusResponse> getAllRoles() {
-        return userStatusResponseMapper.from(userStatusRepository.findAll());
+        return userStatusResponseMapper
+                .from(userStatusRepository.findAll());
 
     }
 
@@ -40,6 +42,4 @@ public class UserStatusDomainService {
         return userStatusRepository.save(userStatusMapper.from(request)).getId();
 
     }
-
-
 }
