@@ -21,7 +21,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
-public class PointDomainServiceTest {
+class PointDomainServiceTest {
 
     @Mock
     private PointRepository pointRepository;
@@ -38,7 +38,6 @@ public class PointDomainServiceTest {
     private final Point pointAdd = new Point(1L);
     private final List<PointResponse> pointResponses = new ArrayList<>();
     private final Long ID = 0L;
-    private final Long id = 1L;
 
 
     @Test
@@ -80,8 +79,8 @@ public class PointDomainServiceTest {
 
     @Test
     void deletePointTest() {
-        service.deletePoint(id);
-        verify(pointRepository).deleteById(id);
+        service.deletePoint(ID);
+        verify(pointRepository).deleteById(ID);
 
         verifyNoMoreInteractions(pointRepository, pointResponseMapper);
         verifyNoInteractions(pointMapper);
