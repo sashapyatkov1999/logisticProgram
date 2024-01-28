@@ -88,6 +88,7 @@ public class PointDomainServiceTest {
 
     @Test
     void addUserTest() {
+
         when(pointMapper.from(pointAddRequestAdd)).thenReturn(pointAdd);
         when(pointRepository.save(pointAdd)).thenReturn(pointAdd);
         Long id = service.addPoint(pointAddRequestAdd);
