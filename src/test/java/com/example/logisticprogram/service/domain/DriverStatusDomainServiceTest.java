@@ -1,6 +1,5 @@
 package com.example.logisticprogram.service.domain;
 
-import com.example.logisticprogram.dto.request.driverstatus.DriverStatusAddRequest;
 import com.example.logisticprogram.dto.response.driverstatus.DriverStatusResponse;
 import com.example.logisticprogram.entity.DriverStatus;
 import com.example.logisticprogram.mapper.driverstatus.DriverStatusMapper;
@@ -19,9 +18,12 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoInteractions;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
+import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
-public class DriverStatusDomainServiceTest {
+class DriverStatusDomainServiceTest {
 
     @Mock
     private DriverStatusRepository driverStatusRepository;
