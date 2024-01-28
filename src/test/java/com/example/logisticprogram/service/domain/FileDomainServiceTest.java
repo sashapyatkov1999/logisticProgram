@@ -1,13 +1,13 @@
 package com.example.logisticprogram.service.domain;
 
-import com.example.logisticprogram.dto.request.file.FileAddRequest;
+import com.example.logisticprogram.dto.request.point.PointAddRequest;
 import com.example.logisticprogram.dto.response.file.FileResponse;
 import com.example.logisticprogram.dto.response.point.PointResponse;
 import com.example.logisticprogram.entity.File;
 import com.example.logisticprogram.entity.Point;
-import com.example.logisticprogram.mapper.file.FileMapper;
-import com.example.logisticprogram.mapper.file.FileResponseMapper;
-import com.example.logisticprogram.repository.FileRepository;
+import com.example.logisticprogram.mapper.point.PointMapper;
+import com.example.logisticprogram.mapper.point.PointResponseMapper;
+import com.example.logisticprogram.repository.PointRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -26,62 +26,62 @@ import static org.mockito.Mockito.*;
 public class FileDomainServiceTest {
 
     @Mock
-    private FileRepository pointRepository;
+    private PointRepository pointRepository;
     @Mock
-    private FileResponseMapper pointResponseMapper;
+    private PointResponseMapper pointResponseMapper;
     @Mock
-    private FileMapper pointMapper;
+    private PointMapper pointMapper;
     @InjectMocks
-    private FileDomainService service;
+    private PointDomainService service;
 
-    private final FileAddRequest fileAddRequestAdd = new FileAddRequest();
-    private final List<File> files = new ArrayList<>();
-    private final File fileAdd = new File(1L);
-    private final List<FileResponse> pointResponses = new ArrayList<>();
+    private final PointAddRequest pointAddRequestAdd = new PointAddRequest();
+    private final List<Point> points = new ArrayList<>();
+    private final Point pointAdd = new Point(1L);
+    private final List<PointResponse> pointResponses = new ArrayList<>();
     private final Long ID = 0L;
     private final Long id = 1L;
 
 
     @Test
-    void getFileTest() {
+    void getPointTest() {
 
-        when(pointResponseMapper.from((File) any())).thenReturn(getFileResponse());
-        when(pointRepository.getReferenceById(anyLong())).thenReturn(getFile());
+        when(pointResponseMapper.from((Point) any())).thenReturn(getPointResponse());
+        when(pointRepository.getReferenceById(anyLong())).thenReturn(getPoint());
 
-        var result = service.getFile(ID);
+        var result = service.getPoint(ID);
 
         assertNotNull(result);
 
         verify(pointRepository).getReferenceById(anyLong());
-        verify(pointResponseMapper).from((File) any());
+        verify(pointResponseMapper).from((Point) any());
         verifyNoMoreInteractions(pointRepository, pointResponseMapper);
         verifyNoInteractions(pointMapper);
     }
 
     @Test
-    void getAllFilesTest() {
-        files.add(new File(1L));
-        files.add(new File(2L));
-        pointResponses.add(new FileResponse());
-        pointResponses.add(new FileResponse());
+    void getAllPointsTest() {
+        points.add(new Point(1L));
+        points.add(new Point(2L));
+        pointResponses.add(new PointResponse());
+        pointResponses.add(new PointResponse());
 
-        when(pointRepository.findAll()).thenReturn(files);
-        when(pointResponseMapper.from(files)).thenReturn(pointResponses);
+        when(pointRepository.findAll()).thenReturn(points);
+        when(pointResponseMapper.from(points)).thenReturn(pointResponses);
 
-        List<FileResponse> result = service.getAllFiles();
+        List<PointResponse> result = service.getAllPoints();
 
         assertEquals(pointResponses, result);
         assertNotNull(result);
         verify(pointRepository).findAll();
-        verify(pointResponseMapper).from(files);
+        verify(pointResponseMapper).from(points);
 
         verifyNoMoreInteractions(pointRepository, pointResponseMapper);
         verifyNoInteractions(pointMapper);
     }
 
     @Test
-    void deleteUserTest() {
-        service.deleteFile(id);
+    void deletePointTest() {
+        service.deletePoint(id);
         verify(pointRepository).deleteById(id);
 
         verifyNoMoreInteractions(pointRepository, pointResponseMapper);
@@ -89,22 +89,22 @@ public class FileDomainServiceTest {
     }
 
     @Test
-    void addUserTest() {
-        when(pointMapper.from(fileAddRequestAdd)).thenReturn(fileAdd);
-        when(pointRepository.save(fileAdd)).thenReturn(fileAdd);
-        Long id = service.addFile(fileAddRequestAdd);
-        assertEquals(fileAdd.getId(), id.longValue());
-        verify(pointMapper).from(fileAddRequestAdd);
-        verify(pointRepository).save(fileAdd);
+    void addPointTest() {
+        when(pointMapper.from(pointAddRequestAdd)).thenReturn(pointAdd);
+        when(pointRepository.save(pointAdd)).thenReturn(pointAdd);
+        Long id = service.addPoint(pointAddRequestAdd);
+        assertEquals(pointAdd.getId(), id.longValue());
+        verify(pointMapper).from(pointAddRequestAdd);
+        verify(pointRepository).save(pointAdd);
         verifyNoMoreInteractions(pointRepository, pointResponseMapper);
     }
 
-    private FileResponse getFileResponse() {
-        return new FileResponse()
+    private PointResponse getPointResponse() {
+        return new PointResponse()
                 .setId(ID);
     }
 
-    private File getFile() {
-        return new File(ID);
+    private Point getPoint() {
+        return new Point(ID);
     }
 }
