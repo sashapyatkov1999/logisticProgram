@@ -26,6 +26,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 class TypeDocDomainServiceTest {
 
+
         @Mock
         private TypeDocRepository typeDocRepository;
         @Mock
