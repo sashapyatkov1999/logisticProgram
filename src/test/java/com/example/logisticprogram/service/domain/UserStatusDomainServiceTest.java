@@ -94,6 +94,7 @@ public class UserStatusDomainServiceTest {
         verify(userStatusMapper).from(userStatusAddRequestAdd);
         verify(userStatusRepository).save(userStatusAdd);
         verifyNoMoreInteractions(userStatusRepository, userStatusResponseMapper);
+
     }
 
     private UserStatusResponse getUserStatusResponse(){
