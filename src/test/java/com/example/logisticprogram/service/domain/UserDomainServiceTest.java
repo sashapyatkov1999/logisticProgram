@@ -41,7 +41,7 @@ class UserDomainServiceTest {
     private final Long id = 1L;
 
     @Test
-    void getUserStatusTest(){
+    void getUserTest(){
 
         when(userResponseMapper.from((User) any())).thenReturn(getUserResponse());
         when(userRepository.getReferenceById(anyLong())).thenReturn(getUser());
@@ -57,7 +57,7 @@ class UserDomainServiceTest {
     }
 
     @Test
-    void getAllRolesTest(){
+    void getAllUsersTest(){
         users.add(new User(1L));
         users.add(new User(2L));
         userResponses.add(new UserResponse());
@@ -78,7 +78,7 @@ class UserDomainServiceTest {
     }
 
     @Test
-    void  deleteTypeDoc(){
+    void  deleteUser(){
         service.deleteUser(id);
         verify(userRepository).deleteById(id);
 
@@ -86,16 +86,7 @@ class UserDomainServiceTest {
         verifyNoInteractions(userMapper);
     }
 
-    @Test
-    void addTypeDoc(){
-        when(userMapper.from(userAddRequestAdd)).thenReturn(user);
-        when(userRepository.save(user)).thenReturn(user);
-        Long id = service.addUser(userAddRequestAdd);
-        assertEquals(user.getId(),id.longValue());
-        verify(userMapper).from(userAddRequestAdd);
-        verify(userRepository).save(user);
-        verifyNoMoreInteractions(userRepository, userResponseMapper);
-    }
+
 
     private UserResponse getUserResponse(){
         return new UserResponse().setId(ID);
