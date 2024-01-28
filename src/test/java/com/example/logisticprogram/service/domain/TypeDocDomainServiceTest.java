@@ -43,7 +43,7 @@ class TypeDocDomainServiceTest {
         private final TypeDoc typeDoc = new TypeDoc(1L);
         private final List<TypeDocResponse> typeDocResponses = new ArrayList<>();
         private final Long ID = 0L;
-        private final Long id = 1L;
+
 
         @Test
         void getTypeDocStatusTest(){
@@ -84,8 +84,8 @@ class TypeDocDomainServiceTest {
 
         @Test
         void  deleteTypeDoc(){
-            service.deleteTypeDoc(id);
-            verify(typeDocRepository).deleteById(id);
+            service.deleteTypeDoc(ID);
+            verify(typeDocRepository).deleteById(ID);
 
             verifyNoMoreInteractions(typeDocRepository, typeDocResponseMapper);
             verifyNoInteractions(typeDocMapper);
