@@ -21,7 +21,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
-public class ApplicationDomainServiceTest {
+class ApplicationDomainServiceTest {
 
     @Mock
     private ApplicationRepository applicationRepository;
@@ -37,8 +37,6 @@ public class ApplicationDomainServiceTest {
     private final Application application = new Application(1L);
     private final List<ApplicationResponse> applicationResponses = new ArrayList<>();
     private final Long ID = 0L;
-    private final Long id = 1L;
-
 
     @Test
     void getApplicationTest() {
@@ -80,8 +78,8 @@ public class ApplicationDomainServiceTest {
 
     @Test
     void deleteApplicationTest() {
-        service.deleteApplication(id);
-        verify(applicationRepository).deleteById(id);
+        service.deleteApplication(ID);
+        verify(applicationRepository).deleteById(ID);
 
         verifyNoMoreInteractions(applicationRepository, applicationResponseMapper);
         verifyNoInteractions(applicationMapper);
