@@ -2,9 +2,7 @@ package com.example.logisticprogram.service.domain;
 
 import com.example.logisticprogram.dto.request.role.RoleAddRequest;
 import com.example.logisticprogram.dto.response.role.RoleResponse;
-import com.example.logisticprogram.dto.response.user.UserResponse;
 import com.example.logisticprogram.entity.Role;
-import com.example.logisticprogram.entity.User;
 import com.example.logisticprogram.mapper.role.RoleMapper;
 import com.example.logisticprogram.mapper.role.RoleMerger;
 import com.example.logisticprogram.mapper.role.RoleResponseMapper;
@@ -22,9 +20,12 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoInteractions;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
+import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
-public class RoleDomainServiceTest {
+class RoleDomainServiceTest {
 
         @Mock
         private RoleRepository roleRepository;
