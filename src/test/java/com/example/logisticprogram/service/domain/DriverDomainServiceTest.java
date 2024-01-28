@@ -1,11 +1,14 @@
 package com.example.logisticprogram.service.domain;
 
-import com.example.logisticprogram.dto.request.user.UserAddRequest;
+import com.example.logisticprogram.dto.request.driver.DriverAddRequest;
+import com.example.logisticprogram.dto.response.driver.DriverResponse;
 import com.example.logisticprogram.dto.response.user.UserResponse;
+import com.example.logisticprogram.entity.Driver;
 import com.example.logisticprogram.entity.User;
-import com.example.logisticprogram.mapper.user.UserMapper;
-import com.example.logisticprogram.mapper.user.UserResponseMapper;
-import com.example.logisticprogram.repository.UserRepository;
+import com.example.logisticprogram.mapper.driver.DriverMapper;
+import com.example.logisticprogram.mapper.driver.DriverMerger;
+import com.example.logisticprogram.mapper.driver.DriverResponseMapper;
+import com.example.logisticprogram.repository.DriverRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -15,95 +18,112 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 public class DriverDomainServiceTest {
     @Mock
-    private UserRepository userRepository;
+    private DriverRepository driverRepository;
     @Mock
-    private UserResponseMapper userResponseMapper;
+    private DriverMerger driverMerger;
     @Mock
-    private UserMapper userMapper;
+    private DriverResponseMapper driverResponseMapper;
+    @Mock
+    private DriverMapper driverMapper;
     @InjectMocks
-    private UserDomainService service;
+    private DriverDomainService service;
 
-    private final UserAddRequest userAddRequestAdd = new UserAddRequest();
-    private final List<User> users = new ArrayList<>();
-    private final User userAdd = new User(1L);
-    private final List<UserResponse> userResponses = new ArrayList<>();
+    private final DriverAddRequest driverAddRequestAdd = new DriverAddRequest();
+    private final List<Driver> drivers = new ArrayList<>();
+    private final Driver driver = new Driver(1L);
+    private final List<DriverResponse> driverResponses = new ArrayList<>();
     private final Long ID = 0L;
     private final Long id = 1L;
 
 
 
     @Test
-    void getUserTest() {
+    void getDriverTest() {
 
-        when(userResponseMapper.from((User) any())).thenReturn(getUserResponse());
-        when(userRepository.getReferenceById(anyLong())).thenReturn(getUser());
+        when(driverResponseMapper.from((Driver) any())).thenReturn(getDriverResponse());
+        when(driverRepository.getReferenceById(anyLong())).thenReturn(getDriver());
 
-        var result = service.getUser(ID);
+        var result = service.getDriverById(ID);
 
         assertNotNull(result);
 
-        verify(userRepository).getReferenceById(anyLong());
-        verify(userResponseMapper).from((User) any());
-        verifyNoMoreInteractions(userRepository, userResponseMapper);
-        verifyNoInteractions(userMapper);
+        verify(driverRepository).getReferenceById(anyLong());
+        verify(driverResponseMapper).from((Driver) any());
+        verifyNoMoreInteractions(driverRepository, driverResponseMapper);
+        verifyNoInteractions(driverMapper);
     }
 
     @Test
-    void getAllUsersTest() {
-        users.add(new User(1L));
-        users.add(new User(2L));
-        userResponses.add(new UserResponse());
-        userResponses.add(new UserResponse());
+    void getAllDriversTest() {
+        drivers.add(new Driver(1L));
+        drivers.add(new Driver(2L));
+        driverResponses.add(new DriverResponse());
+        driverResponses.add(new DriverResponse());
 
-        when(userRepository.findAll()).thenReturn(users);
-        when(userResponseMapper.from(users)).thenReturn(userResponses);
+        when(driverRepository.findAll()).thenReturn(drivers);
+        when(driverResponseMapper.from(drivers)).thenReturn(driverResponses);
 
-        List<UserResponse> result = service.getAllUsers();
+        List<DriverResponse> result = service.getAllDrivers();
 
-        assertEquals(userResponses, result);
+        assertEquals(driverResponses, result);
         assertNotNull(result);
-        verify(userRepository).findAll();
-        verify(userResponseMapper).from(users);
+        verify(driverRepository).findAll();
+        verify(driverResponseMapper).from(drivers);
 
-        verifyNoMoreInteractions(userRepository, userResponseMapper);
-        verifyNoInteractions(userMapper);
+        verifyNoMoreInteractions(driverRepository, driverResponseMapper);
+        verifyNoInteractions(driverMapper);
     }
 
     @Test
-    void deleteUserTest() {
-        service.deleteUser(id);
-        verify(userRepository).deleteById(id);
+    void deleteDriverTest() {
+        service.deleteDriver(id);
+        verify(driverRepository).deleteById(id);
 
-        verifyNoMoreInteractions(userRepository, userResponseMapper);
-        verifyNoInteractions(userMapper);
+        verifyNoMoreInteractions(driverRepository, driverResponseMapper);
+        verifyNoInteractions(driverMapper);
     }
 
     @Test
-    void addUserTest() {
-        when(userMapper.from(userAddRequestAdd)).thenReturn(userAdd);
-        when(userRepository.save(userAdd)).thenReturn(userAdd);
-        Long id = service.addUser(userAddRequestAdd);
-        assertEquals(userAdd.getId(),id.longValue());
-        verify(userMapper).from(userAddRequestAdd);
-        verify(userRepository).save(userAdd);
-        verifyNoMoreInteractions(userRepository, userResponseMapper);
+    void addDriverTest() {
+        when(driverMapper.from(driverAddRequestAdd)).thenReturn(driver);
+        when(driverRepository.save(driver)).thenReturn(driver);
+        Long id = service.addDriver(driverAddRequestAdd);
+        assertEquals(driver.getId(),id.longValue());
+        verify(driverMapper).from(driverAddRequestAdd);
+        verify(driverRepository).save(driver);
+        verifyNoMoreInteractions(driverRepository, driverResponseMapper);
+    }
+    @Test
+    void editDriverTest(){
+        driverAddRequestAdd.setId(1L);
+        driver.setId(1L);
+
+        when(driverRepository.getReferenceById(driverAddRequestAdd.getId())).thenReturn(driver);
+        when(driverMerger.merge(driver, driverAddRequestAdd)).thenReturn(driver);
+        when(driverRepository.saveAndFlush(driver)).thenReturn(driver);
+
+        service.editDrivers(driverAddRequestAdd);
+
+        verify(driverRepository).getReferenceById(driverAddRequestAdd.getId());
+        verify(driverMerger).merge(driver, driverAddRequestAdd);
+
+
     }
 
-    private UserResponse getUserResponse(){
-        return  new UserResponse()
+    private DriverResponse getDriverResponse(){
+        return  new DriverResponse()
                 .setId(ID);
     }
 
-    private User getUser(){
-        return new User(ID);
+    private Driver getDriver(){
+        return new Driver(ID);
     }
 
 }
