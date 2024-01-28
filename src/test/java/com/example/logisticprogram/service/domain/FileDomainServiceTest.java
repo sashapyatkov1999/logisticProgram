@@ -21,7 +21,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
-public class FileDomainServiceTest {
+class FileDomainServiceTest {
 
     @Mock
     private FileRepository fileRepository;
@@ -37,7 +37,6 @@ public class FileDomainServiceTest {
     private final File fileAdd = new File(1L);
     private final List<FileResponse> fileResponses = new ArrayList<>();
     private final Long ID = 0L;
-    private final Long id = 1L;
 
 
     @Test
@@ -79,8 +78,8 @@ public class FileDomainServiceTest {
 
     @Test
     void deleteFileTest() {
-        service.deleteFile(id);
-        verify(fileRepository).deleteById(id);
+        service.deleteFile(ID);
+        verify(fileRepository).deleteById(ID);
 
         verifyNoMoreInteractions(fileRepository, fileResponseMapper);
         verifyNoInteractions(fileMapper);
