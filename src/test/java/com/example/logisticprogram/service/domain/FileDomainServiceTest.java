@@ -1,13 +1,11 @@
 package com.example.logisticprogram.service.domain;
 
-import com.example.logisticprogram.dto.request.point.PointAddRequest;
+import com.example.logisticprogram.dto.request.file.FileAddRequest;
 import com.example.logisticprogram.dto.response.file.FileResponse;
-import com.example.logisticprogram.dto.response.point.PointResponse;
 import com.example.logisticprogram.entity.File;
-import com.example.logisticprogram.entity.Point;
-import com.example.logisticprogram.mapper.point.PointMapper;
-import com.example.logisticprogram.mapper.point.PointResponseMapper;
-import com.example.logisticprogram.repository.PointRepository;
+import com.example.logisticprogram.mapper.file.FileMapper;
+import com.example.logisticprogram.mapper.file.FileResponseMapper;
+import com.example.logisticprogram.repository.FileRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -26,85 +24,85 @@ import static org.mockito.Mockito.*;
 public class FileDomainServiceTest {
 
     @Mock
-    private PointRepository pointRepository;
+    private FileRepository fileRepository;
     @Mock
-    private PointResponseMapper pointResponseMapper;
+    private FileResponseMapper fileResponseMapper;
     @Mock
-    private PointMapper pointMapper;
+    private FileMapper fileMapper;
     @InjectMocks
-    private PointDomainService service;
+    private FileDomainService service;
 
-    private final PointAddRequest pointAddRequestAdd = new PointAddRequest();
-    private final List<Point> points = new ArrayList<>();
-    private final Point pointAdd = new Point(1L);
-    private final List<PointResponse> pointResponses = new ArrayList<>();
+    private final FileAddRequest fileAddRequestAdd = new FileAddRequest();
+    private final List<File> files = new ArrayList<>();
+    private final File fileAdd = new File(1L);
+    private final List<FileResponse> fileResponses = new ArrayList<>();
     private final Long ID = 0L;
     private final Long id = 1L;
 
 
     @Test
-    void getPointTest() {
+    void getFileTest() {
 
-        when(pointResponseMapper.from((Point) any())).thenReturn(getPointResponse());
-        when(pointRepository.getReferenceById(anyLong())).thenReturn(getPoint());
+        when(fileResponseMapper.from((File) any())).thenReturn(getFileResponse());
+        when(fileRepository.getReferenceById(anyLong())).thenReturn(getFile());
 
-        var result = service.getPoint(ID);
+        var result = service.getFile(ID);
 
         assertNotNull(result);
 
-        verify(pointRepository).getReferenceById(anyLong());
-        verify(pointResponseMapper).from((Point) any());
-        verifyNoMoreInteractions(pointRepository, pointResponseMapper);
-        verifyNoInteractions(pointMapper);
+        verify(fileRepository).getReferenceById(anyLong());
+        verify(fileResponseMapper).from((File) any());
+        verifyNoMoreInteractions(fileRepository, fileResponseMapper);
+        verifyNoInteractions(fileMapper);
     }
 
     @Test
-    void getAllPointsTest() {
-        points.add(new Point(1L));
-        points.add(new Point(2L));
-        pointResponses.add(new PointResponse());
-        pointResponses.add(new PointResponse());
+    void getAllFilesTest() {
+        files.add(new File(1L));
+        files.add(new File(2L));
+        fileResponses.add(new FileResponse());
+        fileResponses.add(new FileResponse());
 
-        when(pointRepository.findAll()).thenReturn(points);
-        when(pointResponseMapper.from(points)).thenReturn(pointResponses);
+        when(fileRepository.findAll()).thenReturn(files);
+        when(fileResponseMapper.from(files)).thenReturn(fileResponses);
 
-        List<PointResponse> result = service.getAllPoints();
+        List<FileResponse> result = service.getAllFiles();
 
-        assertEquals(pointResponses, result);
+        assertEquals(fileResponses, result);
         assertNotNull(result);
-        verify(pointRepository).findAll();
-        verify(pointResponseMapper).from(points);
+        verify(fileRepository).findAll();
+        verify(fileResponseMapper).from(files);
 
-        verifyNoMoreInteractions(pointRepository, pointResponseMapper);
-        verifyNoInteractions(pointMapper);
+        verifyNoMoreInteractions(fileRepository, fileResponseMapper);
+        verifyNoInteractions(fileMapper);
     }
 
     @Test
-    void deletePointTest() {
-        service.deletePoint(id);
-        verify(pointRepository).deleteById(id);
+    void deleteFileTest() {
+        service.deleteFile(id);
+        verify(fileRepository).deleteById(id);
 
-        verifyNoMoreInteractions(pointRepository, pointResponseMapper);
-        verifyNoInteractions(pointMapper);
+        verifyNoMoreInteractions(fileRepository, fileResponseMapper);
+        verifyNoInteractions(fileMapper);
     }
 
     @Test
-    void addPointTest() {
-        when(pointMapper.from(pointAddRequestAdd)).thenReturn(pointAdd);
-        when(pointRepository.save(pointAdd)).thenReturn(pointAdd);
-        Long id = service.addPoint(pointAddRequestAdd);
-        assertEquals(pointAdd.getId(), id.longValue());
-        verify(pointMapper).from(pointAddRequestAdd);
-        verify(pointRepository).save(pointAdd);
-        verifyNoMoreInteractions(pointRepository, pointResponseMapper);
+    void addFileTest() {
+        when(fileMapper.from(fileAddRequestAdd)).thenReturn(fileAdd);
+        when(fileRepository.save(fileAdd)).thenReturn(fileAdd);
+        Long id = service.addFile(fileAddRequestAdd);
+        assertEquals(fileAdd.getId(), id.longValue());
+        verify(fileMapper).from(fileAddRequestAdd);
+        verify(fileRepository).save(fileAdd);
+        verifyNoMoreInteractions(fileRepository, fileResponseMapper);
     }
 
-    private PointResponse getPointResponse() {
-        return new PointResponse()
+    private FileResponse getFileResponse() {
+        return new FileResponse()
                 .setId(ID);
     }
 
-    private Point getPoint() {
-        return new Point(ID);
+    private File getFile() {
+        return new File(ID);
     }
 }
