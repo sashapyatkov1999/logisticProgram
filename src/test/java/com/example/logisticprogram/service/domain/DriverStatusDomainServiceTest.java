@@ -35,7 +35,6 @@ public class DriverStatusDomainServiceTest {
     private final List<DriverStatus> driverStatuses = new ArrayList<>();
     private final List<DriverStatusResponse> driverStatusResponses = new ArrayList<>();
     private final Long ID = 0L;
-    private final Long id = 1L;
 
 
     @Test
