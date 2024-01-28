@@ -25,6 +25,7 @@ public class PointDomainServiceTest {
 
     @Mock
     private PointRepository pointRepository;
+
     @Mock
     private PointResponseMapper pointResponseMapper;
     @Mock
@@ -41,7 +42,7 @@ public class PointDomainServiceTest {
 
 
     @Test
-    void getUserTest() {
+    void getPointTest() {
 
         when(pointResponseMapper.from((Point) any())).thenReturn(getPointResponse());
         when(pointRepository.getReferenceById(anyLong())).thenReturn(getPoint());
@@ -57,7 +58,7 @@ public class PointDomainServiceTest {
     }
 
     @Test
-    void getAllUsersTest() {
+    void getAllPointsTest() {
         points.add(new Point(1L));
         points.add(new Point(2L));
         pointResponses.add(new PointResponse());
@@ -78,7 +79,7 @@ public class PointDomainServiceTest {
     }
 
     @Test
-    void deleteUserTest() {
+    void deletePointTest() {
         service.deletePoint(id);
         verify(pointRepository).deleteById(id);
 
@@ -87,7 +88,7 @@ public class PointDomainServiceTest {
     }
 
     @Test
-    void addUserTest() {
+    void addPointTest() {
 
         when(pointMapper.from(pointAddRequestAdd)).thenReturn(pointAdd);
         when(pointRepository.save(pointAdd)).thenReturn(pointAdd);
