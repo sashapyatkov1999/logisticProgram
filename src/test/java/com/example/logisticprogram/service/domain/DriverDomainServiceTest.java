@@ -2,9 +2,7 @@ package com.example.logisticprogram.service.domain;
 
 import com.example.logisticprogram.dto.request.driver.DriverAddRequest;
 import com.example.logisticprogram.dto.response.driver.DriverResponse;
-import com.example.logisticprogram.dto.response.user.UserResponse;
 import com.example.logisticprogram.entity.Driver;
-import com.example.logisticprogram.entity.User;
 import com.example.logisticprogram.mapper.driver.DriverMapper;
 import com.example.logisticprogram.mapper.driver.DriverMerger;
 import com.example.logisticprogram.mapper.driver.DriverResponseMapper;
@@ -18,12 +16,16 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoInteractions;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
+import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
-public class DriverDomainServiceTest {
+class DriverDomainServiceTest {
     @Mock
     private DriverRepository driverRepository;
     @Mock
@@ -40,7 +42,6 @@ public class DriverDomainServiceTest {
     private final Driver driver = new Driver(1L);
     private final List<DriverResponse> driverResponses = new ArrayList<>();
     private final Long ID = 0L;
-    private final Long id = 1L;
 
 
 
@@ -83,8 +84,8 @@ public class DriverDomainServiceTest {
 
     @Test
     void deleteDriverTest() {
-        service.deleteDriver(id);
-        verify(driverRepository).deleteById(id);
+        service.deleteDriver(ID);
+        verify(driverRepository).deleteById(ID);
 
         verifyNoMoreInteractions(driverRepository, driverResponseMapper);
         verifyNoInteractions(driverMapper);
