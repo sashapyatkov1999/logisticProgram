@@ -75,6 +75,7 @@ public class ApplicationDomainServiceTest {
 
         verifyNoMoreInteractions(applicationRepository, applicationResponseMapper);
         verifyNoInteractions(applicationMapper);
+
     }
 
     @Test
