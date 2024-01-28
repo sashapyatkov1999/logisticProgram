@@ -23,7 +23,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
-public class CarDomainServiceTest {
+class CarDomainServiceTest {
 
     @Mock
     private CarRepository carRepository;
@@ -43,7 +43,6 @@ public class CarDomainServiceTest {
     private final Car car = new Car(1L);
     private final List<CarResponse> carResponses = new ArrayList<>();
     private final Long ID = 0L;
-    private final Long id = 1L;
     private final CarNumberRequest numberRequest = new CarNumberRequest();
 
 
@@ -87,8 +86,8 @@ public class CarDomainServiceTest {
 
     @Test
     void deleteCarTest() {
-        service.deleteCar(id);
-        verify(carRepository).deleteById(id);
+        service.deleteCar(ID);
+        verify(carRepository).deleteById(ID);
 
         verifyNoMoreInteractions(carRepository, carResponseMapper);
         verifyNoInteractions(carMapper);
