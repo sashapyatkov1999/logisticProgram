@@ -6,6 +6,7 @@ import com.example.logisticprogram.dto.response.user.UserResponse;
 import com.example.logisticprogram.entity.Role;
 import com.example.logisticprogram.entity.User;
 import com.example.logisticprogram.mapper.role.RoleMapper;
+import com.example.logisticprogram.mapper.role.RoleMerger;
 import com.example.logisticprogram.mapper.role.RoleResponseMapper;
 import com.example.logisticprogram.repository.RoleRepository;
 import org.junit.jupiter.api.Test;
@@ -27,6 +28,8 @@ public class RoleDomainServiceTest {
 
         @Mock
         private RoleRepository roleRepository;
+        @Mock
+        private RoleMerger roleMerger;
         @Mock
         private RoleResponseMapper roleResponseMapper;
         @Mock
@@ -88,6 +91,24 @@ public class RoleDomainServiceTest {
             verifyNoMoreInteractions(roleRepository, roleResponseMapper);
             verifyNoInteractions(roleMapper);
         }
+        @Test
+        void editRoleTest(){
+        roleAddRequestAdd.setId(1L);
+        roleAdd.setId(1L);
+
+        when(roleRepository.getReferenceById(roleAddRequestAdd.getId())).thenReturn(roleAdd);
+        when(roleMerger.merge(roleAdd,roleAddRequestAdd)).thenReturn(roleAdd);
+        when(roleRepository.save(roleAdd)).thenReturn(roleAdd);
+
+        Long result = service.editRole(roleAddRequestAdd);
+
+        verify(roleRepository).getReferenceById(roleAddRequestAdd.getId());
+        verify(roleRepository).save(roleAdd);
+        verify(roleMerger).merge(roleAdd,roleAddRequestAdd);
+
+        assertEquals(1L, result);
+
+    }
 
         @Test
         void addUserTest() {
