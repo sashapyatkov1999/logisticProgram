@@ -1,11 +1,11 @@
 package com.example.logisticprogram.service.domain;
 
 import com.example.logisticprogram.dto.request.car.CarAddRequest;
+import com.example.logisticprogram.dto.request.car.CarNumberRequest;
 import com.example.logisticprogram.dto.response.car.CarResponse;
-import com.example.logisticprogram.dto.response.file.FileResponse;
 import com.example.logisticprogram.entity.Car;
-import com.example.logisticprogram.entity.File;
 import com.example.logisticprogram.mapper.car.CarMapper;
+import com.example.logisticprogram.mapper.car.CarMerger;
 import com.example.logisticprogram.mapper.car.CarResponseMapper;
 import com.example.logisticprogram.repository.CarRepository;
 import org.junit.jupiter.api.Test;
@@ -28,18 +28,24 @@ public class CarDomainServiceTest {
     @Mock
     private CarRepository carRepository;
     @Mock
+    private CarMerger carMerger;
+    @Mock
     private CarResponseMapper carResponseMapper;
     @Mock
     private CarMapper carMapper;
     @InjectMocks
     private CarDomainService service;
 
+    private final CarResponse carResponse = new CarResponse();
+
     private final CarAddRequest carAddRequestAdd = new CarAddRequest();
     private final List<Car> cars = new ArrayList<>();
     private final Car car = new Car(1L);
-    private final List<CarResponse> pointResponses = new ArrayList<>();
+    private final List<CarResponse> carResponses = new ArrayList<>();
     private final Long ID = 0L;
     private final Long id = 1L;
+    private final CarNumberRequest numberRequest = new CarNumberRequest();
+
 
 
     @Test
@@ -62,15 +68,15 @@ public class CarDomainServiceTest {
     void getAllCarsTest() {
         cars.add(new Car(1L));
         cars.add(new Car(2L));
-        pointResponses.add(new CarResponse());
-        pointResponses.add(new CarResponse());
+        carResponses.add(new CarResponse());
+        carResponses.add(new CarResponse());
 
         when(carRepository.findAll()).thenReturn(cars);
-        when(carResponseMapper.from(cars)).thenReturn(pointResponses);
+        when(carResponseMapper.from(cars)).thenReturn(carResponses);
 
         List<CarResponse> result = service.getAllCars();
 
-        assertEquals(pointResponses, result);
+        assertEquals(carResponses, result);
         assertNotNull(result);
         verify(carRepository).findAll();
         verify(carResponseMapper).from(cars);
@@ -80,7 +86,7 @@ public class CarDomainServiceTest {
     }
 
     @Test
-    void deleteUserTest() {
+    void deleteCarTest() {
         service.deleteCar(id);
         verify(carRepository).deleteById(id);
 
@@ -89,7 +95,7 @@ public class CarDomainServiceTest {
     }
 
     @Test
-    void addUserTest() {
+    void addCarTest() {
         when(carMapper.from(carAddRequestAdd)).thenReturn(car);
         when(carRepository.save(car)).thenReturn(car);
         Long id = service.addCar(carAddRequestAdd);
@@ -97,6 +103,43 @@ public class CarDomainServiceTest {
         verify(carMapper).from(carAddRequestAdd);
         verify(carRepository).save(car);
         verifyNoMoreInteractions(carRepository, carResponseMapper);
+    }
+
+    @Test
+    void editCarsTest(){
+        carAddRequestAdd.setId(1L);
+        car.setId(1L);
+
+        when(carRepository.getReferenceById(carAddRequestAdd.getId())).thenReturn(car);
+        when(carMerger.merge(car,carAddRequestAdd)).thenReturn(car);
+        when(carRepository.save(car)).thenReturn(car);
+
+        Long result = service.editCars(carAddRequestAdd);
+
+        verify(carRepository).getReferenceById(carAddRequestAdd.getId());
+        verify(carRepository).save(car);
+        verify(carMerger).merge(car,carAddRequestAdd);
+
+        assertEquals(1L, result);
+
+    }
+
+    @Test
+    void getCarByNumber(){
+        numberRequest.setNumber("ABC123");
+        car.setId(1L);
+        car.setCarNumber("ABC123");
+        carResponse.setId(1L);
+        carResponse.setCarNumber("ABC123");
+        cars.add(car);
+        when(carRepository.findAll()).thenReturn(cars);
+        when(carResponseMapper.from(car)).thenReturn(carResponse);
+
+        List<CarResponse> result = service.getCarByNumber(numberRequest);
+        verify(carRepository).findAll();
+        verify(carResponseMapper).from(car);
+        assertEquals(1, result.size());
+        assertEquals(carResponse, result.get(0));
     }
 
     private CarResponse getCarResponse() {
