@@ -10,16 +10,20 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoInteractions;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
+import static org.mockito.Mockito.when;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class UserDomainServiceTest {
@@ -30,6 +34,7 @@ class UserDomainServiceTest {
     private UserResponseMapper userResponseMapper;
     @Mock
     private UserMapper userMapper;
+
     @InjectMocks
     private UserDomainService service;
 
@@ -39,6 +44,7 @@ class UserDomainServiceTest {
     private final List<UserResponse> userResponses = new ArrayList<>();
     private final Long ID = 0L;
     private final Long id = 1L;
+
 
 
 
@@ -97,6 +103,8 @@ class UserDomainServiceTest {
         verify(userMapper).from(userAddRequestAdd);
         verify(userRepository).save(userAdd);
         verifyNoMoreInteractions(userRepository, userResponseMapper);
+    }
+
     }
 
     private UserResponse getUserResponse(){
