@@ -28,11 +28,6 @@ public class Role extends EntityWithName {
     @Serial
     private static final long serialVersionUID = 1L;
 
-    /*
-        @OneToMany(cascade = CascadeType.ALL, mappedBy = "role")
-        private List<UserRole> userRoles = Collections.emptyList();
-
-    */
     public Role(Long id) {
         this.id = id;
     }
