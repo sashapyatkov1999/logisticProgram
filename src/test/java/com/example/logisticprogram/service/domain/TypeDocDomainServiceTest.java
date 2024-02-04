@@ -43,6 +43,7 @@ class TypeDocDomainServiceTest {
         private final TypeDoc typeDoc = new TypeDoc(1L);
         private final List<TypeDocResponse> typeDocResponses = new ArrayList<>();
         private final Long ID = 0L;
+        private final Long id = 1L;
 
 
         @Test
@@ -63,10 +64,7 @@ class TypeDocDomainServiceTest {
 
         @Test
         void getAllTypeDocsTest(){
-            typeDocs.add(new TypeDoc(1L));
-            typeDocs.add(new TypeDoc(2L));
-            typeDocResponses.add(new TypeDocResponse());
-            typeDocResponses.add(new TypeDocResponse());
+            addNewTypeDocs();
 
             when(typeDocRepository.findAll()).thenReturn(typeDocs);
             when(typeDocResponseMapper.from(typeDocs)).thenReturn(typeDocResponses);
@@ -104,8 +102,7 @@ class TypeDocDomainServiceTest {
 
         @Test
         void editTypeDocTest(){
-            typeDocAddRequestAdd.setId(1L);
-            typeDoc.setId(1L);
+            typeDocAdd();
 
             when(typeDocRepository.getReferenceById(typeDocAddRequestAdd.getId())).thenReturn(typeDoc);
             when(typeDocMerger.merge(typeDoc,typeDocAddRequestAdd)).thenReturn(typeDoc);
@@ -125,7 +122,16 @@ class TypeDocDomainServiceTest {
             return new TypeDocResponse().setId(ID);
         }
 
-
+        private void typeDocAdd(){
+            typeDocAddRequestAdd.setId(1L);
+            typeDoc.setId(1L);
+        }
+        private void addNewTypeDocs(){
+            typeDocs.add(new TypeDoc(1L));
+            typeDocs.add(new TypeDoc(2L));
+            typeDocResponses.add(new TypeDocResponse());
+            typeDocResponses.add(new TypeDocResponse());
+        }
         private TypeDoc getUser(){return new TypeDoc(ID);}
     }
 
