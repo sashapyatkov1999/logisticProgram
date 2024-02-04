@@ -33,7 +33,7 @@ class UserDomainServiceTest {
     @InjectMocks
     private UserDomainService service;
 
-    private final UserAddRequest userAddRequestAdd = new UserAddRequest();
+
     private final List<User> users = new ArrayList<>();
     private final User user = new User(1L);
     private final List<UserResponse> userResponses = new ArrayList<>();
@@ -58,10 +58,7 @@ class UserDomainServiceTest {
 
     @Test
     void getAllUsersTest(){
-        users.add(new User(1L));
-        users.add(new User(2L));
-        userResponses.add(new UserResponse());
-        userResponses.add(new UserResponse());
+        userAdd();
 
         when(userRepository.findAll()).thenReturn(users);
         when(userResponseMapper.from(users)).thenReturn(userResponses);
@@ -86,7 +83,23 @@ class UserDomainServiceTest {
         verifyNoInteractions(userMapper);
     }
 
+    @Test
+    void addUserTest() {
+        when(userMapper.from(userAddRequestAdd())).thenReturn(user);
+        when(userRepository.save(user)).thenReturn(user);
+        Long id = service.addUser(userAddRequestAdd());
+        assertEquals(user.getId(),id.longValue());
+        verify(userMapper).from(userAddRequestAdd());
+        verify(userRepository).save(user);
+        verifyNoMoreInteractions(userRepository, userResponseMapper);
+    }
 
+    private void userAdd(){
+        users.add(new User(1L));
+        users.add(new User(2L));
+        userResponses.add(new UserResponse());
+        userResponses.add(new UserResponse());
+    }
 
     private UserResponse getUserResponse(){
         return new UserResponse().setId(ID);
@@ -94,4 +107,9 @@ class UserDomainServiceTest {
 
 
     private User getUser(){return new User(ID);}
+
+    private UserAddRequest userAddRequestAdd(){
+        UserAddRequest userAddRequestAdd = new UserAddRequest();
+        return  userAddRequestAdd;
+    }
 }
