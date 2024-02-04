@@ -48,7 +48,7 @@ class RoleDomainServiceTest {
 
 
         @Test
-        void getUserTest() {
+        void getRoleTest() {
 
             when(roleResponseMapper.from((Role) any())).thenReturn(getRoleResponse());
             when(roleRepository.getReferenceById(anyLong())).thenReturn(getRole());
@@ -64,7 +64,7 @@ class RoleDomainServiceTest {
         }
 
         @Test
-        void getAllUsersTest() {
+        void getAllRolesTest() {
             roles.add(new Role(1L));
             roles.add(new Role(2L));
             roleResponses.add(new RoleResponse());
@@ -85,7 +85,7 @@ class RoleDomainServiceTest {
         }
 
         @Test
-        void deleteUserTest() {
+        void deleteRoleTest() {
             service.deleteRole(id);
             verify(roleRepository).deleteById(id);
 
@@ -112,7 +112,7 @@ class RoleDomainServiceTest {
     }
 
         @Test
-        void addUserTest() {
+        void addRoleTest() {
             when(roleMapper.from(roleAddRequestAdd)).thenReturn(roleAdd);
             when(roleRepository.save(roleAdd)).thenReturn(roleAdd);
             Long id = service.addRole(roleAddRequestAdd);
