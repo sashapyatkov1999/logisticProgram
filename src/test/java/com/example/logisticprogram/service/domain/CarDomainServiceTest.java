@@ -38,11 +38,11 @@ class CarDomainServiceTest {
 
     private final CarResponse carResponse = new CarResponse();
 
-    private final CarAddRequest carAddRequestAdd = new CarAddRequest();
     private final List<Car> cars = new ArrayList<>();
     private final Car car = new Car(1L);
     private final List<CarResponse> carResponses = new ArrayList<>();
     private final Long ID = 0L;
+    private final Long id = 1L;
     private final CarNumberRequest numberRequest = new CarNumberRequest();
 
 
@@ -65,10 +65,7 @@ class CarDomainServiceTest {
 
     @Test
     void getAllCarsTest() {
-        cars.add(new Car(1L));
-        cars.add(new Car(2L));
-        carResponses.add(new CarResponse());
-        carResponses.add(new CarResponse());
+        carAdd();
 
         when(carRepository.findAll()).thenReturn(cars);
         when(carResponseMapper.from(cars)).thenReturn(carResponses);
@@ -95,29 +92,28 @@ class CarDomainServiceTest {
 
     @Test
     void addCarTest() {
-        when(carMapper.from(carAddRequestAdd)).thenReturn(car);
+        when(carMapper.from(carAddRequestAdd())).thenReturn(car);
         when(carRepository.save(car)).thenReturn(car);
-        Long id = service.addCar(carAddRequestAdd);
+        Long id = service.addCar(carAddRequestAdd());
         assertEquals(car.getId(), id.longValue());
-        verify(carMapper).from(carAddRequestAdd);
+        verify(carMapper).from(carAddRequestAdd());
         verify(carRepository).save(car);
         verifyNoMoreInteractions(carRepository, carResponseMapper);
     }
 
     @Test
     void editCarsTest(){
-        carAddRequestAdd.setId(1L);
-        car.setId(1L);
+        carSet();
 
-        when(carRepository.getReferenceById(carAddRequestAdd.getId())).thenReturn(car);
-        when(carMerger.merge(car,carAddRequestAdd)).thenReturn(car);
+        when(carRepository.getReferenceById(carAddRequestAdd().getId())).thenReturn(car);
+        when(carMerger.merge(car,carAddRequestAdd())).thenReturn(car);
         when(carRepository.save(car)).thenReturn(car);
 
-        Long result = service.editCars(carAddRequestAdd);
+        Long result = service.editCars(carAddRequestAdd());
 
-        verify(carRepository).getReferenceById(carAddRequestAdd.getId());
+        verify(carRepository).getReferenceById(carAddRequestAdd().getId());
         verify(carRepository).save(car);
-        verify(carMerger).merge(car,carAddRequestAdd);
+        verify(carMerger).merge(car,carAddRequestAdd());
 
         assertEquals(1L, result);
 
@@ -125,12 +121,7 @@ class CarDomainServiceTest {
 
     @Test
     void getCarByNumber(){
-        numberRequest.setNumber("ABC123");
-        car.setId(1L);
-        car.setCarNumber("ABC123");
-        carResponse.setId(1L);
-        carResponse.setCarNumber("ABC123");
-        cars.add(car);
+        forCarByNumber();
         when(carRepository.findAll()).thenReturn(cars);
         when(carResponseMapper.from(car)).thenReturn(carResponse);
 
@@ -145,9 +136,31 @@ class CarDomainServiceTest {
         return new CarResponse()
                 .setId(ID);
     }
+    private CarAddRequest carAddRequestAdd(){
+        CarAddRequest carAddRequestAdd = new CarAddRequest();
+        return carAddRequestAdd;
+    }
+    private void forCarByNumber(){
+        numberRequest.setNumber("ABC123");
+        car.setId(1L);
+        car.setCarNumber("ABC123");
+        carResponse.setId(1L);
+        carResponse.setCarNumber("ABC123");
+        cars.add(car);
+    }
+    private void carAdd(){
+        cars.add(new Car(1L));
+        cars.add(new Car(2L));
+        carResponses.add(new CarResponse());
+        carResponses.add(new CarResponse());
+    }
 
     private Car getCar() {
         return new Car(ID);
+    }
+    private void carSet(){
+        carAddRequestAdd().setId(id);
+        car.setId(id);
     }
 }
 
