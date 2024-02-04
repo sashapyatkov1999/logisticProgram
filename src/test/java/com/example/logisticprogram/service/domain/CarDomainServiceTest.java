@@ -36,8 +36,6 @@ class CarDomainServiceTest {
     @InjectMocks
     private CarDomainService service;
 
-    private final CarResponse carResponse = new CarResponse();
-
     private final List<Car> cars = new ArrayList<>();
     private final Car car = new Car(1L);
     private final List<CarResponse> carResponses = new ArrayList<>();
@@ -123,13 +121,13 @@ class CarDomainServiceTest {
     void getCarByNumber(){
         forCarByNumber();
         when(carRepository.findAll()).thenReturn(cars);
-        when(carResponseMapper.from(car)).thenReturn(carResponse);
+        when(carResponseMapper.from(car)).thenReturn(carResponse());
 
         List<CarResponse> result = service.getCarByNumber(numberRequest);
         verify(carRepository).findAll();
         verify(carResponseMapper).from(car);
         assertEquals(1, result.size());
-        assertEquals(carResponse, result.get(0));
+        assertEquals(carResponse(), result.get(0));
     }
 
     private CarResponse getCarResponse() {
@@ -144,8 +142,8 @@ class CarDomainServiceTest {
         numberRequest.setNumber("ABC123");
         car.setId(1L);
         car.setCarNumber("ABC123");
-        carResponse.setId(1L);
-        carResponse.setCarNumber("ABC123");
+        carResponse().setId(1L);
+        carResponse().setCarNumber("ABC123");
         cars.add(car);
     }
     private void carAdd(){
@@ -157,6 +155,10 @@ class CarDomainServiceTest {
 
     private Car getCar() {
         return new Car(ID);
+    }
+    private CarResponse carResponse(){
+        CarResponse carResponse = new CarResponse();
+        return carResponse;
     }
     private void carSet(){
         carAddRequestAdd().setId(id);
