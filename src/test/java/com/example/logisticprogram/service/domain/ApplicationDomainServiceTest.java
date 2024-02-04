@@ -32,7 +32,7 @@ class ApplicationDomainServiceTest {
     @InjectMocks
     private ApplicationDomainService service;
 
-    private final ApplicationAddRequest applicationAddRequestAdd = new ApplicationAddRequest();
+
     private final List<Application> applications = new ArrayList<>();
     private final Application application = new Application(1L);
     private final List<ApplicationResponse> applicationResponses = new ArrayList<>();
@@ -56,10 +56,7 @@ class ApplicationDomainServiceTest {
 
     @Test
     void getAllApplicationsTest() {
-        applications.add(new Application(1L));
-        applications.add(new Application(2L));
-        applicationResponses.add(new ApplicationResponse());
-        applicationResponses.add(new ApplicationResponse());
+        applicationAdd();
 
         when(applicationRepository.findAll()).thenReturn(applications);
         when(applicationResponseMapper.from(applications)).thenReturn(applicationResponses);
@@ -87,11 +84,11 @@ class ApplicationDomainServiceTest {
 
     @Test
     void addApplicationTest() {
-        when(applicationMapper.from(applicationAddRequestAdd)).thenReturn(application);
+        when(applicationMapper.from(applicationAddRequestAdd())).thenReturn(application);
         when(applicationRepository.save(application)).thenReturn(application);
-        Long id = service.addApplication(applicationAddRequestAdd);
+        Long id = service.addApplication(applicationAddRequestAdd());
         assertEquals(application.getId(), id.longValue());
-        verify(applicationMapper).from(applicationAddRequestAdd);
+        verify(applicationMapper).from(applicationAddRequestAdd());
         verify(applicationRepository).save(application);
         verifyNoMoreInteractions(applicationRepository, applicationResponseMapper);
     }
@@ -99,6 +96,16 @@ class ApplicationDomainServiceTest {
     private ApplicationResponse getApplicationResponse() {
         return new ApplicationResponse()
                 .setId(ID);
+    }
+    private void applicationAdd(){
+        applications.add(new Application(1L));
+        applications.add(new Application(2L));
+        applicationResponses.add(new ApplicationResponse());
+        applicationResponses.add(new ApplicationResponse());
+    }
+    private final ApplicationAddRequest applicationAddRequestAdd(){
+        ApplicationAddRequest applicationAddRequestAdd = new ApplicationAddRequest();
+        return applicationAddRequestAdd;
     }
 
     private Application getApplication() {
