@@ -11,6 +11,7 @@ import java.util.Date;
 @Accessors(chain = true)
 @NoArgsConstructor
 public class PointAddRequest {
+    private Long id;
     private Long applicationId;
     private String field;
     private Integer ordinal;

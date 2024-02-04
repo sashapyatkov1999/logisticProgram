@@ -2,6 +2,7 @@ package com.example.logisticprogram.service;
 
 import com.example.logisticprogram.dto.request.role.RoleAddRequest;
 import com.example.logisticprogram.dto.request.role.RoleRequest;
+import com.example.logisticprogram.dto.request.user.UserAddRequest;
 import com.example.logisticprogram.dto.response.role.RoleResponse;
 
 import com.example.logisticprogram.service.domain.RoleDomainService;
@@ -26,5 +27,10 @@ public class RoleService {
     public void deleteRole(RoleRequest request) {
           roleDomainService.deleteRole(request.getId());
     }
+    public void editRole(RoleAddRequest request) {
+        roleDomainService.editRole(request);
+    }
+
+
 
 }

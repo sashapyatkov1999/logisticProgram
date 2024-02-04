@@ -47,8 +47,8 @@ public class TypeDocDomainService {
     }
 
     @Transactional
-    public Long editTypeDocs(TypeDocAddRequest request){
+    public void editTypeDocs(TypeDocAddRequest request){
         var typeDoc = typeDocRepository.getReferenceById(request.getId());
-        return typeDocRepository.save(typeDocMerger.merge(typeDoc,request)).getId();
+        typeDocRepository.save(typeDocMerger.merge(typeDoc,request)).getId();
     }
 }
