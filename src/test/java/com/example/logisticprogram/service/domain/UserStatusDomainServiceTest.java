@@ -1,5 +1,6 @@
 package com.example.logisticprogram.service.domain;
 
+import com.example.logisticprogram.dto.request.user.UserAddRequest;
 import com.example.logisticprogram.dto.request.userstatus.UserStatusAddRequest;
 import com.example.logisticprogram.dto.response.userstatus.UserStatusResponse;
 import com.example.logisticprogram.entity.UserStatus;
@@ -32,7 +33,6 @@ public class UserStatusDomainServiceTest {
     @InjectMocks
     private UserStatusDomainService service;
 
-    private final UserStatusAddRequest userStatusAddRequestAdd = new UserStatusAddRequest();
     private final List<UserStatus> usersStatus = new ArrayList<>();
     private final UserStatus userStatusAdd = new UserStatus(1L);
     private final List<UserStatusResponse> userResponses = new ArrayList<>();
@@ -84,11 +84,11 @@ public class UserStatusDomainServiceTest {
 
     @Test
     void addUserStatus(){
-        when(userStatusMapper.from(userStatusAddRequestAdd)).thenReturn(userStatusAdd);
+        when(userStatusMapper.from(userStatusAddRequestAdd())).thenReturn(userStatusAdd);
         when(userStatusRepository.save(userStatusAdd)).thenReturn(userStatusAdd);
-        Long id = service.addUserStatus(userStatusAddRequestAdd);
+        Long id = service.addUserStatus(userStatusAddRequestAdd());
         assertEquals(userStatusAdd.getId(),id.longValue());
-        verify(userStatusMapper).from(userStatusAddRequestAdd);
+        verify(userStatusMapper).from(userStatusAddRequestAdd());
         verify(userStatusRepository).save(userStatusAdd);
         verifyNoMoreInteractions(userStatusRepository, userStatusResponseMapper);
 
@@ -98,6 +98,10 @@ public class UserStatusDomainServiceTest {
         usersStatus.add(new UserStatus(ID));
         userResponses.add(new UserStatusResponse());
         userResponses.add(new UserStatusResponse());
+    }
+    private UserStatusAddRequest userStatusAddRequestAdd(){
+        UserStatusAddRequest userStatusAddRequestAdd = new UserStatusAddRequest();
+        return  userStatusAddRequestAdd;
     }
     private UserStatusResponse getUserStatusResponse(){
         return new UserStatusResponse().setId(ID);
