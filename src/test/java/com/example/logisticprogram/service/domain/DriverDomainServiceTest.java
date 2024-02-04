@@ -1,6 +1,7 @@
 package com.example.logisticprogram.service.domain;
 
 import com.example.logisticprogram.dto.request.driver.DriverAddRequest;
+import com.example.logisticprogram.dto.request.user.UserAddRequest;
 import com.example.logisticprogram.dto.response.driver.DriverResponse;
 import com.example.logisticprogram.entity.Driver;
 import com.example.logisticprogram.mapper.driver.DriverMapper;
@@ -37,7 +38,6 @@ class DriverDomainServiceTest {
     @InjectMocks
     private DriverDomainService service;
 
-    private final DriverAddRequest driverAddRequestAdd = new DriverAddRequest();
     private final List<Driver> drivers = new ArrayList<>();
     private final Driver driver = new Driver(1L);
     private final List<DriverResponse> driverResponses = new ArrayList<>();
@@ -90,11 +90,11 @@ class DriverDomainServiceTest {
 
     @Test
     void addDriverTest() {
-        when(driverMapper.from(driverAddRequestAdd)).thenReturn(driver);
+        when(driverMapper.from(driverAddRequestAdd())).thenReturn(driver);
         when(driverRepository.save(driver)).thenReturn(driver);
-        Long id = service.addDriver(driverAddRequestAdd);
+        Long id = service.addDriver(driverAddRequestAdd());
         assertEquals(driver.getId(),id.longValue());
-        verify(driverMapper).from(driverAddRequestAdd);
+        verify(driverMapper).from(driverAddRequestAdd());
         verify(driverRepository).save(driver);
         verifyNoMoreInteractions(driverRepository, driverResponseMapper);
     }
@@ -102,14 +102,14 @@ class DriverDomainServiceTest {
     void editDriverTest(){
         driverSet();
 
-        when(driverRepository.getReferenceById(driverAddRequestAdd.getId())).thenReturn(driver);
-        when(driverMerger.merge(driver, driverAddRequestAdd)).thenReturn(driver);
+        when(driverRepository.getReferenceById(driverAddRequestAdd().getId())).thenReturn(driver);
+        when(driverMerger.merge(driver, driverAddRequestAdd())).thenReturn(driver);
         when(driverRepository.saveAndFlush(driver)).thenReturn(driver);
 
-        service.editDrivers(driverAddRequestAdd);
+        service.editDrivers(driverAddRequestAdd());
 
-        verify(driverRepository).getReferenceById(driverAddRequestAdd.getId());
-        verify(driverMerger).merge(driver, driverAddRequestAdd);
+        verify(driverRepository).getReferenceById(driverAddRequestAdd().getId());
+        verify(driverMerger).merge(driver, driverAddRequestAdd());
 
 
     }
@@ -119,7 +119,7 @@ class DriverDomainServiceTest {
                 .setId(ID);
     }
     private void driverSet(){
-        driverAddRequestAdd.setId(1L);
+        driverAddRequestAdd().setId(1L);
         driver.setId(1L);
     }
     private void addDriver(){
@@ -131,6 +131,10 @@ class DriverDomainServiceTest {
 
     private Driver getDriver(){
         return new Driver(ID);
+    }
+    private DriverAddRequest driverAddRequestAdd(){
+        DriverAddRequest driverAddRequestAdd = new DriverAddRequest();
+        return  driverAddRequestAdd;
     }
 
 }
