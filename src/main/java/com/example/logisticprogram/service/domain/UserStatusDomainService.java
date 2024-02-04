@@ -26,19 +26,19 @@ public class UserStatusDomainService {
 
 
     @Transactional
-    public List<UserStatusResponse> getAllRoles() {
+    public List<UserStatusResponse> getAllUserStatuses() {
         return userStatusResponseMapper
                 .from(userStatusRepository.findAll());
 
     }
 
     @Transactional
-    public void deleteRole(Long id) {
+    public void deleteUserStatus(Long id) {
         userStatusRepository.deleteById(id);
     }
 
     @Transactional
-    public Long addRole(UserStatusAddRequest request) {
+    public Long addUserStatus(UserStatusAddRequest request) {
         return userStatusRepository.save(userStatusMapper.from(request)).getId();
 
     }

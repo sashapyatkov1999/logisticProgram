@@ -57,15 +57,12 @@ public class UserStatusDomainServiceTest {
 
     @Test
     void getAllUserStatusTest(){
-        usersStatus.add(new UserStatus(1L));
-        usersStatus.add(new UserStatus(2L));
-        userResponses.add(new UserStatusResponse());
-        userResponses.add(new UserStatusResponse());
+        addUserStatusAndUserResponses();
 
         when(userStatusRepository.findAll()).thenReturn(usersStatus);
         when(userStatusResponseMapper.from(usersStatus)).thenReturn(userResponses);
 
-        List<UserStatusResponse> result = service.getAllRoles();
+        List<UserStatusResponse> result = service.getAllUserStatuses();
 
         assertEquals(userResponses, result);
         assertNotNull(result);
@@ -78,7 +75,7 @@ public class UserStatusDomainServiceTest {
 
     @Test
     void  deleteUserStatus(){
-        service.deleteRole(id);
+        service.deleteUserStatus(id);
         verify(userStatusRepository).deleteById(id);
 
         verifyNoMoreInteractions(userStatusRepository, userStatusResponseMapper);
@@ -89,14 +86,19 @@ public class UserStatusDomainServiceTest {
     void addUserStatus(){
         when(userStatusMapper.from(userStatusAddRequestAdd)).thenReturn(userStatusAdd);
         when(userStatusRepository.save(userStatusAdd)).thenReturn(userStatusAdd);
-        Long id = service.addRole(userStatusAddRequestAdd);
+        Long id = service.addUserStatus(userStatusAddRequestAdd);
         assertEquals(userStatusAdd.getId(),id.longValue());
         verify(userStatusMapper).from(userStatusAddRequestAdd);
         verify(userStatusRepository).save(userStatusAdd);
         verifyNoMoreInteractions(userStatusRepository, userStatusResponseMapper);
 
     }
-
+    private void addUserStatusAndUserResponses(){
+        usersStatus.add(new UserStatus(id));
+        usersStatus.add(new UserStatus(ID));
+        userResponses.add(new UserStatusResponse());
+        userResponses.add(new UserStatusResponse());
+    }
     private UserStatusResponse getUserStatusResponse(){
         return new UserStatusResponse().setId(ID);
     }

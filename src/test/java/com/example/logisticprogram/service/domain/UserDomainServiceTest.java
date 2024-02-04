@@ -14,6 +14,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
@@ -105,7 +106,6 @@ class UserDomainServiceTest {
         verifyNoMoreInteractions(userRepository, userResponseMapper);
     }
 
-    }
 
     private UserResponse getUserResponse(){
         return  new UserResponse()
