@@ -63,10 +63,7 @@ class DriverDomainServiceTest {
 
     @Test
     void getAllDriversTest() {
-        drivers.add(new Driver(1L));
-        drivers.add(new Driver(2L));
-        driverResponses.add(new DriverResponse());
-        driverResponses.add(new DriverResponse());
+        addDriver();
 
         when(driverRepository.findAll()).thenReturn(drivers);
         when(driverResponseMapper.from(drivers)).thenReturn(driverResponses);
@@ -103,8 +100,7 @@ class DriverDomainServiceTest {
     }
     @Test
     void editDriverTest(){
-        driverAddRequestAdd.setId(1L);
-        driver.setId(1L);
+        driverSet();
 
         when(driverRepository.getReferenceById(driverAddRequestAdd.getId())).thenReturn(driver);
         when(driverMerger.merge(driver, driverAddRequestAdd)).thenReturn(driver);
@@ -121,6 +117,16 @@ class DriverDomainServiceTest {
     private DriverResponse getDriverResponse(){
         return  new DriverResponse()
                 .setId(ID);
+    }
+    private void driverSet(){
+        driverAddRequestAdd.setId(1L);
+        driver.setId(1L);
+    }
+    private void addDriver(){
+        drivers.add(new Driver(1L));
+        drivers.add(new Driver(2L));
+        driverResponses.add(new DriverResponse());
+        driverResponses.add(new DriverResponse());
     }
 
     private Driver getDriver(){
