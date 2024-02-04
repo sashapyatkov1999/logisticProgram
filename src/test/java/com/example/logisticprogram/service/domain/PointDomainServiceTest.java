@@ -33,7 +33,7 @@ class PointDomainServiceTest {
     @InjectMocks
     private PointDomainService service;
 
-    private final PointAddRequest pointAddRequestAdd = new PointAddRequest();
+
     private final List<Point> points = new ArrayList<>();
     private final Point pointAdd = new Point(1L);
     private final List<PointResponse> pointResponses = new ArrayList<>();
@@ -58,10 +58,7 @@ class PointDomainServiceTest {
 
     @Test
     void getAllPointsTest() {
-        points.add(new Point(1L));
-        points.add(new Point(2L));
-        pointResponses.add(new PointResponse());
-        pointResponses.add(new PointResponse());
+        pointAdd();
 
         when(pointRepository.findAll()).thenReturn(points);
         when(pointResponseMapper.from(points)).thenReturn(pointResponses);
@@ -89,11 +86,11 @@ class PointDomainServiceTest {
     @Test
     void addPointTest() {
 
-        when(pointMapper.from(pointAddRequestAdd)).thenReturn(pointAdd);
+        when(pointMapper.from(pointAddRequestAdd())).thenReturn(pointAdd);
         when(pointRepository.save(pointAdd)).thenReturn(pointAdd);
-        Long id = service.addPoint(pointAddRequestAdd);
+        Long id = service.addPoint(pointAddRequestAdd());
         assertEquals(pointAdd.getId(), id.longValue());
-        verify(pointMapper).from(pointAddRequestAdd);
+        verify(pointMapper).from(pointAddRequestAdd());
         verify(pointRepository).save(pointAdd);
         verifyNoMoreInteractions(pointRepository, pointResponseMapper);
     }
@@ -102,6 +99,19 @@ class PointDomainServiceTest {
         return new PointResponse()
                 .setId(ID);
     }
+
+    private void pointAdd(){
+        points.add(new Point(1L));
+        points.add(new Point(2L));
+        pointResponses.add(new PointResponse());
+        pointResponses.add(new PointResponse());
+    }
+
+    private PointAddRequest pointAddRequestAdd(){
+        PointAddRequest pointAddRequestAdd = new PointAddRequest();
+        return  pointAddRequestAdd;
+    }
+
 
     private Point getPoint() {
         return new Point(ID);
