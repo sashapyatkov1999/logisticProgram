@@ -26,11 +26,7 @@ class ApplicationMergerTest {
 
         String description = "";
 
-        when(applicationAddRequest.getManagerId()).thenReturn(managerId);
-        when(applicationAddRequest.getDriverId()).thenReturn(driverId);
-        when(applicationAddRequest.getName()).thenReturn(name);
-        when(applicationAddRequest.getDescription()).thenReturn(description);
-
+       //spy
 
         Application result = merger().merge(target(),applicationAddRequest);
 

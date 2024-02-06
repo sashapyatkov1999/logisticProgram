@@ -23,9 +23,7 @@ class ApplicationClientMapperTest {
     @Test
      void ApplicationClientTest() {
 
-        when(applicationClientAddRequest.getApplicationId()).thenReturn(applicationId);
-        when(applicationClientAddRequest.getClientId()).thenReturn(clientId);
-        when(applicationClientAddRequest.getDescription()).thenReturn(description);
+        //spy
 
 
         ApplicationClient result = mapper().from(applicationClientAddRequest);

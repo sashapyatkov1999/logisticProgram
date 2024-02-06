@@ -28,7 +28,7 @@ class ApplicationResponseMapperTest {
 
     @Mock
     private UserResponseMapper userResponseMapper;
-    Long id = 1L;
+    private final Long id = 1L;
     Long driverId = 2L;
     Long managerId = 3L;
     String name = "";
