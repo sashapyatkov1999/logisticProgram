@@ -1,9 +1,8 @@
 package com.example.logisticprogram.controller;
 
-import com.example.logisticprogram.dto.request.typedoc.TypeDocNumberRequest;
+import com.example.logisticprogram.dto.request.user.LoginRequest;
 import com.example.logisticprogram.dto.request.user.UserAddRequest;
 import com.example.logisticprogram.dto.request.user.UserRequest;
-import com.example.logisticprogram.dto.response.typedoc.TypeDocResponse;
 import com.example.logisticprogram.dto.response.user.UserResponse;
 import com.example.logisticprogram.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -19,33 +18,17 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 @RequiredArgsConstructor
 public class UserController {
     private final UserService service;
-    public static final String USER_SET_LOGIN = "/api/v1/user/set-login";
-    public static final String USER_SET_PASSWORD = "/api/v1/user/set-password";
+
     public static final String USER_ADD = "/api/v1/user/add";
     public static final String USER_GET = "/api/v1/user/get";
     public static final String USER_DELETE = "/api/v1/user/delete";
-    public static final String USER_GET_LOGIN = "/api/v1/user/get-login";
-    public static final String USER_GET_PASSWORD = "/api/v1/user/get-password";
-    public static final String USER_GET_REGISTRATION = "/api/v1/user/get-registration";
-    public static final String USER_SET_REGISTRATION = "/api/v1/user/set-registration";
     public static final String USER_EDIT = "/api/v1/user/edit";
     public static final String USER_GET_ALL = "/api/v1/user/get-all";
     public static final String USER_SEARCH = "/api/v1/user/search";
-    @PostMapping(
-            value = USER_SET_LOGIN,
-            consumes = APPLICATION_JSON_VALUE,
-            produces = APPLICATION_JSON_VALUE)
-    public void setLogin(@RequestBody String request) {
-        service.setLogin(request);
-    }
 
-    @PostMapping(
-            value = USER_SET_PASSWORD,
-            consumes = APPLICATION_JSON_VALUE,
-            produces = APPLICATION_JSON_VALUE)
-    public void setPassword(@RequestBody String request) {
-        service.setPassword(request);
-    }
+    public static final String USER_LOGIN = "/api/v1/user/login";
+
+
     @PostMapping(
             value = USER_ADD,
             consumes = APPLICATION_JSON_VALUE,
@@ -60,6 +43,14 @@ public class UserController {
     public UserResponse getUser(@RequestBody UserRequest request) {
         return service.getUser(request);
     }
+
+    @PostMapping(
+            value = USER_LOGIN,
+            consumes = APPLICATION_JSON_VALUE,
+            produces = APPLICATION_JSON_VALUE)
+    public Boolean login (@RequestBody LoginRequest request) {
+        return service.login(request);
+    }
     @PostMapping(
             value = USER_DELETE,
             consumes = APPLICATION_JSON_VALUE,
@@ -67,34 +58,7 @@ public class UserController {
     public void deleteUser(@RequestBody UserRequest request) {
         service.deleteUser(request);
     }
-    @PostMapping(
-            value = USER_GET_LOGIN,
-            consumes = APPLICATION_JSON_VALUE,
-            produces = APPLICATION_JSON_VALUE)
-    public String getLogin(@RequestBody UserRequest request) {
-        return service.getLogin(request);
-    }
-    @PostMapping(
-            value = USER_GET_PASSWORD,
-            consumes = APPLICATION_JSON_VALUE,
-            produces = APPLICATION_JSON_VALUE)
-    public String getPassword(@RequestBody UserRequest request) {
-        return service.getPassword(request);
-    }
-    @PostMapping(
-            value = USER_GET_REGISTRATION,
-            consumes = APPLICATION_JSON_VALUE,
-            produces = APPLICATION_JSON_VALUE)
-    public String getRegistration(@RequestBody UserRequest request) {
-        return service.getRegistration(request);
-    }
-    @PostMapping(
-            value = USER_SET_REGISTRATION,
-            consumes = APPLICATION_JSON_VALUE,
-            produces = APPLICATION_JSON_VALUE)
-    public void setRegistration(@RequestBody String registration, @RequestBody UserRequest request) {
-        service.setRegistration(registration, request);
-    }
+
     @PostMapping(
             value = USER_EDIT,
             consumes = APPLICATION_JSON_VALUE,
@@ -113,8 +77,8 @@ public class UserController {
             value = USER_SEARCH,
             consumes = APPLICATION_JSON_VALUE,
             produces = APPLICATION_JSON_VALUE)
-    public void search(@RequestBody List<UserResponse> userResponses,@RequestBody char request) {
-        service.search(userResponses,request);
+    public void search(@RequestBody String request) {
+        service.search(request);
     }
 
 }

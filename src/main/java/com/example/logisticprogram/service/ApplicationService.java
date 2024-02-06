@@ -12,7 +12,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -64,10 +63,11 @@ public class ApplicationService {
         pointDomainService.getPoint(request.getId());
     }
 
-    public List<PointResponse> pointGetByApplication(List<PointResponse> pointResponses, char request) {
-        return pointResponses.stream()
+    public List<PointResponse> pointGetByApplication(String request) {
+        return pointDomainService.getAllPoints()
+                .stream()
                 .filter(pointResponse ->
-                        pointResponse.getField().toLowerCase().contains(String.valueOf(Character.toLowerCase(request))))
-                .collect(Collectors.toList());
+                        pointResponse.getField().toLowerCase().contains((request)))
+                .toList();
     }
 }

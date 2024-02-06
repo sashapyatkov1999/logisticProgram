@@ -97,8 +97,8 @@ public class ApplicationController {
             value = POINT_GET_BY_APPLICATION,
             consumes = APPLICATION_JSON_VALUE,
             produces = APPLICATION_JSON_VALUE)
-    public List<PointResponse> pointGetByApplication(@RequestBody List<PointResponse> pointGetByApplication, @RequestBody char request) {
-        return service.pointGetByApplication(pointGetByApplication,request);
+    public List<PointResponse> pointGetByApplication(@RequestBody String request) {
+        return service.pointGetByApplication(request);
     }
 }
 

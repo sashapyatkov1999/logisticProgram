@@ -9,13 +9,12 @@ import com.example.logisticprogram.mapper.car.CarResponseMapper;
 import com.example.logisticprogram.mapper.driver.DriverMapper;
 import com.example.logisticprogram.mapper.driver.DriverMerger;
 import com.example.logisticprogram.mapper.driver.DriverResponseMapper;
-import com.example.logisticprogram.mapper.user.UserResponseMapper;
 import com.example.logisticprogram.repository.DriverRepository;
-import com.example.logisticprogram.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.security.InvalidParameterException;
 import java.util.List;
 
 @Service
@@ -25,8 +24,6 @@ public class DriverDomainService {
     private final DriverMapper driverMapper;
     private final DriverResponseMapper driverResponseMapper;
     private final DriverMerger driverMerger;
-    private final UserRepository userRepository;
-    private final UserResponseMapper userResponseMapper;
     private final CarResponseMapper carResponseMapper;
 
     @Transactional
@@ -34,6 +31,10 @@ public class DriverDomainService {
         return driverResponseMapper.from(repository.getReferenceById(id));
     }
 
+    @Transactional
+    public DriverResponse getDriverByUser(Long userId) {
+        return driverResponseMapper.from(repository.findByUserId(userId).orElseThrow(() -> new InvalidParameterException("Водитель не найден")));
+    }
 
     @Transactional
     public List<DriverResponse> getAllDrivers() {
@@ -53,18 +54,20 @@ public class DriverDomainService {
     }
 
     @Transactional
-    public void editDrivers(DriverAddRequest request){
+    public void editDrivers(DriverAddRequest request) {
         var driver = repository.getReferenceById(request.getId());
-         repository.saveAndFlush(driverMerger.merge(driver,request));
+        repository.saveAndFlush(driverMerger.merge(driver, request));
 
     }
 
     @Transactional
-    public  List<CarResponse> getCarByDriver(DriverFindByNameRequest request) {
-        return  repository.findAll()
+    public List<CarResponse> getCarByDriver(DriverFindByNameRequest request) {
+        return repository.findAll()
                 .stream()
                 .filter(driver -> driver.getUser().getName().toLowerCase().contains(request.getFindByName().toLowerCase()))
                 .map(driver -> carResponseMapper.from(driver.getCar()))
                 .toList();
     }
+
+
 }
