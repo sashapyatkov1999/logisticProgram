@@ -14,124 +14,120 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyList;
 import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoInteractions;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class TypeDocDomainServiceTest {
 
 
-        @Mock
-        private TypeDocRepository typeDocRepository;
-        @Mock
-        private TypeDocMerger typeDocMerger;
-        @Mock
-        private TypeDocResponseMapper typeDocResponseMapper;
-        @Mock
-        private TypeDocMapper typeDocMapper;
-        @InjectMocks
-        private TypeDocDomainService service;
+    @Mock
+    private TypeDocRepository typeDocRepository;
+    @Mock
+    private TypeDocMerger typeDocMerger;
+    @Mock
+    private TypeDocResponseMapper typeDocResponseMapper;
+    @Mock
+    private TypeDocMapper typeDocMapper;
+    @InjectMocks
+    private TypeDocDomainService service;
 
-        private final TypeDocAddRequest typeDocAddRequestAdd = new TypeDocAddRequest();
-        private final List<TypeDoc> typeDocs = new ArrayList<>();
-        private final TypeDoc typeDoc = new TypeDoc(1L);
-        private final List<TypeDocResponse> typeDocResponses = new ArrayList<>();
-        private final Long ID = 0L;
-        private final Long id = 1L;
+    private final Long ID = 0L;
 
 
-        @Test
-        void getTypeDocStatusTest(){
+    @Test
+    void getTypeDocStatusTest() {
 
-            when(typeDocResponseMapper.from((TypeDoc) any())).thenReturn(getTypeDocResponse());
-            when(typeDocRepository.getReferenceById(anyLong())).thenReturn(getUser());
+        when(typeDocResponseMapper.from(any(TypeDoc.class))).thenReturn(getTypeDocResponse());
+        when(typeDocRepository.getReferenceById(anyLong())).thenReturn(getTypeDoc());
 
-            var result = service.getTypeDocById(ID);
+        var result = service.getTypeDocById(ID);
 
-            assertNotNull(result);
+        assertThat(result).isNotNull();
 
-            verify(typeDocRepository).getReferenceById(anyLong());
-            verify(typeDocResponseMapper).from((TypeDoc) any());
-            verifyNoMoreInteractions(typeDocRepository, typeDocResponseMapper);
-            verifyNoInteractions(typeDocMapper);
-        }
+        verify(typeDocRepository).getReferenceById(anyLong());
+        verify(typeDocResponseMapper).from(any(TypeDoc.class));
+        verifyNoMoreInteractions(typeDocRepository, typeDocResponseMapper);
+        verifyNoInteractions(typeDocMapper);
+    }
 
-        @Test
-        void getAllTypeDocsTest(){
-            addNewTypeDocs();
+    @Test
+    void getAllTypeDocsTest() {
 
-            when(typeDocRepository.findAll()).thenReturn(typeDocs);
-            when(typeDocResponseMapper.from(typeDocs)).thenReturn(typeDocResponses);
+        when(typeDocRepository.findAll()).thenReturn(Collections.singletonList(getTypeDoc()));
+        when(typeDocResponseMapper.from(anyList())).thenReturn(Collections.singletonList(getTypeDocResponse()));
 
-            List<TypeDocResponse> result = service.getAllTypeDocs();
+        List<TypeDocResponse> result = service.getAllTypeDocs();
 
-            assertEquals(typeDocResponses, result);
-            assertNotNull(result);
-            verify(typeDocRepository).findAll();
-            verify(typeDocResponseMapper).from(typeDocs);
 
-            verifyNoMoreInteractions(typeDocRepository, typeDocResponseMapper);
-            verifyNoInteractions(typeDocMapper);
-        }
+        assertThat(result).isNotNull();
+        verify(typeDocRepository).findAll();
+        verify(typeDocResponseMapper).from(anyList());
 
-        @Test
-        void  deleteTypeDoc(){
-            service.deleteTypeDoc(ID);
-            verify(typeDocRepository).deleteById(ID);
+        verifyNoMoreInteractions(typeDocRepository, typeDocResponseMapper);
+        verifyNoInteractions(typeDocMapper);
+    }
 
-            verifyNoMoreInteractions(typeDocRepository, typeDocResponseMapper);
-            verifyNoInteractions(typeDocMapper);
-        }
+    @Test
+    void deleteTypeDoc() {
+        service.deleteTypeDoc(ID);
+        verify(typeDocRepository).deleteById(ID);
 
-        @Test
-        void addTypeDoc(){
-            when(typeDocMapper.from(typeDocAddRequestAdd)).thenReturn(typeDoc);
-            when(typeDocRepository.save(typeDoc)).thenReturn(typeDoc);
-            Long id = service.addTypeDoc(typeDocAddRequestAdd);
-            assertEquals(typeDoc.getId(),id.longValue());
-            verify(typeDocMapper).from(typeDocAddRequestAdd);
-            verify(typeDocRepository).save(typeDoc);
-            verifyNoMoreInteractions(typeDocRepository, typeDocResponseMapper);
-        }
+        verifyNoMoreInteractions(typeDocRepository, typeDocResponseMapper);
+        verifyNoInteractions(typeDocMapper);
+    }
 
-        @Test
-        void editTypeDocTest(){
-            typeDocAdd();
+    @Test
+    void addTypeDoc() {
+        when(typeDocMapper.from(any(TypeDocAddRequest.class))).thenReturn(getTypeDoc());
+        when(typeDocRepository.save(any())).thenReturn(getTypeDoc());
+        Long id = service.addTypeDoc(getTypeDocAddRequest());
 
-            when(typeDocRepository.getReferenceById(typeDocAddRequestAdd.getId())).thenReturn(typeDoc);
-            when(typeDocMerger.merge(typeDoc,typeDocAddRequestAdd)).thenReturn(typeDoc);
-            when(typeDocRepository.save(typeDoc)).thenReturn(typeDoc);
+        assertThat(id).isEqualTo(ID);
 
-            Long result = service.editTypeDocs(typeDocAddRequestAdd);
+        verify(typeDocMapper).from(any(TypeDocAddRequest.class));
+        verify(typeDocRepository).save(any());
+        verifyNoMoreInteractions(typeDocRepository, typeDocResponseMapper);
+    }
 
-            verify(typeDocRepository).getReferenceById(typeDocAddRequestAdd.getId());
-            verify(typeDocRepository).save(typeDoc);
-            verify(typeDocMerger).merge(typeDoc,typeDocAddRequestAdd);
+    @Test
+    void editTypeDocTest() {
 
-            assertEquals(1L, result);
+        when(typeDocRepository.getReferenceById(anyLong())).thenReturn(getTypeDoc());
+        when(typeDocMerger.merge(any(), any())).thenReturn(getTypeDoc());
+        when(typeDocRepository.save(any())).thenReturn(getTypeDoc());
+
+        Long result = service.editTypeDocs(getTypeDocAddRequest());
+
+        assertThat(result).isEqualTo(ID);
+
+        verify(typeDocRepository).getReferenceById(anyLong());
+        verify(typeDocRepository).save(any());
+        verify(typeDocMerger).merge(any(), any());
+        verifyNoMoreInteractions(typeDocRepository, typeDocMerger);
 
     }
 
-        private TypeDocResponse getTypeDocResponse(){
-            return new TypeDocResponse().setId(ID);
-        }
-
-        private void typeDocAdd(){
-            typeDocAddRequestAdd.setId(1L);
-            typeDoc.setId(1L);
-        }
-        private void addNewTypeDocs(){
-            typeDocs.add(new TypeDoc(1L));
-            typeDocs.add(new TypeDoc(2L));
-            typeDocResponses.add(new TypeDocResponse());
-            typeDocResponses.add(new TypeDocResponse());
-        }
-        private TypeDoc getUser(){return new TypeDoc(ID);}
+    private TypeDocResponse getTypeDocResponse() {
+        return new TypeDocResponse().setId(ID);
     }
+
+    private TypeDoc getTypeDoc() {
+        return new TypeDoc(ID);
+    }
+
+    private TypeDocAddRequest getTypeDocAddRequest() {
+        return new TypeDocAddRequest()
+                .setId(ID);
+    }
+}
 
