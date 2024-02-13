@@ -18,7 +18,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.when;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class ApplicationClientResponseMapperTest {
@@ -33,31 +34,33 @@ class ApplicationClientResponseMapperTest {
 
     Long id = 1L;
     String description = "";
-    LocalDateTime created = LocalDateTime.now();
-    LocalDateTime modified = LocalDateTime.now();
+
 
     @Test
-    void ApplicationClientResponseTest() {
+    void from() {
         when(applicationResponseMapper.from(application())).thenReturn(applicationResponse());
         when(clientResponseMapper.from(client())).thenReturn(clientResponse());
 
-        ApplicationClientResponse result = mapper.from(source());
+        var source = spy(source());
+        ApplicationClientResponse result = mapper.from(source);
 
-        assertEquals(id, result.getId());
+        assertNull(result.getId());
+        assertNull(result.getCreated());
+        assertNull(result.getModified());
         assertEquals(applicationResponse(), result.getApplication());
         assertEquals(clientResponse(), result.getClient());
         assertEquals(description, result.getDescription());
-        assertEquals(created, result.getCreated());
-        assertEquals(modified, result.getModified());
+        verify(source).getApplication();
+        verify(source).getDescription();
+        verify(source).getClient();
+
     }
     ApplicationClient source(){
-        ApplicationClient source = new ApplicationClient();
-        return source.setId(id)
+
+        return new ApplicationClient()
                 .setApplication(application())
                 .setClient(client())
-                .setDescription(description)
-                .setCreated(created)
-                .setModified(modified);
+                .setDescription(description);
     }
     Application application(){
         return new Application();

@@ -6,39 +6,51 @@ import com.example.logisticprogram.mapper.application.ApplicationMapper;
 import com.example.logisticprogram.mapper.application.ApplicationMerger;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.when;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class ApplicationMergerTest {
-    @Mock
-    private ApplicationAddRequest applicationAddRequest;
+    @InjectMocks
+    private ApplicationMerger merger;
 
-    Long managerId = 1L;
-    Long driverId = 2L;
-    String name = "";
+
+    private final Long managerId = 1L;
+    private final Long driverId = 2L;
+    private final String name = "";
+    private final String description = "";
 
     @Test
-    void ApplicationMergerTest() {
+    void merge() {
 
-        String description = "";
+        var source = spy(getApplicationAddRequest());
+        var target = spy(target());
+        var result = merger.merge(target,source);
 
-       //spy
-
-        Application result = merger().merge(target(),applicationAddRequest);
-
+        assertNull(result.getId());
+        assertNull(result.getCreated());
+        assertNull(result.getModified());
         assertEquals(managerId, result.getManager().getId());
         assertEquals(driverId, result.getDriver().getId());
         assertEquals(name, result.getName());
         assertEquals(description, result.getDescription());
+
     }
 
-    ApplicationMerger merger(){
-        return new ApplicationMerger();
+    private ApplicationAddRequest getApplicationAddRequest(){
+        return new ApplicationAddRequest()
+                .setManagerId(managerId)
+                .setDriverId(driverId)
+                .setName(name)
+                .setDescription(description);
     }
+
+
     Application target(){
         return new Application();
     }

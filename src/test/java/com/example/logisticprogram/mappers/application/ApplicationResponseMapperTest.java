@@ -11,6 +11,7 @@ import com.example.logisticprogram.mapper.driver.DriverResponseMapper;
 import com.example.logisticprogram.mapper.user.UserResponseMapper;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
@@ -19,7 +20,7 @@ import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class ApplicationResponseMapperTest {
@@ -28,6 +29,8 @@ class ApplicationResponseMapperTest {
 
     @Mock
     private UserResponseMapper userResponseMapper;
+    @InjectMocks
+    private ApplicationResponseMapper mapper;
     private final Long id = 1L;
     Long driverId = 2L;
     Long managerId = 3L;
@@ -41,7 +44,8 @@ class ApplicationResponseMapperTest {
         when(driverResponseMapper.from(any(Driver.class))).thenReturn(new DriverResponse());
         when(userResponseMapper.from(any(User.class))).thenReturn(new UserResponse());
 
-        ApplicationResponse result = mapper().from(source());
+        var source = spy(source());
+        var result = mapper.from(source);
 
         assertEquals(response().getId(), result.getId());
         assertEquals(response().getDriver(), result.getDriver());
@@ -50,6 +54,15 @@ class ApplicationResponseMapperTest {
         assertEquals(response().getDescription(), result.getDescription());
         assertEquals(response().getCreated(), result.getCreated());
         assertEquals(response().getModified(), result.getModified());
+        verify(source).getDriver();
+        verify(source).getId();
+        verify(source).getManager();
+        verify(source).getName();
+        verify(source).getDescription();
+        verify(source).getCreated();
+        verify(source).getModified();
+
+        verifyNoMoreInteractions(source);
     }
     ApplicationResponse response(){
     ApplicationResponse response = new ApplicationResponse();
