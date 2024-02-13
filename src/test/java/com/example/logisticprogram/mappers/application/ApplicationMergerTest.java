@@ -10,6 +10,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.time.LocalDateTime;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.Mockito.*;
@@ -24,6 +26,8 @@ class ApplicationMergerTest {
     private final Long driverId = 2L;
     private final String name = "";
     private final String description = "";
+    private final LocalDateTime CREATED = LocalDateTime.now();
+    private final LocalDateTime MODIFIED = LocalDateTime.now();
 
     @Test
     void merge() {
@@ -33,8 +37,8 @@ class ApplicationMergerTest {
         var result = merger.merge(target,source);
 
         assertNull(result.getId());
-        assertNull(result.getCreated());
-        assertNull(result.getModified());
+        assertEquals(CREATED,result.getCreated());
+        assertEquals(MODIFIED,result.getModified());
         assertEquals(managerId, result.getManager().getId());
         assertEquals(driverId, result.getDriver().getId());
         assertEquals(name, result.getName());
@@ -52,6 +56,9 @@ class ApplicationMergerTest {
 
 
     Application target(){
-        return new Application();
+        return new Application()
+                .setId(1L)
+                .setCreated(CREATED)
+                .setModified(MODIFIED);
     }
 }

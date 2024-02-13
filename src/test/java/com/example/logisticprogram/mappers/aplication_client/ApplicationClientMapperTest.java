@@ -15,9 +15,8 @@ import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class ApplicationClientMapperTest {
-    @Mock
-    private ApplicationClientAddRequest applicationClientAddRequest;
-
+    @InjectMocks
+    ApplicationClientMapper mapper;
     Long number = 0L;
 
     Long applicationId = 1L;
@@ -29,7 +28,7 @@ class ApplicationClientMapperTest {
 
         //spy
         var source = spy(getApplicationClientAddRequest());
-        var result = mapper().from(source);
+        var result = mapper.from(source);
 
         assertNull(result.getId());
         assertNull(result.getCreated());
@@ -43,9 +42,7 @@ class ApplicationClientMapperTest {
         verifyNoMoreInteractions(source);
     }
 
-    public  ApplicationClientMapper mapper(){
-        return new ApplicationClientMapper();
-    }
+
     private ApplicationClientAddRequest getApplicationClientAddRequest(){
         return new ApplicationClientAddRequest()
                 .setApplicationId(applicationId)
