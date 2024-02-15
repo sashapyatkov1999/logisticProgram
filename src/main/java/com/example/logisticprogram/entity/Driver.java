@@ -69,7 +69,6 @@ public class Driver extends BaseEntity {
     }
 
 
-
     @Override
     public Driver setModified(LocalDateTime modified) {
         this.modified = modified;
