@@ -10,8 +10,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-
 import java.util.Collections;
 import java.util.List;
 
@@ -20,6 +20,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.*;
+
 
 @ExtendWith(MockitoExtension.class)
 class UserDomainServiceTest {
@@ -34,6 +35,9 @@ class UserDomainServiceTest {
     private UserDomainService service;
 
     private final Long ID = 0L;
+
+
+
 
     @Test
     void getUserTest(){
@@ -63,6 +67,7 @@ class UserDomainServiceTest {
         verify(userRepository).findAll();
         verify(userResponseMapper).from(anyList());
 
+
         verifyNoMoreInteractions(userRepository, userResponseMapper);
         verifyNoInteractions(userMapper);
     }
@@ -78,8 +83,10 @@ class UserDomainServiceTest {
 
     @Test
     void addUserTest() {
+
         when(userMapper.from(any(UserAddRequest.class))).thenReturn(getUser());
         when(userRepository.save(any())).thenReturn(getUser());
+
 
         Long id = service.addUser(userAddRequestAdd());
 

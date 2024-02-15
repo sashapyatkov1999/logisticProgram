@@ -20,7 +20,8 @@ public class UserDomainService {
 
     @Transactional
     public UserResponse getUser(Long id) {
-        return userResponseMapper.from(userRepository.getReferenceById(id));
+        return userResponseMapper
+                .from(userRepository.getReferenceById(id));
     }
 
     @Transactional

@@ -21,7 +21,7 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class DriverDomainService {
-    private final DriverRepository repository;
+    private final DriverRepository driverRepository;
     private final DriverMapper driverMapper;
     private final DriverResponseMapper driverResponseMapper;
     private final DriverMerger driverMerger;
@@ -31,37 +31,38 @@ public class DriverDomainService {
 
     @Transactional
     public DriverResponse getDriverById(Long id) {
-        return driverResponseMapper.from(repository.getReferenceById(id));
+        return driverResponseMapper
+                .from(driverRepository.getReferenceById(id));
     }
 
 
     @Transactional
     public List<DriverResponse> getAllDrivers() {
-        return driverResponseMapper.from(repository.findAll());
+        return driverResponseMapper.from(driverRepository.findAll());
 
     }
 
     @Transactional
     public void deleteDriver(Long id) {
-        repository.deleteById(id);
+        driverRepository.deleteById(id);
     }
 
     @Transactional
     public Long addDriver(DriverAddRequest request) {
-        return repository.save(driverMapper.from(request)).getId();
+        return driverRepository.save(driverMapper.from(request)).getId();
 
     }
 
     @Transactional
     public void editDrivers(DriverAddRequest request){
-        var driver = repository.getReferenceById(request.getId());
-         repository.saveAndFlush(driverMerger.merge(driver,request));
+        var driver = driverRepository.getReferenceById(request.getId());
+         driverRepository.saveAndFlush(driverMerger.merge(driver,request));
 
     }
 
     @Transactional
     public  List<CarResponse> getCarByDriver(DriverFindByNameRequest request) {
-        return  repository.findAll()
+        return  driverRepository.findAll()
                 .stream()
                 .filter(driver -> driver.getUser().getName().toLowerCase().contains(request.getFindByName().toLowerCase()))
                 .map(driver -> carResponseMapper.from(driver.getCar()))
