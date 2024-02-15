@@ -15,8 +15,11 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.InstanceOfAssertFactories.LIST;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
@@ -38,9 +41,6 @@ class DriverDomainServiceTest {
     @InjectMocks
     private DriverDomainService service;
 
-    private final List<Driver> drivers = new ArrayList<>();
-    private final Driver driver = new Driver(1L);
-    private final List<DriverResponse> driverResponses = new ArrayList<>();
     private final Long ID = 0L;
 
 
@@ -48,12 +48,12 @@ class DriverDomainServiceTest {
     @Test
     void getDriverTest() {
 
-        when(driverResponseMapper.from((Driver) any())).thenReturn(getDriverResponse());
+        when(driverResponseMapper.from(any(Driver.class))).thenReturn(getDriverResponse());
         when(driverRepository.getReferenceById(anyLong())).thenReturn(getDriver());
 
         var result = service.getDriverById(ID);
 
-        assertNotNull(result);
+        assertThat(result).isNotNull();
 
         verify(driverRepository).getReferenceById(anyLong());
         verify(driverResponseMapper).from((Driver) any());
@@ -63,17 +63,16 @@ class DriverDomainServiceTest {
 
     @Test
     void getAllDriversTest() {
-        addDriver();
 
-        when(driverRepository.findAll()).thenReturn(drivers);
-        when(driverResponseMapper.from(drivers)).thenReturn(driverResponses);
+        when(driverRepository.findAll()).thenReturn(Collections.singletonList(getDriver()));
+        when(driverResponseMapper.from(any(List.class))).thenReturn(Collections.singletonList(getDriverResponse()));
 
         List<DriverResponse> result = service.getAllDrivers();
 
-        assertEquals(driverResponses, result);
-        assertNotNull(result);
+        assertThat(result).hasSize(1);
+
         verify(driverRepository).findAll();
-        verify(driverResponseMapper).from(drivers);
+        verify(driverResponseMapper).from(any(List.class));
 
         verifyNoMoreInteractions(driverRepository, driverResponseMapper);
         verifyNoInteractions(driverMapper);
@@ -90,51 +89,43 @@ class DriverDomainServiceTest {
 
     @Test
     void addDriverTest() {
-        when(driverMapper.from(driverAddRequestAdd())).thenReturn(driver);
-        when(driverRepository.save(driver)).thenReturn(driver);
+        when(driverMapper.from(any(DriverAddRequest.class))).thenReturn(getDriver());
+        when(driverRepository.save(any())).thenReturn(getDriver());
+
         Long id = service.addDriver(driverAddRequestAdd());
-        assertEquals(driver.getId(),id.longValue());
-        verify(driverMapper).from(driverAddRequestAdd());
-        verify(driverRepository).save(driver);
+
+        assertThat(id).isEqualTo(ID);
+
+        verify(driverMapper).from(any(DriverAddRequest.class));
+        verify(driverRepository).save(any());
         verifyNoMoreInteractions(driverRepository, driverResponseMapper);
     }
     @Test
     void editDriverTest(){
-        driverSet();
 
-        when(driverRepository.getReferenceById(driverAddRequestAdd().getId())).thenReturn(driver);
-        when(driverMerger.merge(driver, driverAddRequestAdd())).thenReturn(driver);
-        when(driverRepository.saveAndFlush(driver)).thenReturn(driver);
+        when(driverRepository.getReferenceById(anyLong())).thenReturn(getDriver());
+        when(driverMerger.merge(any(),any())).thenReturn(getDriver());
+        when(driverRepository.saveAndFlush(any())).thenReturn(getDriver());
 
-        service.editDrivers(driverAddRequestAdd());
+        Long result = service.editDrivers(driverAddRequestAdd());
+        assertThat(result).isEqualTo(ID);
 
-        verify(driverRepository).getReferenceById(driverAddRequestAdd().getId());
-        verify(driverMerger).merge(driver, driverAddRequestAdd());
-
-
+        verify(driverRepository).getReferenceById(anyLong());
+        verify(driverRepository).saveAndFlush(any());
+        verify(driverMerger).merge(any(),any());
+        verifyNoMoreInteractions(driverRepository, driverMerger);
     }
 
     private DriverResponse getDriverResponse(){
         return  new DriverResponse()
                 .setId(ID);
     }
-    private void driverSet(){
-        driverAddRequestAdd().setId(1L);
-        driver.setId(1L);
-    }
-    private void addDriver(){
-        drivers.add(new Driver(1L));
-        drivers.add(new Driver(2L));
-        driverResponses.add(new DriverResponse());
-        driverResponses.add(new DriverResponse());
-    }
 
     private Driver getDriver(){
         return new Driver(ID);
     }
     private DriverAddRequest driverAddRequestAdd(){
-        DriverAddRequest driverAddRequestAdd = new DriverAddRequest();
-        return  driverAddRequestAdd;
+        return  new DriverAddRequest().setId(ID);
     }
 
 }

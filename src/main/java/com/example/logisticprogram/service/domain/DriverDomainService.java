@@ -25,8 +25,6 @@ public class DriverDomainService {
     private final DriverMapper driverMapper;
     private final DriverResponseMapper driverResponseMapper;
     private final DriverMerger driverMerger;
-    private final UserRepository userRepository;
-    private final UserResponseMapper userResponseMapper;
     private final CarResponseMapper carResponseMapper;
 
     @Transactional
@@ -53,18 +51,10 @@ public class DriverDomainService {
     }
 
     @Transactional
-    public void editDrivers(DriverAddRequest request){
+    public Long editDrivers(DriverAddRequest request){
         var driver = repository.getReferenceById(request.getId());
-         repository.saveAndFlush(driverMerger.merge(driver,request));
-
-    }
-
-    @Transactional
-    public  List<CarResponse> getCarByDriver(DriverFindByNameRequest request) {
-        return  repository.findAll()
-                .stream()
-                .filter(driver -> driver.getUser().getName().toLowerCase().contains(request.getFindByName().toLowerCase()))
-                .map(driver -> carResponseMapper.from(driver.getCar()))
-                .toList();
+         return repository.saveAndFlush
+                 (driverMerger.merge(driver,request))
+                 .getId();
     }
 }
