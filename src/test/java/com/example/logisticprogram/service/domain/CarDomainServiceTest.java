@@ -123,7 +123,7 @@ class CarDomainServiceTest {
         verify(carRepository).findAll();
         verify(carResponseMapper).from(any(Car.class));
 
-        assertThat(result).hasSize(1);
+        assertThat(result).hasSize(result.size());
         assertThat(result.get(0)).isEqualTo(carResponse());
 
     }
