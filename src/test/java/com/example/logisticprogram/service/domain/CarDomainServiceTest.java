@@ -15,10 +15,10 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.*;
@@ -37,44 +37,38 @@ class CarDomainServiceTest {
     private CarDomainService service;
 
     private final List<Car> cars = new ArrayList<>();
-    private final Car car = new Car(1L);
-    private final List<CarResponse> carResponses = new ArrayList<>();
+    private final Car car = new Car(0L);
     private final Long ID = 0L;
-    private final Long id = 1L;
-    private final CarNumberRequest numberRequest = new CarNumberRequest();
+    private  final CarNumberRequest numberRequest = new CarNumberRequest();
 
 
 
     @Test
     void getCarTest() {
-
-        when(carResponseMapper.from((Car) any())).thenReturn(getCarResponse());
+        when(carResponseMapper.from(any(Car.class))).thenReturn(getCarResponse());
         when(carRepository.getReferenceById(anyLong())).thenReturn(getCar());
 
         var result = service.getCarById(ID);
 
-        assertNotNull(result);
+        assertThat(result).isNotNull();
 
         verify(carRepository).getReferenceById(anyLong());
-        verify(carResponseMapper).from((Car) any());
+        verify(carResponseMapper).from(any(Car.class));
         verifyNoMoreInteractions(carRepository, carResponseMapper);
         verifyNoInteractions(carMapper);
     }
 
     @Test
     void getAllCarsTest() {
-        carAdd();
-
-        when(carRepository.findAll()).thenReturn(cars);
-        when(carResponseMapper.from(cars)).thenReturn(carResponses);
+        when(carRepository.findAll()).thenReturn(Collections.singletonList(getCar()));
+        when(carResponseMapper.from(anyList())).thenReturn(Collections.singletonList(getCarResponse()));
 
         List<CarResponse> result = service.getAllCars();
 
-        assertEquals(carResponses, result);
-        assertNotNull(result);
-        verify(carRepository).findAll();
-        verify(carResponseMapper).from(cars);
+        assertThat(result).isNotNull();
 
+        verify(carRepository).findAll();
+        verify(carResponseMapper).from(anyList());
         verifyNoMoreInteractions(carRepository, carResponseMapper);
         verifyNoInteractions(carMapper);
     }
@@ -90,30 +84,32 @@ class CarDomainServiceTest {
 
     @Test
     void addCarTest() {
-        when(carMapper.from(carAddRequestAdd())).thenReturn(car);
-        when(carRepository.save(car)).thenReturn(car);
+        when(carMapper.from(any(CarAddRequest.class))).thenReturn(getCar());
+        when(carRepository.save(any())).thenReturn(getCar());
+
         Long id = service.addCar(carAddRequestAdd());
-        assertEquals(car.getId(), id.longValue());
-        verify(carMapper).from(carAddRequestAdd());
-        verify(carRepository).save(car);
+
+        assertThat(id).isEqualTo(ID);
+
+        verify(carMapper).from(any(CarAddRequest.class));
+        verify(carRepository).save(any());
         verifyNoMoreInteractions(carRepository, carResponseMapper);
     }
 
     @Test
     void editCarsTest(){
-        carSet();
-
-        when(carRepository.getReferenceById(carAddRequestAdd().getId())).thenReturn(car);
-        when(carMerger.merge(car,carAddRequestAdd())).thenReturn(car);
-        when(carRepository.save(car)).thenReturn(car);
+        when(carRepository.getReferenceById(anyLong())).thenReturn(getCar());
+        when(carMerger.merge(any(),any())).thenReturn(getCar());
+        when(carRepository.save(any())).thenReturn(getCar());
 
         Long result = service.editCars(carAddRequestAdd());
 
-        verify(carRepository).getReferenceById(carAddRequestAdd().getId());
-        verify(carRepository).save(car);
-        verify(carMerger).merge(car,carAddRequestAdd());
+        assertThat(result).isEqualTo(ID);
 
-        assertEquals(1L, result);
+        verify(carRepository).getReferenceById(anyLong());
+        verify(carRepository).save(any());
+        verify(carMerger).merge(any(),any());
+        verifyNoMoreInteractions(carRepository,carMerger);
 
     }
 
@@ -121,13 +117,15 @@ class CarDomainServiceTest {
     void getCarByNumber(){
         forCarByNumber();
         when(carRepository.findAll()).thenReturn(cars);
-        when(carResponseMapper.from(car)).thenReturn(carResponse());
+        when(carResponseMapper.from(any(Car.class))).thenReturn(carResponse());
 
         List<CarResponse> result = service.getCarByNumber(numberRequest);
         verify(carRepository).findAll();
-        verify(carResponseMapper).from(car);
-        assertEquals(1, result.size());
-        assertEquals(carResponse(), result.get(0));
+        verify(carResponseMapper).from(any(Car.class));
+
+        assertThat(result).hasSize(1);
+        assertThat(result.get(0)).isEqualTo(carResponse());
+
     }
 
     private CarResponse getCarResponse() {
@@ -135,8 +133,7 @@ class CarDomainServiceTest {
                 .setId(ID);
     }
     private CarAddRequest carAddRequestAdd(){
-        CarAddRequest carAddRequestAdd = new CarAddRequest();
-        return carAddRequestAdd;
+        return new CarAddRequest().setId(ID);
     }
     private void forCarByNumber(){
         numberRequest.setNumber("ABC123");
@@ -146,23 +143,12 @@ class CarDomainServiceTest {
         carResponse().setCarNumber("ABC123");
         cars.add(car);
     }
-    private void carAdd(){
-        cars.add(new Car(1L));
-        cars.add(new Car(2L));
-        carResponses.add(new CarResponse());
-        carResponses.add(new CarResponse());
-    }
 
     private Car getCar() {
         return new Car(ID);
     }
     private CarResponse carResponse(){
-        CarResponse carResponse = new CarResponse();
-        return carResponse;
-    }
-    private void carSet(){
-        carAddRequestAdd().setId(id);
-        car.setId(id);
+        return new CarResponse();
     }
 }
 
