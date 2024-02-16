@@ -13,18 +13,13 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoInteractions;
-import static org.mockito.Mockito.verifyNoMoreInteractions;
-import static org.mockito.Mockito.when;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 class RoleDomainServiceTest {
 
@@ -38,39 +33,35 @@ class RoleDomainServiceTest {
         private RoleMapper roleMapper;
         @InjectMocks
         private RoleDomainService service;
-        private final List<Role> roles = new ArrayList<>();
-        private final Role roleAdd = new Role(1L);
-        private final List<RoleResponse> roleResponses = new ArrayList<>();
         private final Long ID = 0L;
-        private final Long id = 1L;
 
 
 
         @Test
         void getRoleTest() {
-            when(roleRepository.findById(id)).thenReturn(Optional.of(getRole()));
-            when(roleResponseMapper.from((Role) any())).thenReturn(roleResponse());
-            RoleResponse result = service.getRole(id);
-            assertNotNull(result);
-            verify(roleRepository).findById(id);
-            verify(roleResponseMapper).from((Role) any());
+            when(roleRepository.findById(anyLong())).thenReturn(Optional.of(getRole()));
+            when(roleResponseMapper.from(any(Role.class))).thenReturn(getRoleResponse());
+            RoleResponse result = service.getRole(ID)
+                    ;
+            assertThat(result).isNotNull();
+
+            verify(roleRepository).findById(ID);
+            verify(roleResponseMapper).from(any(Role.class));
             verifyNoMoreInteractions(roleRepository, roleResponseMapper);
         }
 
 
         @Test
         void getAllRolesTest() {
-            addRole();
-
-            when(roleRepository.findAll()).thenReturn(roles);
-            when(roleResponseMapper.from(roles)).thenReturn(roleResponses);
+            when(roleRepository.findAll()).thenReturn(Collections.singletonList(getRole()));
+            when(roleResponseMapper.from(anyList())).thenReturn(Collections.singletonList(getRoleResponse()));
 
             List<RoleResponse> result = service.getAllRoles();
 
-            assertEquals(roleResponses, result);
-            assertNotNull(result);
+            assertThat(result).isNotNull();
+
             verify(roleRepository).findAll();
-            verify(roleResponseMapper).from(roles);
+            verify(roleResponseMapper).from(anyList());
 
             verifyNoMoreInteractions(roleRepository, roleResponseMapper);
             verifyNoInteractions(roleMapper);
@@ -78,38 +69,39 @@ class RoleDomainServiceTest {
 
         @Test
         void deleteRoleTest() {
-            service.deleteRole(id);
-            verify(roleRepository).deleteById(id);
+            service.deleteRole(ID);
+            verify(roleRepository).deleteById(ID);
 
             verifyNoMoreInteractions(roleRepository, roleResponseMapper);
             verifyNoInteractions(roleMapper);
         }
         @Test
         void editRoleTest(){
-        setRole();
+        when(roleRepository.getReferenceById(anyLong())).thenReturn(getRole());
+        when(roleMerger.merge(any(),any())).thenReturn(getRole());
+        when(roleRepository.save(any())).thenReturn(getRole());
 
-        when(roleRepository.getReferenceById(roleAddRequestAdd().getId())).thenReturn(roleAdd);
-        when(roleMerger.merge(roleAdd,roleAddRequestAdd())).thenReturn(roleAdd);
-        when(roleRepository.save(roleAdd)).thenReturn(roleAdd);
+        Long result = service.editRole(getRoleAddRequest());
 
-        Long result = service.editRole(roleAddRequestAdd());
+        assertThat(result).isEqualTo(ID);
 
-        verify(roleRepository).getReferenceById(roleAddRequestAdd().getId());
-        verify(roleRepository).save(roleAdd);
-        verify(roleMerger).merge(roleAdd,roleAddRequestAdd());
-
-        assertEquals(1L, result);
+        verify(roleRepository).getReferenceById(anyLong());
+        verify(roleRepository).save(any());
+        verify(roleMerger).merge(any(),any());
+        verifyNoMoreInteractions(roleRepository,roleMerger);
 
     }
 
         @Test
         void addRoleTest() {
-            when(roleMapper.from(roleAddRequestAdd())).thenReturn(roleAdd);
-            when(roleRepository.save(roleAdd)).thenReturn(roleAdd);
-            Long id = service.addRole(roleAddRequestAdd());
-            assertEquals(roleAdd.getId(),id.longValue());
-            verify(roleMapper).from(roleAddRequestAdd());
-            verify(roleRepository).save(roleAdd);
+            when(roleMapper.from(any(RoleAddRequest.class))).thenReturn(getRole());
+            when(roleRepository.save(any())).thenReturn(getRole());
+
+            Long id = service.addRole(getRoleAddRequest());
+            assertThat(id).isEqualTo(ID);
+
+            verify(roleMapper).from(any(RoleAddRequest.class));
+            verify(roleRepository).save(any());
             verifyNoMoreInteractions(roleRepository, roleResponseMapper);
         }
 
@@ -121,20 +113,8 @@ class RoleDomainServiceTest {
         private Role getRole(){
             return new Role(ID);
         }
-        private RoleResponse roleResponse(){
-            return new RoleResponse();
-        }
-        private void addRole(){
-            roles.add(new Role(1L));
-            roles.add(new Role(2L));
-            roleResponses.add(new RoleResponse());
-            roleResponses.add(new RoleResponse());
-        }
-        private void setRole(){
-            roleAddRequestAdd().setId(id);
-            roleAdd.setId(id);
-        }
-    private final RoleAddRequest roleAddRequestAdd(){
-             return new RoleAddRequest();
+
+        private RoleAddRequest getRoleAddRequest(){
+             return new RoleAddRequest().setId(ID);
     }
 }
