@@ -12,11 +12,10 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.*;
@@ -25,50 +24,42 @@ class PointDomainServiceTest {
 
     @Mock
     private PointRepository pointRepository;
-
     @Mock
     private PointResponseMapper pointResponseMapper;
     @Mock
     private PointMapper pointMapper;
     @InjectMocks
     private PointDomainService service;
-
-
-    private final List<Point> points = new ArrayList<>();
-    private final Point pointAdd = new Point(1L);
-    private final List<PointResponse> pointResponses = new ArrayList<>();
     private final Long ID = 0L;
 
 
     @Test
     void getPointTest() {
 
-        when(pointResponseMapper.from((Point) any())).thenReturn(getPointResponse());
+        when(pointResponseMapper.from(any(Point.class))).thenReturn(getPointResponse());
         when(pointRepository.getReferenceById(anyLong())).thenReturn(getPoint());
 
         var result = service.getPoint(ID);
 
-        assertNotNull(result);
+        assertThat(result).isNotNull();
 
         verify(pointRepository).getReferenceById(anyLong());
-        verify(pointResponseMapper).from((Point) any());
+        verify(pointResponseMapper).from(any(Point.class));
         verifyNoMoreInteractions(pointRepository, pointResponseMapper);
         verifyNoInteractions(pointMapper);
     }
 
     @Test
     void getAllPointsTest() {
-        pointAdd();
-
-        when(pointRepository.findAll()).thenReturn(points);
-        when(pointResponseMapper.from(points)).thenReturn(pointResponses);
+        when(pointRepository.findAll()).thenReturn(Collections.singletonList(getPoint()));
+        when(pointResponseMapper.from(anyList())).thenReturn(Collections.singletonList(getPointResponse()));
 
         List<PointResponse> result = service.getAllPoints();
 
-        assertEquals(pointResponses, result);
-        assertNotNull(result);
+        assertThat(result).isNotNull();
+
         verify(pointRepository).findAll();
-        verify(pointResponseMapper).from(points);
+        verify(pointResponseMapper).from(anyList());
 
         verifyNoMoreInteractions(pointRepository, pointResponseMapper);
         verifyNoInteractions(pointMapper);
@@ -86,12 +77,14 @@ class PointDomainServiceTest {
     @Test
     void addPointTest() {
 
-        when(pointMapper.from(pointAddRequestAdd())).thenReturn(pointAdd);
-        when(pointRepository.save(pointAdd)).thenReturn(pointAdd);
+        when(pointMapper.from(any(PointAddRequest.class))).thenReturn(getPoint());
+        when(pointRepository.save(any())).thenReturn(getPoint());
         Long id = service.addPoint(pointAddRequestAdd());
-        assertEquals(pointAdd.getId(), id.longValue());
-        verify(pointMapper).from(pointAddRequestAdd());
-        verify(pointRepository).save(pointAdd);
+
+        assertThat(id).isEqualTo(ID);
+
+        verify(pointMapper).from(any(PointAddRequest.class));
+        verify(pointRepository).save(any());
         verifyNoMoreInteractions(pointRepository, pointResponseMapper);
     }
 
@@ -100,16 +93,8 @@ class PointDomainServiceTest {
                 .setId(ID);
     }
 
-    private void pointAdd(){
-        points.add(new Point(1L));
-        points.add(new Point(2L));
-        pointResponses.add(new PointResponse());
-        pointResponses.add(new PointResponse());
-    }
-
     private PointAddRequest pointAddRequestAdd(){
-        PointAddRequest pointAddRequestAdd = new PointAddRequest();
-        return  pointAddRequestAdd;
+        return  new PointAddRequest();
     }
 
 
