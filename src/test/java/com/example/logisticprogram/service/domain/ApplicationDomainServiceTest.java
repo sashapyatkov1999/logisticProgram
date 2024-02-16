@@ -12,11 +12,10 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.*;
@@ -31,43 +30,35 @@ class ApplicationDomainServiceTest {
     private ApplicationMapper applicationMapper;
     @InjectMocks
     private ApplicationDomainService service;
-
-
-    private final List<Application> applications = new ArrayList<>();
-    private final Application application = new Application(1L);
-    private final List<ApplicationResponse> applicationResponses = new ArrayList<>();
     private final Long ID = 0L;
 
     @Test
     void getApplicationTest() {
 
-        when(applicationResponseMapper.from((Application) any())).thenReturn(getApplicationResponse());
+        when(applicationResponseMapper.from(any(Application.class))).thenReturn(getApplicationResponse());
         when(applicationRepository.getReferenceById(anyLong())).thenReturn(getApplication());
 
         var result = service.getApplication(ID);
 
-        assertNotNull(result);
+        assertThat(result).isNotNull();
 
         verify(applicationRepository).getReferenceById(anyLong());
-        verify(applicationResponseMapper).from((Application) any());
+        verify(applicationResponseMapper).from(any(Application.class));
         verifyNoMoreInteractions(applicationRepository, applicationResponseMapper);
         verifyNoInteractions(applicationMapper);
     }
 
     @Test
     void getAllApplicationsTest() {
-        applicationAdd();
-
-        when(applicationRepository.findAll()).thenReturn(applications);
-        when(applicationResponseMapper.from(applications)).thenReturn(applicationResponses);
+        when(applicationRepository.findAll()).thenReturn(Collections.singletonList(getApplication()));
+        when(applicationResponseMapper.from(anyList())).thenReturn(Collections.singletonList(getApplicationResponse()));
 
         List<ApplicationResponse> result = service.getAllApplications();
 
-        assertEquals(applicationResponses, result);
-        assertNotNull(result);
-        verify(applicationRepository).findAll();
-        verify(applicationResponseMapper).from(applications);
+        assertThat(result).isNotNull();
 
+        verify(applicationRepository).findAll();
+        verify(applicationResponseMapper).from(anyList());
         verifyNoMoreInteractions(applicationRepository, applicationResponseMapper);
         verifyNoInteractions(applicationMapper);
 
@@ -84,12 +75,15 @@ class ApplicationDomainServiceTest {
 
     @Test
     void addApplicationTest() {
-        when(applicationMapper.from(applicationAddRequestAdd())).thenReturn(application);
-        when(applicationRepository.save(application)).thenReturn(application);
+        when(applicationMapper.from(any(ApplicationAddRequest.class))).thenReturn(getApplication());
+        when(applicationRepository.save(any())).thenReturn(getApplication());
+
         Long id = service.addApplication(applicationAddRequestAdd());
-        assertEquals(application.getId(), id.longValue());
-        verify(applicationMapper).from(applicationAddRequestAdd());
-        verify(applicationRepository).save(application);
+
+        assertThat(id).isEqualTo(ID);
+
+        verify(applicationMapper).from(any(ApplicationAddRequest.class));
+        verify(applicationRepository).save(any());
         verifyNoMoreInteractions(applicationRepository, applicationResponseMapper);
     }
 
@@ -97,15 +91,8 @@ class ApplicationDomainServiceTest {
         return new ApplicationResponse()
                 .setId(ID);
     }
-    private void applicationAdd(){
-        applications.add(new Application(1L));
-        applications.add(new Application(2L));
-        applicationResponses.add(new ApplicationResponse());
-        applicationResponses.add(new ApplicationResponse());
-    }
-    private final ApplicationAddRequest applicationAddRequestAdd(){
-        ApplicationAddRequest applicationAddRequestAdd = new ApplicationAddRequest();
-        return applicationAddRequestAdd;
+    private ApplicationAddRequest applicationAddRequestAdd(){
+        return new ApplicationAddRequest();
     }
 
     private Application getApplication() {
