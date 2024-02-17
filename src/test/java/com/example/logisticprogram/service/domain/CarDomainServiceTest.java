@@ -14,7 +14,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -36,10 +35,8 @@ class CarDomainServiceTest {
     @InjectMocks
     private CarDomainService service;
 
-    private final List<Car> cars = new ArrayList<>();
-    private final Car car = new Car(0L);
     private final Long ID = 0L;
-    private  final CarNumberRequest numberRequest = new CarNumberRequest();
+
 
 
 
@@ -115,40 +112,35 @@ class CarDomainServiceTest {
 
     @Test
     void getCarByNumber(){
-        forCarByNumber();
-        when(carRepository.findAll()).thenReturn(cars);
-        when(carResponseMapper.from(any(Car.class))).thenReturn(carResponse());
+        when(carRepository.findAll()).thenReturn(Collections.singletonList(getCar()));
+        when(carResponseMapper.from(any(Car.class))).thenReturn(getCarResponse());
 
-        List<CarResponse> result = service.getCarByNumber(numberRequest);
+        List<CarResponse> result = service.getCarByNumber(numberRequest());
+
+        assertThat(result).hasSize(result.size()).isNotEmpty();
+        assertThat(result.get(0)).isEqualTo(getCarResponse());
         verify(carRepository).findAll();
         verify(carResponseMapper).from(any(Car.class));
 
-        assertThat(result).hasSize(result.size());
-        assertThat(result.get(0)).isEqualTo(carResponse());
+
+        verify(carRepository, times(1)).findAll();
+        verify(carResponseMapper, times(1)).from(any(Car.class));
+
 
     }
+    private  CarNumberRequest numberRequest() { return new CarNumberRequest().setNumber("ABC123");}
 
     private CarResponse getCarResponse() {
         return new CarResponse()
-                .setId(ID);
+                .setId(null)
+                .setCarNumber("ABC123");
     }
     private CarAddRequest carAddRequestAdd(){
         return new CarAddRequest().setId(ID);
     }
-    private void forCarByNumber(){
-        numberRequest.setNumber("ABC123");
-        car.setId(1L);
-        car.setCarNumber("ABC123");
-        carResponse().setId(1L);
-        carResponse().setCarNumber("ABC123");
-        cars.add(car);
-    }
 
     private Car getCar() {
-        return new Car(ID);
-    }
-    private CarResponse carResponse(){
-        return new CarResponse();
+        return new Car(ID).setCarNumber("ABC123");
     }
 }
 
