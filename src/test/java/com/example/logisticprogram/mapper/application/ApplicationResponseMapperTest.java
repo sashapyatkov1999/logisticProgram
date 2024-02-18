@@ -1,11 +1,10 @@
-package com.example.logisticprogram.mappers.application;
+package com.example.logisticprogram.mapper.application;
 
 import com.example.logisticprogram.dto.response.driver.DriverResponse;
 import com.example.logisticprogram.dto.response.user.UserResponse;
 import com.example.logisticprogram.entity.Application;
 import com.example.logisticprogram.entity.Driver;
 import com.example.logisticprogram.entity.User;
-import com.example.logisticprogram.mapper.application.ApplicationResponseMapper;
 import com.example.logisticprogram.mapper.driver.DriverResponseMapper;
 import com.example.logisticprogram.mapper.user.UserResponseMapper;
 import org.junit.jupiter.api.Test;

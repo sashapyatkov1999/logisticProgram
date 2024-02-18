@@ -18,6 +18,7 @@ public class PointMerger implements Merger<Point, PointAddRequest> {
                 .setOrdinal(Long.valueOf(source.getOrdinal()))
                 .setApplication(new Application(source.getApplicationId()))
                 .setName(source.getName())
+                .setStatusOfOrdinalWithGeo(source.getStatusOfOrdinalWithGeo())
                 .setDescription(source.getDescription())
                 .setTimeStart(source.getTimeStart())
                 .setTimeEnd(source.getTimeEnd());

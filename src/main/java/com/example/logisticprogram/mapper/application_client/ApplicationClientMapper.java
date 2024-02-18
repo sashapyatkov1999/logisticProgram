@@ -1,9 +1,6 @@
-package com.example.logisticprogram.mapper.allpication_client;
+package com.example.logisticprogram.mapper.application_client;
 
-import com.example.logisticprogram.dto.request.application.ApplicationAddRequest;
 import com.example.logisticprogram.dto.request.application_client.ApplicationClientAddRequest;
-import com.example.logisticprogram.dto.response.application.ApplicationResponse;
-import com.example.logisticprogram.dto.response.application_client.ApplicationClientResponse;
 import com.example.logisticprogram.entity.Application;
 import com.example.logisticprogram.entity.ApplicationClient;
 import com.example.logisticprogram.entity.User;
