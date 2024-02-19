@@ -47,7 +47,7 @@ public class User extends  BaseEntity {
 
     @ToString.Include
     @Column(name = "PHONE_NUMBER", nullable = false, updatable = false)
-    protected Long phoneNumber;
+    protected String phoneNumber;
 
 
     public User(Long id) {

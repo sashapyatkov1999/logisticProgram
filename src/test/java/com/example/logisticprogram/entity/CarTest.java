@@ -6,12 +6,11 @@ import org.junit.jupiter.api.Test;
 import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
-class RoleTest extends BaseEntityTest {
-
+class CarTest extends BaseEntityTest{
     private static final Long ID = 0L;
-    private static final String NAME = "NAME";
+    private static final String TRAILER_NUMBER = "ABC123";
+    private static final String CAR_NUMBER = "ABC123";
     private static final String DESCRIPTION = "DESCRIPTION";
     private static final LocalDateTime CREATED = LocalDateTime.now();
     private static final LocalDateTime MODIFIED = LocalDateTime.now().plusMinutes(1);
@@ -21,31 +20,28 @@ class RoleTest extends BaseEntityTest {
         checkNumFields(5);
     }
 
-
     @Test
     void testNoArgsConstructor(){
 
-        var result = getRole();
+        var result = getCar();
 
         assertEquals(ID, result.getId());
-        assertEquals(NAME, result.getName());
-        assertEquals(DESCRIPTION, result.getDescription());
+        assertEquals(CAR_NUMBER, result.getCarNumber());
+        assertEquals(TRAILER_NUMBER, result.getTrailerNumber());
         assertEquals(CREATED, result.getCreated());
         assertEquals(MODIFIED, result.getModified());
 
     }
 
 
-
-    private Role getRole() {
-    return new Role()
-            .setId(ID)
-            .setName(NAME)
-            .setDescription(DESCRIPTION)
-            .setCreated(CREATED)
-            .setModified(MODIFIED);
+    private Car getCar() {
+        return new Car()
+                .setId(ID)
+                .setCarNumber(CAR_NUMBER)
+                .setTrailerNumber(TRAILER_NUMBER)
+                .setCreated(CREATED)
+                .setModified(MODIFIED);
 
 
     }
-
 }
