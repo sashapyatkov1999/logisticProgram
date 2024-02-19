@@ -23,7 +23,11 @@ class ApplicationTest extends BaseEntityTest{
     void init () throws ClassNotFoundException {
         checkNumFields(10);
     }
-
+    @Test
+    void testApplicationConstructor() {
+        Application application = new Application(ID);
+        assertThat(application.getId()).isEqualTo(ID);
+    }
     @Test
     void testNoArgsConstructor(){
         var result = getApplication();

@@ -17,6 +17,10 @@ class TypeDocTest extends BaseEntityTest{
     void init() throws ClassNotFoundException {
         checkNumFields(5);
     }
+    @Test
+    void testConstructor() {
+        assertThat(new TypeDoc(ID).getId()).isEqualTo(ID);
+    }
 
     @Test
     void testNoArgsConstructor(){

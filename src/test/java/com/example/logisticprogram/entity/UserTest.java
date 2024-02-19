@@ -23,6 +23,10 @@ class UserTest extends BaseEntityTest {
     void init () throws ClassNotFoundException {
         checkNumFields(10);
     }
+    @Test
+    void testConstructor() {
+        assertThat(new User(ID).getId()).isEqualTo(ID);
+    }
 
     @Test
     void testNoArgsConstructor() {

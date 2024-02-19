@@ -19,7 +19,10 @@ class ApplicationClientTest extends BaseEntityTest {
     void init() throws ClassNotFoundException {
         checkNumFields(7);
     }
-
+    @Test
+    void testConstructor() {
+        assertThat(new ApplicationClient(ID).getId()).isEqualTo(ID);
+    }
     @Test
     void testNoArgsConstructor(){
 

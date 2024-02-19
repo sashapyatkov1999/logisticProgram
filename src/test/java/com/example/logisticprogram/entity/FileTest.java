@@ -21,6 +21,10 @@ class FileTest extends BaseEntityTest {
     void init() throws ClassNotFoundException {
         checkNumFields(8);
     }
+    @Test
+    void testConstructor() {
+        assertThat(new File(ID).getId()).isEqualTo(ID);
+    }
 
     @Test
     void testNoArgsConstructor() {

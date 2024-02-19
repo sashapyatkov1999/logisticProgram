@@ -20,6 +20,10 @@ class UserStatusTest extends BaseEntityTest{
     }
 
     @Test
+    void testConstructor() {
+        assertThat(new UserStatus(ID).getId()).isEqualTo(ID);
+    }
+    @Test
     void testNoArgsConstructor() {
 
         var result = getUserStatus();

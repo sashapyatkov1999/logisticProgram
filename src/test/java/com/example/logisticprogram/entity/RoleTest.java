@@ -5,8 +5,8 @@ import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 class RoleTest extends BaseEntityTest {
 
@@ -21,7 +21,10 @@ class RoleTest extends BaseEntityTest {
         checkNumFields(5);
     }
 
-
+    @Test
+    void testConstructor() {
+        assertThat(new Role(ID).getId()).isEqualTo(ID);
+    }
     @Test
     void testNoArgsConstructor(){
 

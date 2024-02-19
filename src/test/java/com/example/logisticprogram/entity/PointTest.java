@@ -24,6 +24,10 @@ class PointTest extends BaseEntityTest {
     void init () throws ClassNotFoundException {
         checkNumFields(11);
     }
+    @Test
+    void testConstructor() {
+        assertThat(new Point(ID).getId()).isEqualTo(ID);
+    }
 
     @Test
     void testNoArgsConstructor() {

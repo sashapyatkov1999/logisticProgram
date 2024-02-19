@@ -18,6 +18,10 @@ class DriverStatusTest extends BaseEntityTest{
         checkNumFields(5);
     }
     @Test
+    void testConstructor() {
+        assertThat(new DriverStatus(ID).getId()).isEqualTo(ID);
+    }
+    @Test
     void testNoArgsConstructor(){
 
         var result = getDriverStatus();

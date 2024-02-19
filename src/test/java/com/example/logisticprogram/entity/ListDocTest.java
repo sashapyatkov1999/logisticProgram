@@ -19,6 +19,10 @@ class ListDocTest extends BaseEntityTest {
     void init () throws ClassNotFoundException {
         checkNumFields(6);
     }
+    @Test
+    void testConstructor() {
+        assertThat(new ListDoc(ID).getId()).isEqualTo(ID);
+    }
 
     @Test
     void testNoArgsConstructor() {
