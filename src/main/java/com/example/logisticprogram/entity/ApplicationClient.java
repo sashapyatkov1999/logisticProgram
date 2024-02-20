@@ -12,16 +12,16 @@ import lombok.experimental.FieldDefaults;
 import java.io.Serial;
 import java.time.LocalDateTime;
 
-@Entity(name = "LIST_DOC")
-@Data
+@Entity(name = "APPLICATION_CLIENT")
 @Accessors(chain = true)
-@NoArgsConstructor
-@ToString(onlyExplicitlyIncluded = true, callSuper = true)
 @EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = true)
-@AttributeOverride(name = "id", column = @Column(name = "LIST_DOC_ID"))
+@ToString(onlyExplicitlyIncluded = true, callSuper = true)
+@Data
+@NoArgsConstructor
+@AttributeOverride(name = "id", column = @Column(name = "APPLICATION__CLIENT_ID"))
 @FieldDefaults(level = AccessLevel.PRIVATE)
 
-public class ListDoc extends BaseEntity{
+public class ApplicationClient extends EntityWithName {
     @Serial
     private static final long serialVersionUID = 1L;
 
@@ -30,32 +30,36 @@ public class ListDoc extends BaseEntity{
     Application application;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "TYPE_DOCS_ID")
-    TypeDoc typeDoc;
+    @JoinColumn(name = "CLIENT_ID")
+    User client;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "POINT_ID")
-    Point point;
 
-    public ListDoc(Long id) {
+    public ApplicationClient(Long id) {
         this.id = id;
     }
 
     @Override
-    public ListDoc setId(Long id) {
+    public ApplicationClient setId(Long id) {
         this.id = id;
         return this;
     }
 
     @Override
-    public ListDoc setCreated(LocalDateTime created) {
+    public ApplicationClient setCreated(LocalDateTime created) {
         this.created = created;
         return this;
     }
 
     @Override
-    public ListDoc setModified(LocalDateTime modified) {
+    public ApplicationClient setModified(LocalDateTime modified) {
         this.modified = modified;
+        return this;
+    }
+
+
+    @Override
+    public ApplicationClient setDescription(String description) {
+        this.description = description;
         return this;
     }
 }
