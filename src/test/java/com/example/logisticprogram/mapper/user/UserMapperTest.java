@@ -8,15 +8,20 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
 
+import static com.example.logisticprogram.entity.UserStatusEnum.ENABLE;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
 
 @ExtendWith(MockitoExtension.class)
 class UserMapperTest {
     @InjectMocks
     private UserMapper mapper;
 
-    private static final Long USER_STATUS_ID = 1L;
+    private static final Long USER_ID = 1L;
+    private static final Long USER_STATUS_ID = 0L;
     private static final String NAME = "NAME";
     private static final String SURNAME = "SURNAME";
     private static final String PHONE_NUMBER = "8919883832";
@@ -32,7 +37,7 @@ class UserMapperTest {
         assertThat(result.getSurname()).isEqualTo(SURNAME);
         assertThat(result.getPhoneNumber()).isEqualTo(PHONE_NUMBER);
 
-        verify(source).getUserStatusId();
+
         verify(source).getName();
         verify(source).getSurname();
         verify(source).getPhoneNumber();
@@ -49,12 +54,12 @@ class UserMapperTest {
         var result = resultList.get(0);
 
         assertThat(result.getId()).isNull();
-        assertThat(result.getStatus().getId()).isEqualTo(USER_STATUS_ID);
+        assertThat(result.getStatus().getId()).isEqualTo(ENABLE.getId());
         assertThat(result.getName()).isEqualTo(NAME);
         assertThat(result.getSurname()).isEqualTo(SURNAME);
         assertThat(result.getPhoneNumber()).isEqualTo(PHONE_NUMBER);
 
-        verify(source,times(3)).getUserStatusId();
+
         verify(source,times(3)).getName();
         verify(source,times(3)).getSurname();
         verify(source,times(3)).getPhoneNumber();
@@ -63,7 +68,7 @@ class UserMapperTest {
 
     private UserAddRequest source(){
         return new UserAddRequest()
-                .setUserStatusId(USER_STATUS_ID)
+                .setUserId(USER_ID)
                 .setName(NAME)
                 .setSurname(SURNAME)
                 .setPhoneNumber(PHONE_NUMBER);

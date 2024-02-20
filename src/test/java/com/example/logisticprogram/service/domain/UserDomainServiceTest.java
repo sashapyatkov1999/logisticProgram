@@ -105,6 +105,6 @@ class UserDomainServiceTest {
     private User getUser(){return new User(ID);}
 
     private UserAddRequest userAddRequestAdd(){
-        return  new UserAddRequest().setUserStatusId(ID);
+        return  new UserAddRequest().setUserId(ID);
     }
 }
