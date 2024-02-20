@@ -7,11 +7,13 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import lombok.AccessLevel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import lombok.experimental.Accessors;
+import lombok.experimental.FieldDefaults;
 
 import java.io.Serial;
 import java.time.LocalDateTime;
@@ -23,37 +25,38 @@ import java.time.LocalDateTime;
 @Data
 @NoArgsConstructor
 @AttributeOverride(name = "id", column = @Column(name = "POINT_ID"))
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class Point extends EntityWithName {
 
     @Serial
-    private static final long serialVersionUID = 1L;
+    static final long serialVersionUID = 1L;
 
     @ToString.Include
     @Column(name = "ORDINAL")
-    private Long ordinal;
+    Long ordinal;
 
     @ToString.Include
     @Column(name = "FIELD")
-    private String field;
+    String field;
 
     @ToString.Include
     @Column(name = "STATUS_OF_ORDINAL_WITH_GEO")
-    private Boolean statusOfOrdinalWithGeo;
+    Boolean statusOfOrdinalWithGeo;
 
 
     @ToString.Include
     @Column(name = "TIME_START", nullable = false)
-    protected LocalDateTime timeStart;
+    LocalDateTime timeStart;
 
 
     @ToString.Include
     @Column(name = "TIME_END", nullable = false)
-    protected LocalDateTime timeEnd;
+    LocalDateTime timeEnd;
 
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "APPLICATION_ID")
-    private Application application;
+    Application application;
 
 
     public Point(Long id) {

@@ -1,11 +1,18 @@
 package com.example.logisticprogram.entity;
 
-import jakarta.persistence.*;
+import jakarta.persistence.AttributeOverride;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import lombok.AccessLevel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import lombok.experimental.Accessors;
+import lombok.experimental.FieldDefaults;
 
 import java.io.Serial;
 import java.time.LocalDateTime;
@@ -17,7 +24,8 @@ import java.time.LocalDateTime;
 @ToString(onlyExplicitlyIncluded = true, callSuper = true)
 @EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = true)
 @AttributeOverride(name = "id", column = @Column(name = "USER_ID"))
-public class User extends  BaseEntity {
+@FieldDefaults(level = AccessLevel.PRIVATE)
+public class User extends BaseEntity {
     @Serial
     private static final long serialVersionUID = 1L;
 
@@ -27,27 +35,27 @@ public class User extends  BaseEntity {
 
     @ToString.Include
     @Column(name = "SURNAME", nullable = false, updatable = false)
-    protected String surname;
+    String surname;
 
     @ToString.Include
     @Column(name = "NAME")
-    protected String name;
+    String name;
 
     @ToString.Include
     @Column(name = "PASSWORD", nullable = false, updatable = false)
-    protected String password;
+    String password;
 
     @ToString.Include
     @Column(name = "LOGIN", nullable = false, updatable = false)
-    protected String login;
+    String login;
 
     @ToString.Include
     @Column(name = "E_MAIL", nullable = false, updatable = false)
-    protected String email;
+    String email;
 
     @ToString.Include
     @Column(name = "PHONE_NUMBER", nullable = false, updatable = false)
-    protected Long phoneNumber;
+    String phoneNumber;
 
 
     public User(Long id) {
@@ -65,7 +73,6 @@ public class User extends  BaseEntity {
         this.created = created;
         return this;
     }
-
 
 
     @Override
