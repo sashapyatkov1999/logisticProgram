@@ -1,11 +1,13 @@
 package com.example.logisticprogram.entity;
 
 import jakarta.persistence.*;
+import lombok.AccessLevel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import lombok.experimental.Accessors;
+import lombok.experimental.FieldDefaults;
 
 import java.io.Serial;
 import java.time.LocalDateTime;
@@ -17,6 +19,8 @@ import java.time.LocalDateTime;
 @ToString(onlyExplicitlyIncluded = true, callSuper = true)
 @EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = true)
 @AttributeOverride(name = "id", column = @Column(name = "LIST_DOC_ID"))
+@FieldDefaults(level = AccessLevel.PRIVATE)
+
 public class ListDoc extends BaseEntity{
     @Serial
     private static final long serialVersionUID = 1L;

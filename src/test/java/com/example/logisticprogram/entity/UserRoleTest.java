@@ -25,12 +25,16 @@ class UserRoleTest extends BaseEntityTest {
 
         assertThat(result.getRole().getId()).isEqualTo(ROLE_ID);
         assertThat(result.getUser().getId()).isEqualTo(USER_ID);
+        assertThat(result.created).isEqualTo(CREATED);
+        assertThat(result.modified).isEqualTo(MODIFIED);
 
     }
     private UserRole getUserRole(){
         return new UserRole()
                 .setRole(new Role().setId(ROLE_ID))
-                .setUser(new User().setId(USER_ID));
+                .setUser(new User().setId(USER_ID))
+                .setCreated(CREATED)
+                .setModified(MODIFIED);
     }
 
 }
