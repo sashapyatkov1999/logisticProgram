@@ -43,9 +43,6 @@ public class Application extends EntityWithName {
     @JoinColumn(name = "LIST_DOC_ID")
     ListDoc listDocs;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "POINT_ID")
-    Point point;
 
     public Application(Long id) {
         this.id = id;

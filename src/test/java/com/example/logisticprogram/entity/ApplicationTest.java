@@ -13,7 +13,6 @@ class ApplicationTest extends BaseEntityTest{
     private static final Long DRIVER_ID = 2L;
     private static final Long CLIENT_ID = 3L;
     private static final Long LIST_DOC_ID = 3L;
-    private static final Long POINT_ID = 3L;
     private static final String NAME = "NAME";
     private static final String DESCRIPTION = "DESCRIPTION";
     private static final LocalDateTime CREATED = LocalDateTime.now();
@@ -21,7 +20,7 @@ class ApplicationTest extends BaseEntityTest{
 
     @BeforeAll
     void init () throws ClassNotFoundException {
-        checkNumFields(10);
+        checkNumFields(9);
     }
     @Test
     void testApplicationConstructor() {
@@ -37,7 +36,6 @@ class ApplicationTest extends BaseEntityTest{
         assertThat(result.getDriver().getId()).isEqualTo(DRIVER_ID);
         assertThat(result.getClient().getId()).isEqualTo(CLIENT_ID);
         assertThat(result.getListDocs().getId()).isEqualTo(LIST_DOC_ID);
-        assertThat(result.getPoint().getId()).isEqualTo(POINT_ID);
         assertThat(result.getName()).isEqualTo(NAME);
         assertThat(result.getDescription()).isEqualTo(DESCRIPTION);
         assertThat(result.getCreated()).isEqualTo(CREATED);
@@ -51,7 +49,6 @@ class ApplicationTest extends BaseEntityTest{
                 .setDriver(new Driver().setId(DRIVER_ID))
                 .setClient(new User().setId(CLIENT_ID))
                 .setListDocs(new ListDoc().setId(LIST_DOC_ID))
-                .setPoint(new Point().setId(POINT_ID))
                 .setName(NAME)
                 .setDescription(DESCRIPTION)
                 .setCreated(CREATED)
