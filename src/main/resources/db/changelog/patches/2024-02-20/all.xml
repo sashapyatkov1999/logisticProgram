@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="UPDATE_DRIVER_STATUS-001" author="vyushin">
+
+        <delete tableName="DRIVER_STATUS" />
+
+        <dropSequence sequenceName="DRIVER_STATUS_SEQ"/>
+        <createSequence sequenceName="DRIVER_STATUS_SEQ" startValue="0"/>
+        <insert schemaName="REPOSITORY" tableName="DRIVER_STATUS">
+            <column name="NAME" value="SOON_ON_LOADING"/>
+            <column name="DESCRIPTION" value="Через час буду на погрузке"/>
+        </insert>
+
+        <insert schemaName="REPOSITORY" tableName="DRIVER_STATUS">
+            <column name="NAME" value="SOON_ON_UNLOADING"/>
+            <column name="DESCRIPTION" value="Через час буду на выгрузке"/>
+        </insert>
+
+        <insert schemaName="REPOSITORY" tableName="DRIVER_STATUS">
+            <column name="NAME" value="START_LOADING"/>
+            <column name="DESCRIPTION" value="На погрузке"/>
+        </insert>
+
+        <insert schemaName="REPOSITORY" tableName="DRIVER_STATUS">
+            <column name="NAME" value="FINISH_LOADING"/>
+            <column name="DESCRIPTION" value="Погрузка завершена"/>
+        </insert>
+
+        <insert schemaName="REPOSITORY" tableName="DRIVER_STATUS">
+            <column name="NAME" value="START_UNLOADING"/>
+            <column name="DESCRIPTION" value="На выгрузке"/>
+        </insert>
+
+        <insert schemaName="REPOSITORY" tableName="DRIVER_STATUS">
+            <column name="NAME" value="FINISH_UNLOADING"/>
+            <column name="DESCRIPTION" value="Выгрузка завершена"/>
+        </insert>
+
+        <insert schemaName="REPOSITORY" tableName="DRIVER_STATUS">
+            <column name="NAME" value="WAIT_DOCS"/>
+            <column name="DESCRIPTION" value="Жду документы"/>
+        </insert>
+
+    </changeSet>
+</databaseChangeLog>
