@@ -132,7 +132,7 @@ class CarDomainServiceTest {
 
     private CarResponse getCarResponse() {
         return new CarResponse()
-                .setId(null)
+                .setId(ID)
                 .setCarNumber("ABC123");
     }
     private CarAddRequest carAddRequestAdd(){
