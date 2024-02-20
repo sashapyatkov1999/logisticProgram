@@ -53,7 +53,12 @@ public class CarDomainService {
     public  List<CarResponse> getCarByNumber(CarNumberRequest numberRequest) {
         return  carRepository.findAll()
                 .stream()
-                .filter(car-> car.getCarNumber().toLowerCase().contains(numberRequest.getNumber().toLowerCase()))
+                .filter(car-> car
+                        .getCarNumber()
+                        .toLowerCase()
+                        .contains(numberRequest
+                                .getNumber()
+                                .toLowerCase()))
                 .map(carResponseMapper::from)
                 .toList();
     }
