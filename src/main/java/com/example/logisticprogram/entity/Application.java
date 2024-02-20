@@ -6,11 +6,13 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import lombok.AccessLevel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import lombok.experimental.Accessors;
+import lombok.experimental.FieldDefaults;
 
 import java.io.Serial;
 import java.time.LocalDateTime;
@@ -22,6 +24,8 @@ import java.time.LocalDateTime;
 @Data
 @NoArgsConstructor
 @AttributeOverride(name = "id", column = @Column(name = "APPLICATION_ID"))
+@FieldDefaults(level = AccessLevel.PRIVATE)
+
 public class Application extends EntityWithName {
 
     @Serial
