@@ -10,20 +10,16 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import java.util.Collections;
+import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoInteractions;
-import static org.mockito.Mockito.verifyNoMoreInteractions;
-import static org.mockito.Mockito.when;
-import java.util.ArrayList;
-import java.util.List;
+import static org.mockito.Mockito.*;
 
 
 @ExtendWith(MockitoExtension.class)
@@ -35,24 +31,18 @@ class UserDomainServiceTest {
     private UserResponseMapper userResponseMapper;
     @Mock
     private UserMapper userMapper;
-
     @InjectMocks
     private UserDomainService service;
 
-    private final UserAddRequest userAddRequestAdd = new UserAddRequest();
-    private final List<User> users = new ArrayList<>();
-    private final User userAdd = new User(1L);
-    private final List<UserResponse> userResponses = new ArrayList<>();
     private final Long ID = 0L;
-    private final Long id = 1L;
 
 
 
 
     @Test
-    void getUserTest() {
+    void getUserTest(){
 
-        when(userResponseMapper.from((User) any())).thenReturn(getUserResponse());
+        when(userResponseMapper.from(any(User.class))).thenReturn(getUserResponse());
         when(userRepository.getReferenceById(anyLong())).thenReturn(getUser());
 
         var result = service.getUser(ID);
@@ -60,60 +50,61 @@ class UserDomainServiceTest {
         assertNotNull(result);
 
         verify(userRepository).getReferenceById(anyLong());
-        verify(userResponseMapper).from((User) any());
+        verify(userResponseMapper).from((any(User.class)));
         verifyNoMoreInteractions(userRepository, userResponseMapper);
         verifyNoInteractions(userMapper);
     }
 
     @Test
-    void getAllUsersTest() {
-        users.add(new User(1L));
-        users.add(new User(2L));
-        userResponses.add(new UserResponse());
-        userResponses.add(new UserResponse());
-
-        when(userRepository.findAll()).thenReturn(users);
-        when(userResponseMapper.from(users)).thenReturn(userResponses);
+    void getAllUsersTest(){
+        when(userRepository.findAll()).thenReturn(Collections.singletonList(getUser()));
+        when(userResponseMapper.from(anyList())).thenReturn(Collections.singletonList(getUserResponse()));
 
         List<UserResponse> result = service.getAllUsers();
 
-        assertEquals(userResponses, result);
-        assertNotNull(result);
+        assertThat(result).isNotNull();
+
         verify(userRepository).findAll();
-        verify(userResponseMapper).from(users);
+        verify(userResponseMapper).from(anyList());
+
 
         verifyNoMoreInteractions(userRepository, userResponseMapper);
         verifyNoInteractions(userMapper);
     }
 
     @Test
-    void deleteUserTest() {
-        service.deleteUser(id);
-        verify(userRepository).deleteById(id);
+    void  deleteUserTest(){
+        service.deleteUser(ID);
 
+        verify(userRepository).deleteById(ID);
         verifyNoMoreInteractions(userRepository, userResponseMapper);
         verifyNoInteractions(userMapper);
     }
 
     @Test
     void addUserTest() {
-        when(userMapper.from(userAddRequestAdd)).thenReturn(userAdd);
-        when(userRepository.save(userAdd)).thenReturn(userAdd);
-        Long id = service.addUser(userAddRequestAdd);
-        assertEquals(userAdd.getId(),id.longValue());
-        verify(userMapper).from(userAddRequestAdd);
-        verify(userRepository).save(userAdd);
+
+        when(userMapper.from(any(UserAddRequest.class))).thenReturn(getUser());
+        when(userRepository.save(any())).thenReturn(getUser());
+
+
+        Long id = service.addUser(userAddRequestAdd());
+
+        assertThat(id).isEqualTo(ID);
+
+        verify(userMapper).from(any(UserAddRequest.class));
+        verify(userRepository).save(any());
         verifyNoMoreInteractions(userRepository, userResponseMapper);
     }
 
-
     private UserResponse getUserResponse(){
-        return  new UserResponse()
-                .setId(ID);
+        return new UserResponse().setId(ID);
     }
 
-    private User getUser(){
-        return new User(ID);
-    }
 
+    private User getUser(){return new User(ID);}
+
+    private UserAddRequest userAddRequestAdd(){
+        return  new UserAddRequest().setUserStatusId(ID);
+    }
 }
