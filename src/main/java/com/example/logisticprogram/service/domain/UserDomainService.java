@@ -3,6 +3,7 @@ package com.example.logisticprogram.service.domain;
 import com.example.logisticprogram.dto.request.user.UserAddRequest;
 import com.example.logisticprogram.dto.response.user.UserResponse;
 import com.example.logisticprogram.mapper.user.UserMapper;
+import com.example.logisticprogram.mapper.user.UserMerger;
 import com.example.logisticprogram.mapper.user.UserResponseMapper;
 import com.example.logisticprogram.repository.UserRepository;
 import jakarta.transaction.Transactional;
@@ -17,6 +18,7 @@ public class UserDomainService {
     private final UserRepository userRepository;
     private final UserResponseMapper userResponseMapper;
     private final UserMapper userMapper;
+    private final UserMerger userMerger;
 
     @Transactional
     public UserResponse getUser(Long id) {
@@ -38,5 +40,10 @@ public class UserDomainService {
     public Long addUser(UserAddRequest request) {
         return userRepository.save(userMapper.from(request)).getId();
 
+    }
+    @Transactional
+    public Long editUser(UserAddRequest request) {
+        var user = userRepository.getReferenceById(request.getUserId());
+        return userRepository.save(userMerger.merge(user, request)).getId();
     }
 }

@@ -13,7 +13,7 @@ public class UserMapper implements Mapper<User, UserAddRequest> {
     @Override
     public User from(UserAddRequest source) {
         return new User()
-                .setStatus(new UserStatus(source.getUserStatusId()))
+                .setStatus(new UserStatus(source.getUserId()))
                 .setName(source.getName())
                 .setSurname(source.getSurname())
                 .setPhoneNumber(source.getPhoneNumber());
