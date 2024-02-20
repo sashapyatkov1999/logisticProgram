@@ -8,17 +8,13 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.mockito.Mockito.spy;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoMoreInteractions;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class RoleMapperTest {
-
     private static final String NAME = "name";
     private static final String DESCRIPTION = "description";
 
@@ -33,11 +29,11 @@ class RoleMapperTest {
 
       var result = mapper.from(source);
 
-      assertNull(result.getId());
-      assertNull(result.getCreated());
-      assertNull(result.getModified());
-      assertEquals(NAME, result.getName());
-      assertEquals(DESCRIPTION, result.getDescription());
+      assertThat(result.getId()).isNull();
+      assertThat(result.getCreated()).isNull();
+      assertThat(result.getModified()).isNull();
+      assertThat(result.getName()).isEqualTo(NAME);
+      assertThat(result.getDescription()).isEqualTo(DESCRIPTION);
 
 
       verify(source).getName();
@@ -60,11 +56,11 @@ class RoleMapperTest {
 
       var result = resultList.get(0);
 
-      assertNull(result.getId());
-      assertNull(result.getCreated());
-      assertNull(result.getModified());
-      assertEquals(NAME, result.getName());
-      assertEquals(DESCRIPTION, result.getDescription());
+      assertThat(result.getId()).isNull();
+      assertThat(result.getCreated()).isNull();
+      assertThat(result.getModified()).isNull();
+      assertThat(result.getName()).isEqualTo(NAME);
+      assertThat(result.getDescription()).isEqualTo(DESCRIPTION);
 
 
       verify(source, times(3)).getName();
