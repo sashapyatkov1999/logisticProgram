@@ -56,7 +56,7 @@ public class DriverDomainService {
     @Transactional
     public void editDrivers(DriverAddRequest request) {
         var driver = repository.getReferenceById(request.getId());
-        repository.saveAndFlush(driverMerger.merge(driver, request));
+        repository.save(driverMerger.merge(driver, request));
 
     }
 

@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 
@@ -24,6 +26,10 @@ public class RoleController {
     public static final String ROLE_ADD = "/api/v1/role/add";
     public static final String ROLE_GET = "/api/v1/role/get";
     public static final String ROLE_DELETE = "/api/v1/role/delete";
+    private static final String ROLE_GET_ALL = "/api/v1/role/get-all";
+    private static final String ROLE_EDIT = "/api/v1/role/edit";
+
+
 
 
     @PostMapping(
@@ -43,6 +49,21 @@ public class RoleController {
         return service.getRole(request);
     }
 
+
+    @PostMapping(
+            value = ROLE_GET_ALL,
+            consumes = APPLICATION_JSON_VALUE,
+            produces = APPLICATION_JSON_VALUE)
+    public List<RoleResponse> getAllRoles(){
+        return service.getAllRoles();
+    }
+    @PostMapping(
+            value = ROLE_EDIT,
+            consumes = APPLICATION_JSON_VALUE,
+            produces = APPLICATION_JSON_VALUE)
+    public void editRole(RoleAddRequest request){
+        service.editRole(request);
+    }
 
     @PostMapping(
             value = ROLE_DELETE,

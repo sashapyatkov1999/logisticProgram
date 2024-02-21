@@ -2,6 +2,7 @@ package com.example.logisticprogram.controller;
 
 import com.example.logisticprogram.dto.request.application.ApplicationAddRequest;
 import com.example.logisticprogram.dto.request.application.ApplicationNumberRequest;
+import com.example.logisticprogram.dto.request.point.PointAddRequest;
 import com.example.logisticprogram.dto.request.point.PointNumberRequest;
 import com.example.logisticprogram.dto.response.application.ApplicationResponse;
 import com.example.logisticprogram.dto.response.point.PointResponse;
@@ -26,7 +27,10 @@ public class ApplicationController {
     public static final String APPLICATION_EDIT = "/api/v1/application/edit";
     public static final String POINT_GET = "/api/v1/point/get";
     public static final String POINT_DELETE = "/api/v1/point/delete";
+    private static final String POINT_EDIT = "/api/v1/point/edit";
     public static final String POINTS_GET_ALL = "/api/v1/points/get-all";
+    private static final String POINTS_ADD_POINT = "/api/v1/point/add";
+
     public static final String POINT_GET_BY_APPLICATION = "/api/v1/point/get-by-application";
 
     @PostMapping(
@@ -84,7 +88,20 @@ public class ApplicationController {
     public void deletePoint(@RequestBody PointNumberRequest request) {
         service.deletePoint(request);
     }
-
+    @PostMapping(
+            value = POINTS_ADD_POINT,
+            consumes = APPLICATION_JSON_VALUE,
+            produces = APPLICATION_JSON_VALUE)
+    public PointResponse addPoint(@RequestBody PointAddRequest request){
+        return service.addPoint(request);
+    }
+    @PostMapping(
+            value = POINT_EDIT,
+            consumes = APPLICATION_JSON_VALUE,
+            produces = APPLICATION_JSON_VALUE)
+    public void editPoint(@RequestBody PointAddRequest request){
+        service.editPoint(request);
+    }
     @PostMapping(
             value = POINTS_GET_ALL,
             consumes = APPLICATION_JSON_VALUE,

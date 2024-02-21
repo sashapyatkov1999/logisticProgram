@@ -58,7 +58,7 @@ public class TypeDocService {
 
     }
     public ListDocResponse addListDoc(ListDocAddRequest request) {
-        var id = listDocDomainService.addListDoc(request);
+        listDocDomainService.addListDoc(request);
         return listDocDomainService.getListDocById(request.getApplicationId());
     }
 

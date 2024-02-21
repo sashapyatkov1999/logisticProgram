@@ -3,6 +3,7 @@ package com.example.logisticprogram.controller;
 import com.example.logisticprogram.dto.request.user.LoginRequest;
 import com.example.logisticprogram.dto.request.user.UserAddRequest;
 import com.example.logisticprogram.dto.request.user.UserRequest;
+import com.example.logisticprogram.dto.response.driver.DriverResponse;
 import com.example.logisticprogram.dto.response.user.UserResponse;
 import com.example.logisticprogram.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -23,10 +24,12 @@ public class UserController {
     public static final String USER_GET = "/api/v1/user/get";
     public static final String USER_DELETE = "/api/v1/user/delete";
     public static final String USER_EDIT = "/api/v1/user/edit";
-    public static final String USER_GET_ALL = "/api/v1/user/get-all";
+    public static final String USER_GET_ALL = "/api/v1/user/get-all";//работает
     public static final String USER_SEARCH = "/api/v1/user/search";
 
     public static final String USER_LOGIN = "/api/v1/user/login";
+
+
 
 
     @PostMapping(
@@ -43,6 +46,7 @@ public class UserController {
     public UserResponse getUser(@RequestBody UserRequest request) {
         return service.getUser(request);
     }
+
 
     @PostMapping(
             value = USER_LOGIN,

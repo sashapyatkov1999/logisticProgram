@@ -4,8 +4,10 @@ import com.example.logisticprogram.dto.request.car.CarAddRequest;
 import com.example.logisticprogram.dto.request.car.CarNumberRequest;
 import com.example.logisticprogram.dto.request.car.CarRequest;
 import com.example.logisticprogram.dto.request.driver.DriverAddRequest;
+import com.example.logisticprogram.dto.request.driver.DriverFindByNameRequest;
 import com.example.logisticprogram.dto.request.driver.DriverRequest;
 import com.example.logisticprogram.dto.request.driverstatus.DriverStatusRequest;
+import com.example.logisticprogram.dto.request.user.UserRequest;
 import com.example.logisticprogram.dto.response.car.CarResponse;
 import com.example.logisticprogram.dto.response.driver.DriverResponse;
 import com.example.logisticprogram.dto.response.driverstatus.DriverStatusResponse;
@@ -24,19 +26,22 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 public class DriverController {
 
     private final DriverService service;
-    public static final String CAR_GET_BY_NUMBER = "/api/v1/car/find-by-number";
-    public static final String CAR_DELETE = "/api/v1/car/delete";
-    public static final String DRIVER_GET = "/api/v1/driver/get";
+    public static final String CAR_GET_BY_NUMBER = "/api/v1/car/find-by-number";//работает
+    public static final String CAR_DELETE = "/api/v1/car/delete";//еще не попробовал
+    public static final String DRIVER_GET = "/api/v1/driver/get";//работает
     public static final String DRIVER_DELETE = "/api/v1/driver/delete";
     public static final String DRIVER_ADD = "/api/v1/driver/add";
-    public static final String DRIVER_GET_ALL = "/api/v1/driver/get-all";
-    public static final String DRIVER_EDIT = "/api/v1/driver/edit";
+    public static final String DRIVER_GET_ALL = "/api/v1/driver/get-all";//работает
+    public static final String DRIVER_EDIT = "/api/v1/driver/edit";//ошибки
     public static final String DRIVER_STATUS_GET = "/api/v1/driver-status/get";
     public static final String DRIVER_STATUS_GET_ALL = "/api/v1/driver-status/get-all";
     public static final String CAR_ADD = "/api/v1/car/add";
     public static final String CAR_GET = "/api/v1/car/get";
     public static final String CAR_GET_ALL = "/api/v1/car/get-all";
     public static final String CAR_EDIT = "/api/v1/car/edit";
+    private static final String USER_IS_DRIVER = "/api/v1/user/user-is-driver";
+    private static final String CAR_GET_BY_DRIVER = "/api/v1/car/get-by-driver";
+
 
     @PostMapping(
             value = CAR_GET_BY_NUMBER,
@@ -61,7 +66,13 @@ public class DriverController {
     public void deleteDriver(@RequestBody DriverRequest request){
         service.deleteDriver(request);
     }
-
+    @PostMapping(
+            value = USER_IS_DRIVER,
+            consumes = APPLICATION_JSON_VALUE,
+            produces = APPLICATION_JSON_VALUE)
+    public DriverResponse isUserDriver(@RequestBody UserRequest request){
+        return service.isUserDriver(request);
+    }
     @PostMapping(
             value = DRIVER_ADD,
             consumes = APPLICATION_JSON_VALUE,
@@ -133,7 +144,13 @@ public class DriverController {
     public Long editCar(@RequestBody CarAddRequest request){
         return service.editCar(request);
     }
-
+    @PostMapping(
+            value = CAR_GET_BY_DRIVER,
+            consumes = APPLICATION_JSON_VALUE,
+            produces = APPLICATION_JSON_VALUE)
+    public List<CarResponse> getCarByDriver(@RequestBody DriverFindByNameRequest request){
+        return service.getCarByDriver(request);
+    }
     @PostMapping(
             value = CAR_DELETE,
             consumes = APPLICATION_JSON_VALUE,

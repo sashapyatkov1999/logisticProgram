@@ -44,7 +44,7 @@ public class UserDomainService {
     @Transactional
     public void editUser(UserAddRequest request) {
         var role = userRepository.getReferenceById(request.getUserId());
-        userRepository.save(userMerger.merge(role, request)).getId();
+        userRepository.save(userMerger.merge(role, request));
 
     }
 
