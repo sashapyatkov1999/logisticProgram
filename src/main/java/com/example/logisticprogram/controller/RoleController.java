@@ -6,6 +6,8 @@ import com.example.logisticprogram.dto.request.role.RoleAddRequest;
 import com.example.logisticprogram.dto.request.role.RoleRequest;
 import com.example.logisticprogram.dto.response.role.RoleResponse;
 import com.example.logisticprogram.service.RoleService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,6 +18,7 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @RestController
 @RequiredArgsConstructor
+@Tag(name = "Управление ролями")
 public class RoleController {
 
     private final RoleService service;
@@ -26,6 +29,7 @@ public class RoleController {
     public static final String ROLE_DELETE = "/api/v1/role/delete";
 
 
+    @Operation(description = "Добавление новой роли", summary = "Добавление новой роли")
     @PostMapping(
             value = ROLE_ADD,
             consumes = APPLICATION_JSON_VALUE,
