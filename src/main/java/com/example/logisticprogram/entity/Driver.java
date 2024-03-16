@@ -32,7 +32,7 @@ public class Driver extends BaseEntity {
     @Serial
     static final long serialVersionUID = 1L;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     @JoinColumn(name = "DRIVER_STATUS_ID")
     DriverStatus driverStatus;
 

@@ -4,8 +4,10 @@ import com.example.logisticprogram.dto.request.car.CarAddRequest;
 import com.example.logisticprogram.dto.request.car.CarNumberRequest;
 import com.example.logisticprogram.dto.request.car.CarRequest;
 import com.example.logisticprogram.dto.request.driver.DriverAddRequest;
+import com.example.logisticprogram.dto.request.driver.DriverFindByNameRequest;
 import com.example.logisticprogram.dto.request.driver.DriverRequest;
 import com.example.logisticprogram.dto.request.driverstatus.DriverStatusRequest;
+import com.example.logisticprogram.dto.request.user.UserRequest;
 import com.example.logisticprogram.dto.response.car.CarResponse;
 import com.example.logisticprogram.dto.response.driver.DriverResponse;
 import com.example.logisticprogram.dto.response.driverstatus.DriverStatusResponse;
@@ -79,6 +81,15 @@ public class DriverService {
 
     public Long editCar(CarAddRequest request) {
         return carDomainService.editCars(request);
+    }
+
+
+    public DriverResponse isUserDriver(UserRequest request) {
+        return driverDomainService.getDriverByUser(request.getId());
+    }
+
+    public List<CarResponse> getCarByDriver(DriverFindByNameRequest request){
+        return driverDomainService.getCarByDriver(request);
     }
 
 }

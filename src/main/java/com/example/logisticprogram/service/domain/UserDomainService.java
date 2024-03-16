@@ -1,5 +1,6 @@
 package com.example.logisticprogram.service.domain;
 
+import com.example.logisticprogram.dto.request.user.LoginRequest;
 import com.example.logisticprogram.dto.request.user.UserAddRequest;
 import com.example.logisticprogram.dto.response.user.UserResponse;
 import com.example.logisticprogram.mapper.user.UserMapper;
@@ -39,9 +40,22 @@ public class UserDomainService {
 
     @Transactional
     public Long addUser(UserAddRequest request) {
-        return userRepository
-                .save(userMapper.from(request)).getId();
+        return userRepository.save(userMapper.from(request)).getId();
+    }
+  
+    @Transactional
+    public void editUser(UserAddRequest request) {
+        var role = userRepository.getReferenceById(request.getUserId());
+        userRepository.save(userMerger.merge(role, request));
 
+    }
+
+    @Transactional
+    public Boolean login(LoginRequest request) {
+        return userRepository
+                .findByLogin(request.getLogin())
+                .map(value -> value.getPassword().equals(request.getPassword()))
+                .orElse(false);
     }
     @Transactional
     public Long editUser(UserAddRequest request) {

@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
 @Accessors(chain = true)
 @NoArgsConstructor
 public class ApplicationAddRequest {
+    private Long id;
     private Long managerId;
     private Long driverId;
     private String name;

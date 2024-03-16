@@ -7,10 +7,6 @@ import lombok.experimental.Accessors;
 @Data
 @Accessors(chain = true)
 @NoArgsConstructor
-public class ListDocAddRequest {
+public class ListDocRequest {
     private Long id;
-    private Long pointId;
-    private Long applicationId;
-    private Long typeDocId;
 }
-

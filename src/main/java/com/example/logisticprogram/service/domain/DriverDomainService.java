@@ -11,6 +11,7 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.security.InvalidParameterException;
 import java.util.List;
 
 @Service
@@ -20,6 +21,7 @@ public class DriverDomainService {
     private final DriverMapper driverMapper;
     private final DriverResponseMapper driverResponseMapper;
     private final DriverMerger driverMerger;
+    private final CarResponseMapper carResponseMapper;
 
     @Transactional
     public DriverResponse getDriverById(Long id) {
@@ -27,6 +29,10 @@ public class DriverDomainService {
                 .from(repository.getReferenceById(id));
     }
 
+    @Transactional
+    public DriverResponse getDriverByUser(Long userId) {
+        return driverResponseMapper.from(repository.findByUserId(userId).orElseThrow(() -> new InvalidParameterException("Водитель не найден")));
+    }
 
     @Transactional
     public List<DriverResponse> getAllDrivers() {
@@ -46,12 +52,22 @@ public class DriverDomainService {
     }
 
     @Transactional
-
     public Long editDrivers(DriverAddRequest request) {
         var driver = repository.getReferenceById(request.getId());
         return repository.saveAndFlush
                         (driverMerger.merge(driver, request))
                 .getId();
-
     }
+
+
+    @Transactional
+    public List<CarResponse> getCarByDriver(DriverFindByNameRequest request) {
+        return repository.findAll()
+                .stream()
+                .filter(driver -> driver.getUser().getName().toLowerCase().contains(request.getFindByName().toLowerCase()))
+                .map(driver -> carResponseMapper.from(driver.getCar()))
+                .toList();
+    }
+
+
 }
