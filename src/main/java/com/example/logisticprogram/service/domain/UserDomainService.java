@@ -42,14 +42,7 @@ public class UserDomainService {
     public Long addUser(UserAddRequest request) {
         return userRepository.save(userMapper.from(request)).getId();
     }
-  
-    @Transactional
-    public void editUser(UserAddRequest request) {
-        var role = userRepository.getReferenceById(request.getUserId());
-        userRepository.save(userMerger.merge(role, request));
-
-    }
-
+    
     @Transactional
     public Boolean login(LoginRequest request) {
         return userRepository

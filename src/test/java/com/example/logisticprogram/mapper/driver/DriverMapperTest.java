@@ -1,6 +1,7 @@
 package com.example.logisticprogram.mapper.driver;
 
 import com.example.logisticprogram.dto.request.driver.DriverAddRequest;
+import com.example.logisticprogram.entity.DriverStatusEnum;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -32,7 +33,7 @@ class DriverMapperTest {
 
         assertThat(result.getId()).isNull();
         assertThat(result.getUser().getId()).isEqualTo(USER_ID);
-        assertThat(result.getDriverStatus().getId()).isEqualTo(DRIVER_STATUS_ID);
+        assertThat(result.getDriverStatus().getId()).isEqualTo(DriverStatusEnum.WAIT_DOCS.getId());
         assertThat(result.getCar().getId()).isEqualTo(CAR_ID);
         assertThat(result.getPassportNumber()).isEqualTo(PASSPORT_NUMBER);
         assertThat(result.getPassportDate()).isEqualTo(PASSPORT_DATE);
@@ -40,7 +41,6 @@ class DriverMapperTest {
         assertThat(result.getDriverLicense()).isEqualTo(DRIVER_LICENSE);
 
         verify(source).getUserId();
-        verify(source).getDriverStatusId();
         verify(source).getCarId();
         verify(source).getPassportNumber();
         verify(source).getPassportDate();
@@ -60,7 +60,7 @@ class DriverMapperTest {
 
         assertThat(result.getId()).isNull();
         assertThat(result.getUser().getId()).isEqualTo(USER_ID);
-        assertThat(result.getDriverStatus().getId()).isEqualTo(DRIVER_STATUS_ID);
+        assertThat(result.getDriverStatus().getId()).isEqualTo(DriverStatusEnum.WAIT_DOCS.getId());
         assertThat(result.getCar().getId()).isEqualTo(CAR_ID);
         assertThat(result.getPassportNumber()).isEqualTo(PASSPORT_NUMBER);
         assertThat(result.getPassportDate()).isEqualTo(PASSPORT_DATE);
@@ -68,7 +68,6 @@ class DriverMapperTest {
         assertThat(result.getDriverLicense()).isEqualTo(DRIVER_LICENSE);
 
         verify(source,times(3)).getUserId();
-        verify(source,times(3)).getDriverStatusId();
         verify(source,times(3)).getCarId();
         verify(source,times(3)).getPassportNumber();
         verify(source,times(3)).getPassportDate();

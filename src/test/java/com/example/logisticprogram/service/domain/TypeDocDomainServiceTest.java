@@ -106,9 +106,9 @@ class TypeDocDomainServiceTest {
         when(typeDocMerger.merge(any(), any())).thenReturn(getTypeDoc());
         when(typeDocRepository.save(any())).thenReturn(getTypeDoc());
 
-        Long result = service.editTypeDocs(getTypeDocAddRequest());
+       service.editTypeDocs(getTypeDocAddRequest());
 
-        assertThat(result).isEqualTo(ID);
+
 
         verify(typeDocRepository).getReferenceById(anyLong());
         verify(typeDocRepository).save(any());
