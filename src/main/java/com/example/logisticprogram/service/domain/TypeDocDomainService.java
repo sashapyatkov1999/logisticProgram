@@ -1,9 +1,7 @@
 package com.example.logisticprogram.service.domain;
 
 import com.example.logisticprogram.dto.request.typedoc.TypeDocAddRequest;
-import com.example.logisticprogram.dto.request.userstatus.UserStatusAddRequest;
 import com.example.logisticprogram.dto.response.typedoc.TypeDocResponse;
-import com.example.logisticprogram.dto.response.userstatus.UserStatusResponse;
 import com.example.logisticprogram.mapper.typedoc.TypeDocMapper;
 import com.example.logisticprogram.mapper.typedoc.TypeDocMerger;
 import com.example.logisticprogram.mapper.typedoc.TypeDocResponseMapper;
@@ -13,8 +11,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-
-import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
 
 @Service
 @RequiredArgsConstructor

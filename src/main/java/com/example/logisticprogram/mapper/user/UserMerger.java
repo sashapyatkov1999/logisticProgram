@@ -13,9 +13,11 @@ public class UserMerger implements Merger<User, UserAddRequest> {
     public User merge(User target, UserAddRequest source) {
         return target
                 .setId(source.getUserId())
-                .setName(source.getName())
+                
+
                 .setSurname(source.getSurname())
                 .setEmail(source.getEMail())
-                .setPhoneNumber(Long.valueOf(source.getPhoneNumber()));
+                .setPhoneNumber(source.getPhoneNumber())
+                .setName(source.getName());
     }
 }

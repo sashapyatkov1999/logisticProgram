@@ -5,6 +5,7 @@ import com.example.logisticprogram.dto.response.driver.DriverResponse;
 import com.example.logisticprogram.entity.Car;
 import com.example.logisticprogram.entity.Driver;
 import com.example.logisticprogram.entity.DriverStatus;
+import com.example.logisticprogram.entity.DriverStatusEnum;
 import com.example.logisticprogram.entity.User;
 import com.example.logisticprogram.mapper.Mapper;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +20,7 @@ public class DriverMapper  implements Mapper<Driver, DriverAddRequest> {
     public Driver from(DriverAddRequest source) {
         return new Driver()
                 .setUser(new User(source.getUserId()))
-                .setDriverStatus(new DriverStatus(source.getDriverStatusId()))
+                .setDriverStatus(new DriverStatus(DriverStatusEnum.WAIT_DOCS.getId()))
                 .setCar(new Car(source.getCarId()))
                 .setPassportNumber(source.getPassportNumber())
                 .setPassportDate(LocalDate.parse(source.getPassportDate()))

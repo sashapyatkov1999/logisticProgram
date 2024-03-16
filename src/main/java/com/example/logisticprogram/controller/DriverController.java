@@ -83,7 +83,6 @@ public class DriverController {
 
     @PostMapping(
             value = DRIVER_GET_ALL,
-            consumes = APPLICATION_JSON_VALUE,
             produces = APPLICATION_JSON_VALUE)
     public List<DriverResponse> getAllDrivers(){
         return service.getAllDrivers();
@@ -107,7 +106,6 @@ public class DriverController {
 
     @PostMapping(
             value = CAR_GET_ALL,
-            consumes = APPLICATION_JSON_VALUE,
             produces = APPLICATION_JSON_VALUE)
     public List<CarResponse> getAllCars(){
         return service.getAllCars();

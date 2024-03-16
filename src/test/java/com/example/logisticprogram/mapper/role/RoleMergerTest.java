@@ -9,11 +9,9 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDateTime;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.spy;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoMoreInteractions;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class RoleMergerTest {
@@ -43,11 +41,11 @@ class RoleMergerTest {
         verify(target).setDescription(any());
         verifyNoMoreInteractions(source, target);
 
-        assertEquals(ID, result.getId());
-        assertEquals(NAME, result.getName());
-        assertEquals(DESCRIPTION, result.getDescription());
-        assertEquals(CREATED, result.getCreated());
-        assertEquals(MODIFIED, result.getModified());
+        assertThat(result.getId()).isEqualTo(ID);
+        assertThat(result.getName()).isEqualTo(NAME);
+        assertThat(result.getDescription()).isEqualTo(DESCRIPTION);
+        assertThat(result.getCreated()).isEqualTo(CREATED);
+        assertThat(result.getModified()).isEqualTo(MODIFIED);
     }
 
     private Role getRole() {

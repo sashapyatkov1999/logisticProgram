@@ -23,7 +23,8 @@ public class UserDomainService {
 
     @Transactional
     public UserResponse getUser(Long id) {
-        return userResponseMapper.from(userRepository.getReferenceById(id));
+        return userResponseMapper
+                .from(userRepository.getReferenceById(id));
     }
 
     @Transactional
@@ -41,6 +42,7 @@ public class UserDomainService {
     public Long addUser(UserAddRequest request) {
         return userRepository.save(userMapper.from(request)).getId();
     }
+  
     @Transactional
     public void editUser(UserAddRequest request) {
         var role = userRepository.getReferenceById(request.getUserId());
@@ -48,10 +50,16 @@ public class UserDomainService {
 
     }
 
+    @Transactional
     public Boolean login(LoginRequest request) {
         return userRepository
                 .findByLogin(request.getLogin())
                 .map(value -> value.getPassword().equals(request.getPassword()))
                 .orElse(false);
+    }
+    @Transactional
+    public Long editUser(UserAddRequest request) {
+        var user = userRepository.getReferenceById(request.getUserId());
+        return userRepository.save(userMerger.merge(user, request)).getId();
     }
 }
