@@ -15,6 +15,8 @@
     <description>logisticProgram</description>
     <properties>
         <java.version>17</java.version>
+        <postgresql-version>42.6.0</postgresql-version>
+
     </properties>
     <dependencies>
         <dependency>
@@ -40,6 +42,14 @@
             <scope>runtime</scope>
             <version>2.1.214</version>
         </dependency>
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>${postgresql-version}</version>
+            <scope>runtime</scope>
+        </dependency>
+
+
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
