@@ -3,7 +3,6 @@ package com.example.logisticprogram.controller;
 import com.example.logisticprogram.dto.request.user.LoginRequest;
 import com.example.logisticprogram.dto.request.user.UserAddRequest;
 import com.example.logisticprogram.dto.request.user.UserRequest;
-import com.example.logisticprogram.dto.response.driver.DriverResponse;
 import com.example.logisticprogram.dto.response.user.UserResponse;
 import com.example.logisticprogram.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -52,9 +51,11 @@ public class UserController {
             value = USER_LOGIN,
             consumes = APPLICATION_JSON_VALUE,
             produces = APPLICATION_JSON_VALUE)
-    public Boolean login (@RequestBody LoginRequest request) {
+    public String login (@RequestBody LoginRequest request) {
         return service.login(request);
     }
+
+
     @PostMapping(
             value = USER_DELETE,
             consumes = APPLICATION_JSON_VALUE,

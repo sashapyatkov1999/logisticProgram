@@ -5,7 +5,11 @@ import com.example.logisticprogram.dto.request.user.UserAddRequest;
 import com.example.logisticprogram.dto.request.user.UserRequest;
 import com.example.logisticprogram.dto.response.user.UserResponse;
 import com.example.logisticprogram.service.domain.UserDomainService;
+import com.example.logisticprogram.service.security.JwtService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,8 +18,12 @@ import java.util.List;
 @RequiredArgsConstructor
 public class UserService {
     private final UserDomainService userDomainService;
+    private final AuthenticationManager authenticationManager;
+    private final JwtService jwtService;
+    private final PasswordEncoder passwordEncoder;
 
     public UserResponse addUser(UserAddRequest request) {
+        request.setPassword(passwordEncoder.encode(request.getPassword()));
         var id = userDomainService.addUser(request);
         return userDomainService.getUser(id);
     }
@@ -48,8 +56,16 @@ public class UserService {
                 .toList();
     }
 
-    public Boolean login(LoginRequest request) {
-            return userDomainService.login(request);
+    public String login(LoginRequest request) {
+
+        authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(
+                       request.getLogin(),request.getPassword()
+                )
+        );
+
+        var user = userDomainService.getUserByLogin(request.getLogin());
+        return jwtService.generateToken(user);
     }
 }
 
