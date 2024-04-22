@@ -3,12 +3,18 @@ package com.example.logisticprogram.service.domain;
 import com.example.logisticprogram.dto.request.user.LoginRequest;
 import com.example.logisticprogram.dto.request.user.UserAddRequest;
 import com.example.logisticprogram.dto.response.user.UserResponse;
+import com.example.logisticprogram.dto.response.userrole.UserRoleResponse;
+import com.example.logisticprogram.entity.User;
 import com.example.logisticprogram.mapper.user.UserMapper;
 import com.example.logisticprogram.mapper.user.UserMerger;
 import com.example.logisticprogram.mapper.user.UserResponseMapper;
+import com.example.logisticprogram.mapper.userrole.UserRoleResponseMapper;
 import com.example.logisticprogram.repository.UserRepository;
+import com.example.logisticprogram.repository.UserRoleRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,9 +23,11 @@ import java.util.List;
 @RequiredArgsConstructor
 public class UserDomainService {
     private final UserRepository userRepository;
+    private final UserRoleRepository userRoleRepository;
     private final UserResponseMapper userResponseMapper;
     private final UserMapper userMapper;
     private final UserMerger userMerger;
+    private final UserRoleResponseMapper userRoleResponseMapper;
 
     @Transactional
     public UserResponse getUser(Long id) {
@@ -51,8 +59,29 @@ public class UserDomainService {
                 .orElse(false);
     }
     @Transactional
-    public Long editUser(UserAddRequest request) {
-        var user = userRepository.getReferenceById(request.getUserId());
+    public Long editUser(Long userId, UserAddRequest request) {
+        var user = userRepository.getReferenceById(userId);
         return userRepository.save(userMerger.merge(user, request)).getId();
     }
+
+    @Transactional
+    public User getUserByLogin(String login) {
+       return userRepository.findByLogin(login).orElseThrow(() -> new UsernameNotFoundException("Пользователь не найден!"));
+    }
+
+    @Transactional
+    public UserResponse getUserResponseByLogin(String login) {
+        return userResponseMapper.from(getUserByLogin(login));
+    }
+
+    @Transactional
+    public List<UserRoleResponse> getUserRoles(String login){
+        var user = userRepository.findByLogin(login).orElseThrow(() -> new UsernameNotFoundException("Пользователь не найден!"));
+        return userRoleResponseMapper.from(userRoleRepository.findByUserId(user.getId()));
+    }
+
+    public UserDetailsService userDetailsService(){
+        return this::getUserByLogin;
+    }
+
 }

@@ -29,8 +29,8 @@ public class RoleController {
     public static final String ROLE_ADD = "/api/v1/role/add";
     public static final String ROLE_GET = "/api/v1/role/get";
     public static final String ROLE_DELETE = "/api/v1/role/delete";
-    private static final String ROLE_GET_ALL = "/api/v1/role/get-all";
-    private static final String ROLE_EDIT = "/api/v1/role/edit";
+    public static final String ROLE_GET_ALL = "/api/v1/role/get-all";
+    public static final String ROLE_EDIT = "/api/v1/role/edit";
 
 
 
@@ -56,7 +56,6 @@ public class RoleController {
 
     @PostMapping(
             value = ROLE_GET_ALL,
-            consumes = APPLICATION_JSON_VALUE,
             produces = APPLICATION_JSON_VALUE)
     public List<RoleResponse> getAllRoles(){
         return service.getAllRoles();

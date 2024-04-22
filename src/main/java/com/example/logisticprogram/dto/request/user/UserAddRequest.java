@@ -8,9 +8,10 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 @NoArgsConstructor
 public class UserAddRequest {
-    private Long userId;
+    private String login;
     private String name;
     private String surname;
-    private String eMail;
+    private String email;
     private String phoneNumber;
+    private String password;
 }
