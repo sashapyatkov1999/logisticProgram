@@ -16,7 +16,7 @@ public class UserMerger implements Merger<User, UserAddRequest> {
                 
 
                 .setSurname(source.getSurname())
-                .setEmail(source.getEMail())
+                .setEmail(source.getEmail())
                 .setPhoneNumber(source.getPhoneNumber())
                 .setName(source.getName());
     }
