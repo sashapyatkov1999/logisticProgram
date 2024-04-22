@@ -26,8 +26,8 @@ import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.handler.HandlerMappingIntrospector;
 
-import static com.example.logisticprogram.controller.UserController.USER_ADD;
-import static com.example.logisticprogram.controller.UserController.USER_GET_ALL;
+
+import static com.example.logisticprogram.controller.UserController.USERS;
 import static com.example.logisticprogram.controller.UserController.USER_LOGIN;
 
 @Slf4j
@@ -54,8 +54,7 @@ public class WebSecurity implements WebMvcConfigurer {
                 auth
                         .requestMatchers(PathRequest.toH2Console()).permitAll()
                         .requestMatchers(mvcMatcherBuilder.pattern(USER_LOGIN)).permitAll()
-                        .requestMatchers(mvcMatcherBuilder.pattern(USER_ADD)).permitAll()
-                        .requestMatchers(mvcMatcherBuilder.pattern(USER_GET_ALL)).hasAnyAuthority("ADMIN", "DRIVER")
+                        .requestMatchers(mvcMatcherBuilder.pattern(USERS)).hasAnyAuthority("ADMIN", "DRIVER")
                         .anyRequest().authenticated()
         );
 

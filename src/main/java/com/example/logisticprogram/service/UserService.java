@@ -29,16 +29,16 @@ public class UserService {
     }
 
 
-    public UserResponse getUser(UserRequest request) {
-        return userDomainService.getUser(request.getId());
+    public UserResponse getUser(Long userId) {
+        return userDomainService.getUser(userId);
     }
 
-    public void deleteUser(UserRequest request) {
-        userDomainService.deleteUser(request.getId());
+    public void deleteUser(Long userId) {
+        userDomainService.deleteUser(userId);
     }
 
-    public void editUser(UserAddRequest request) {
-        userDomainService.editUser(request);
+    public void editUser(Long userId, UserAddRequest request) {
+        userDomainService.editUser(userId, request);
     }
 
     public List<UserResponse> getAllUsers() {
