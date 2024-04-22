@@ -2,10 +2,10 @@ package com.example.logisticprogram.controller;
 
 import com.example.logisticprogram.dto.request.user.LoginRequest;
 import com.example.logisticprogram.dto.request.user.UserAddRequest;
-import com.example.logisticprogram.dto.request.user.UserRequest;
 import com.example.logisticprogram.dto.response.user.UserResponse;
 import com.example.logisticprogram.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -29,6 +29,8 @@ public class UserController {
 
     public static final String USER = "/api/v1/user/{id}";
     public static final String USERS = "/api/v1/user";
+
+    public static final String WHO_I_AM = "/api/v1/user/who-i-am";
 
 
     @PostMapping(
@@ -85,6 +87,13 @@ public class UserController {
             produces = APPLICATION_JSON_VALUE)
     public void search(@RequestBody String request) {
         service.search(request);
+    }
+
+    @GetMapping(
+            value = WHO_I_AM,
+            produces = APPLICATION_JSON_VALUE)
+    public UserResponse whoIam(Authentication authentication) {
+        return service.getCurrentUser(authentication);
     }
 
 }
