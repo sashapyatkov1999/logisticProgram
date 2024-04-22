@@ -59,8 +59,8 @@ public class UserDomainService {
                 .orElse(false);
     }
     @Transactional
-    public Long editUser(UserAddRequest request) {
-        var user = userRepository.getReferenceById(request.getUserId());
+    public Long editUser(Long userId, UserAddRequest request) {
+        var user = userRepository.getReferenceById(userId);
         return userRepository.save(userMerger.merge(user, request)).getId();
     }
 

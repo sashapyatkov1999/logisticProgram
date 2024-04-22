@@ -12,9 +12,6 @@ public class UserMerger implements Merger<User, UserAddRequest> {
     @Override
     public User merge(User target, UserAddRequest source) {
         return target
-                .setId(source.getUserId())
-                
-
                 .setSurname(source.getSurname())
                 .setEmail(source.getEmail())
                 .setPhoneNumber(source.getPhoneNumber())

@@ -2,13 +2,13 @@ package com.example.logisticprogram.service;
 
 import com.example.logisticprogram.dto.request.user.LoginRequest;
 import com.example.logisticprogram.dto.request.user.UserAddRequest;
-import com.example.logisticprogram.dto.request.user.UserRequest;
 import com.example.logisticprogram.dto.response.user.UserResponse;
 import com.example.logisticprogram.service.domain.UserDomainService;
 import com.example.logisticprogram.service.security.JwtService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -29,16 +29,16 @@ public class UserService {
     }
 
 
-    public UserResponse getUser(UserRequest request) {
-        return userDomainService.getUser(request.getId());
+    public UserResponse getUser(Long userId) {
+        return userDomainService.getUser(userId);
     }
 
-    public void deleteUser(UserRequest request) {
-        userDomainService.deleteUser(request.getId());
+    public void deleteUser(Long userId) {
+        userDomainService.deleteUser(userId);
     }
 
-    public void editUser(UserAddRequest request) {
-        userDomainService.editUser(request);
+    public void editUser(Long userId, UserAddRequest request) {
+        userDomainService.editUser(userId, request);
     }
 
     public List<UserResponse> getAllUsers() {
@@ -60,12 +60,16 @@ public class UserService {
 
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
-                       request.getLogin(),request.getPassword()
+                        request.getLogin(), request.getPassword()
                 )
         );
 
         var user = userDomainService.getUserByLogin(request.getLogin());
         return jwtService.generateToken(user);
+    }
+
+    public UserResponse getCurrentUser(Authentication authentication) {
+        return userDomainService.getUserResponseByLogin(authentication.getName());
     }
 }
 
