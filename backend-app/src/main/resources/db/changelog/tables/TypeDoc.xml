@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="TYPE_DOC_001" author="pyatkov_aa">
+
+        <preConditions>
+            <not>
+                <sequenceExists sequenceName="TYPE_DOC_SEQ"/>
+            </not>
+        </preConditions>
+        <createSequence sequenceName="TYPE_DOC_SEQ" startValue="0" minValue="0"/>
+    </changeSet>
+
+    <changeSet id="TYPE_DOC_002" author="pyatkov_aa">
+
+        <preConditions>
+            <not>
+                <tableExists schemaName="REPOSITORY" tableName="TYPE_DOC"/>
+            </not>
+        </preConditions>
+
+        <createTable schemaName="REPOSITORY" tableName="TYPE_DOC">
+
+            <column name="TYPE_DOC_ID" type="INT" defaultValueSequenceNext="TYPE_DOC_SEQ">
+                <constraints primaryKey="true" primaryKeyName="TYPE_DOC_PK"/>
+            </column>
+
+            <column name="NAME" type="VARCHAR(50)">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="DESCRIPTION" type="VARCHAR(50)">
+            </column>
+
+            <column name="CREATED" type="TIMESTAMP" defaultValue="NOW()">
+                <constraints  nullable="false"/>
+            </column>
+
+            <column name="MODIFIED" type="TIMESTAMP" defaultValue="NOW()">
+                <constraints  nullable="false"/>
+            </column>
+
+        </createTable>
+
+    </changeSet>
+</databaseChangeLog>

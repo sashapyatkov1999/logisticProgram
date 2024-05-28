@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="POINT_001" author="pyatkov_aa">
+
+        <preConditions>
+            <not>
+                <sequenceExists sequenceName="POINT_SEQ"/>
+            </not>
+        </preConditions>
+        <createSequence sequenceName="POINT_SEQ" startValue="0" minValue="0"/>
+    </changeSet>
+
+    <changeSet id="POINT_002" author="pyatkov_aa">
+
+        <preConditions>
+            <not>
+                <tableExists schemaName="REPOSITORY" tableName="POINT"/>
+            </not>
+        </preConditions>
+
+        <createTable schemaName="REPOSITORY" tableName="POINT">
+
+            <column name="POINT_ID" type="INT" defaultValueSequenceNext="POINT_SEQ">
+                <constraints primaryKey="true" primaryKeyName="POINT_PK"/>
+            </column>
+
+            <column name="FIELD" type="VARCHAR(50)">
+                <constraints unique="true" nullable="false"/>
+            </column>
+
+            <column name="ORDINAL" type="INT">
+                <constraints  nullable="false" unique="true"/>
+            </column>
+
+            <column name="APPLICATION_ID" type="INT">
+                <constraints  nullable="false"/>
+            </column>
+
+            <column name="STATUS_OF_ORDINAL_WITH_GEO" type="BOOLEAN">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="NAME" type="VARCHAR(50)">
+                <constraints  nullable="false"/>
+            </column>
+
+            <column name="DESCRIPTION" type="VARCHAR(50)">
+                <constraints  nullable="false"/>
+            </column>
+
+            <column name="CREATED" type="TIMESTAMP" defaultValue="NOW()">
+                <constraints  nullable="false"/>
+            </column>
+
+            <column name="MODIFIED" type="TIMESTAMP" defaultValue="NOW()">
+                <constraints  nullable="false"/>
+            </column>
+
+            <column name="TIME_START" type="TIMESTAMP" defaultValue="NULL">
+                <constraints  nullable="false"/>
+            </column>
+
+            <column name="TIME_END" type="TIMESTAMP" defaultValue="NULL">
+                <constraints  nullable="false"/>
+            </column>
+
+
+
+        </createTable>
+
+    </changeSet>
+</databaseChangeLog>
